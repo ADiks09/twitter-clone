@@ -1,0 +1,39 @@
+.chip {
+  display: flex;
+  align-items: center;
+  width: 240px;
+  padding: 7px 10px;
+  flex-basis: auto;
+  border-radius: 30px;
+  justify-content: space-between;
+  &:hover {
+    transition: all .2s;
+    background-color: #5d9cec2e;
+  }
+}
+
+.usersChip {
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+}
+
+.userNames  {
+  margin-left: 10px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.tag {
+  color: gray;
+}

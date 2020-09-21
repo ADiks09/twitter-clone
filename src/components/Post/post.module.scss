@@ -1,0 +1,51 @@
+@import "../../styles/style.module";
+
+.container {
+  min-height: 120px;
+  max-height: 480px;
+  border-bottom: 1px solid gray;
+  padding: 0 10px;
+  &:hover {
+    background-color: $post-hover;
+  }
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userTag {
+  margin-left: 7px;
+  font-size: 14px;
+  color: gray;
+}
+
+.postDescription {
+  width: 500px;
+  font-size: 15px;
+  margin: 5px 0 0 0;
+  line-height: 22px;
+}
+
+.postMedia {
+  margin-top: 10px;
+  border: 1px solid $border-color;
+  border-radius: 15px;
+  width: 96%;
+  max-height: 250px;
+  object-fit:  cover;
+}
+
+.wrapBtn {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 9px;
+  margin-left: -8px;
+}
+
+.btnAction {
+  @include transparentBtn(12px, 400);
+}

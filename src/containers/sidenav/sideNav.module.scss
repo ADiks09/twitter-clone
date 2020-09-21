@@ -1,0 +1,28 @@
+@import "./src/styles/style.module";
+
+.sideNav {
+  margin-right: 10px;
+  max-width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo {
+  font-size: 35px;
+  color: white;
+  margin: 15px 0;
+}
+
+.chip {
+  margin-top: 120px;
+}
+
+.btn {
+  @include button(12px, 95px);
+}
+
+.sideNavBtn {
+  @include transparentBtn(18px, 700);
+}
