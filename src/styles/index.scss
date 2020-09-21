@@ -1,5 +1,14 @@
 @import "color";
 
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+html {
+  -ms-overflow-style: none;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -1,0 +1,29 @@
+@import "color";
+
+.iconBtn {
+  &:hover {
+    transition: all .2s;
+    background-color: $btn-hover;
+    color: $btn-color;
+  }
+}
+
+@mixin button($p-top, $p-bot) {
+  text-transform: none;
+  font-weight: 700;
+  color: white;
+  border-radius: 30px;
+  padding: $p-top $p-bot;
+}
+
+@mixin transparentBtn($font-size, $font-weight) {
+  font-size: $font-size;
+  text-transform: none;
+  color: white;
+  border-radius: 30px;
+  font-weight: $font-weight;
+  &:hover {
+    color: $btn-color;
+    background-color: $btn-hover;
+  }
+}
