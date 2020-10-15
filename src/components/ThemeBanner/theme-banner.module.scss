@@ -1,0 +1,40 @@
+@import "../../styles/style.module";
+
+.container {
+  padding: 10px 15px;
+  border-bottom: 1px solid $border-color;
+  &:hover{
+    background-color: #1f3245e0;
+    cursor: pointer;
+  }
+
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .actual {
+    font-size: 13px;
+    color: #8899a6;
+  }
+}
+
+.theme {
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.popilarityFor {
+  display: block;
+  color: #8899a6;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.counter {
+  font-size: 12px;
+  color: #91aab7;
+}
