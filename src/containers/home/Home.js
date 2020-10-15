@@ -23,8 +23,12 @@ export const Home = ({ headerTitle, posts }) => {
 
         <div className={classes.emptyBox}> </div>
 
-        {<h2>You don't have posts</h2> ||
-          posts.map((data, index) => <Posts {...data} key={index} />)}
+        {
+          // <h2>You don't have posts</h2> ||
+          posts.map((data, index) => (
+            <Posts {...data} key={index} />
+          ))
+        }
       </div>
     </div>
   )

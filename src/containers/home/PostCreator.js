@@ -28,7 +28,13 @@ export const PostCreator = () => (
       maxLength={306}
     />
 
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginLeft: '-15px',
+      }}
+    >
       <span>
         {btnData.map((icon, index) => (
           <IconButton className={classes.iconBtn} key={index}>

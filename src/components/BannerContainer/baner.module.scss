@@ -1,0 +1,31 @@
+@import "../../styles/style.module";
+
+.bannerContainer {
+  margin: 20px 0;
+  width: 350px;
+  min-height: 200px;
+  background-color: #1f32458c;
+  border-radius: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border-color;
+    padding: 5px 15px;
+    .title {
+      font-weight: 800;
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+}
+
+.btnBottom {
+  text-transform: unset;
+  padding: 10px 15px;
+  color: $main-twit-color;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 100%;
+}
