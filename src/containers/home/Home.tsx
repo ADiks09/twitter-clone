@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { ScatterPlot } from '@material-ui/icons'
 import classes from './home.module.scss'
 import { HomeHeader } from '../../components/HomeHeader/HomeHeader'
@@ -6,7 +6,21 @@ import { PostCreator } from './PostCreator'
 import { Posts } from '../../components/Post/Posts'
 import { PostContainer } from '../../components/PostContainer/PostContainer'
 
-export const Home = ({ headerTitle, posts }) => {
+type Post = {
+  avatar: string,
+  userName?: string,
+  text?: string,
+  imgUrl?: string,
+  time?: string,
+  userTag?: string,
+}
+
+type Props = {
+  headerTitle: string,
+  posts: Array<Post>,
+}
+
+export const Home: FC<Props> = ({ headerTitle, posts }) => {
   return (
     <div className={classes.home}>
       <HomeHeader
@@ -16,7 +30,7 @@ export const Home = ({ headerTitle, posts }) => {
       {/*TODO: fix problems with scroll*/}
       <div className={classes.scrollContainer}>
         <div className={classes.wrapper}>
-          <PostContainer>
+          <PostContainer imgSrc="none">
             <PostCreator />
           </PostContainer>
         </div>

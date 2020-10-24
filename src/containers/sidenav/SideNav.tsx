@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Button } from '@material-ui/core'
 import {
   BookmarkRounded,
@@ -11,7 +11,7 @@ import {
   PersonOutline,
   SearchRounded,
   SettingsApplications,
-  Twitter,
+  Twitter as TwitterIcon,
 } from '@material-ui/icons'
 import { MenuButtons } from './MenuButtons'
 import { ChipTwit } from '../../components/Chip/ChipTwit'
@@ -28,10 +28,10 @@ const buttonsData = [
   { text: 'Setting', icon: <SettingsApplications /> },
 ]
 
-export const SideNav = () => {
+export const SideNav: FC = () => {
   return (
     <nav className={classes.sideNav}>
-      <Twitter className={classes.logo} />
+      <TwitterIcon className={classes.logo} />
       <MenuButtons buttonsData={buttonsData} styles={classes.sideNavBtn} />
       <Button className={classes.btn} variant={'contained'} color={'primary'}>
         Tweet

@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { FC } from 'react'
 import classes from './theme-banner.module.scss'
 import { IconButton } from '@material-ui/core'
 import { ExpandMoreRounded } from '@material-ui/icons'
 
-export const ThemeBanner = ({ actual, theme, popularity, counter }) => (
+type Props = {
+  actual: string,
+  theme: string,
+  popularity?: string,
+  counter?: number,
+}
+
+export const ThemeBanner: FC<Props> = ({
+  actual,
+  theme,
+  popularity,
+  counter,
+}) => (
   <div className={classes.container}>
     <div className={classes.header}>
       <span className={classes.actual}>Актуальные темы: {actual}</span>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { IconButton } from '@material-ui/core'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import Button from '@material-ui/core/Button'
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/icons'
 import classes from './home.module.scss'
 
-const btnData = [
+const btnData: JSX.Element[] = [
   <ImageOutlined color="primary" />,
   <Gif color="primary" />,
   <EqualizerRounded color="primary" />,
@@ -19,7 +19,7 @@ const btnData = [
   <Event color="primary" />,
 ]
 
-export const PostCreator = () => (
+export const PostCreator: FC = () => (
   <>
     <TextareaAutosize
       placeholder="Do you mind?"

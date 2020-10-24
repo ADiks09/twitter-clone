@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Avatar } from '@material-ui/core'
 import classes from './chip.module.scss'
 
-export const ChipTwit = ({ name, tag, img, btn, btnActive, classname }) => {
-  const [click, setClick] = useState(false)
+type Props = {
+  name: string,
+  tag: string,
+  img: string,
+  btnActive: React.ReactNode,
+  btn: React.ReactNode
+  classname: string
+}
+
+export const ChipTwit: FC<Props> = ({ name, tag, img, btn, btnActive, classname }) => {
+  const [click, setClick] = useState<boolean>(false)
   const styles = classes.chip + ' ' + classname
 
   return (
