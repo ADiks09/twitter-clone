@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Banner } from '../../components/BannerContainer/Banner'
 import { ThemeBanner } from '../../components/ThemeBanner/ThemeBanner'
 import { FollowBanner } from '../../components/FollowBanner/FollowBanner'
@@ -9,7 +9,7 @@ const data = {
   actual: 'Ukraine',
   theme: 'DOKA 2',
   popularity: 'Armenia',
-  counter: '3 312',
+  counter: 3312,
 }
 
 const data1 = {
@@ -23,7 +23,7 @@ const data2 = {
   popularity: 'Armenia',
 }
 
-export const SideBanners = () => {
+export const SideBanners: FC = () => {
   return (
     <div className="banners" style={{ marginLeft: 20 }}>
       <CustomizedInputBase />

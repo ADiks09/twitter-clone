@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import classes from './user-banner.module.scss'
 import { Avatar, Button } from '@material-ui/core'
 
-export const FollowBanner = ({ avatar, name, tag }) => (
+type Props = {
+  avatar: string,
+  name: string,
+  tag: string,
+}
+
+export const FollowBanner: FC<Props> = ({ avatar, name, tag }) => (
   <div className={classes.container}>
     <Avatar src={avatar} />
     <div style={{ width: '170px' }}>

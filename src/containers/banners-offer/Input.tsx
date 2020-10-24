@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -30,9 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function CustomizedInputBase() {
+export const CustomizedInputBase: FC = () => {
   const classes = useStyles()
-
   return (
     <Paper component="form" className={classes.root}>
       <IconButton className={classes.iconButton} aria-label="menu">

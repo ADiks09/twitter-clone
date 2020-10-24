@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Button, IconButton } from '@material-ui/core'
 import {
   ExpandMoreRounded,
@@ -10,7 +10,19 @@ import {
 import { PostContainer } from '../PostContainer/PostContainer'
 import classes from './post.module.scss'
 
-export const Posts = ({
+type Props = {
+  imgUrl?: string,
+  text?: string,
+  userName?: string,
+  userTag?: string,
+  time?: string,
+  avatar: string,
+  like?: string,
+  comments?: string,
+  share?: string,
+}
+
+export const Posts: FC<Props> = ({
   imgUrl,
   text,
   userName,

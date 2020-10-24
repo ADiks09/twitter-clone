@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Button from '@material-ui/core/Button'
 
-export const MenuButtons = ({ buttonsData, styles }) => {
+type btnData = {
+  text: string,
+  icon: JSX.Element
+}
+
+type Props = {
+  buttonsData: Array<btnData>
+  styles: any
+}
+
+export const MenuButtons: FC<Props> = ({ buttonsData, styles }) => {
   return (
     <>
       {buttonsData.map((btn, i) => (
