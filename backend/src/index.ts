@@ -1,48 +1,32 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
-import User from './models/User'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import { auth } from './routes/auth'
 
 dotenv.config()
+
 const app: express.Application = express()
+
 const PORT: number | string = process.env.PORT || 5000
 const MONGO_URL: string = process.env.MONGO_URL || ''
+
+app.use(cors())
+app.use(bodyParser.json())
+app.use(cookieParser())
+
+app.use('/api/auth', auth)
 
 app.get('/', async (_, res) => {
   res.send('Twitter API')
 })
 
-app.get('/user', async (req, res) => {
-  try {
-    const candidate = await User.find()
-    res.status(200).json({
-      users: candidate,
-    })
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-})
-
-app.post('/user/:name/:email', async (req, res) => {
-  try {
-    const { name, email } = req.params
-    const user = new User({
-      email,
-      name,
-    })
-
-    const newUser = await user.save()
-    res.status(201).json({
-      user: newUser,
-    })
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-})
-
 const mongoOption: mongoose.ConnectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 }
 
 mongoose
