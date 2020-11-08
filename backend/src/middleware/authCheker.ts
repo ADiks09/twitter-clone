@@ -1,56 +1,41 @@
-import jwt, { VerifyErrors } from 'jsonwebtoken'
-import User from '../models/User'
+import jwt from 'jsonwebtoken'
 import { NextFunction, Request, Response } from 'express'
 import dotenv from 'dotenv'
+import User from '../models/User'
+import { IUser } from '../interfaces'
+
 dotenv.config()
 
 const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET || ''
 const COOKIE_TITLE: string = process.env.COOKIE_TITLE || ''
 
-export const requireAuth = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.cookies[COOKIE_TITLE]
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.cookies[COOKIE_TITLE]
 
-  if (token) {
-    jwt.verify(
-      token,
-      ACCESS_TOKEN_SECRET,
-      (err: VerifyErrors | null, decodedToken: any | undefined) => {
-        if (err) {
-          console.log('message', err.message)
-        } else {
-          console.log('decoded token', decodedToken)
-          next()
-        }
-      }
-    )
-  } else {
-    res.status(401).json({ message: "You don't have a token" })
-  }
-}
+    if (!token) {
+      res.status(401).json({ message: 'token is empty' })
+    }
 
-// check current user
-export const checkUser = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies[COOKIE_TITLE]
-  if (token) {
-    jwt.verify(
-      token,
-      ACCESS_TOKEN_SECRET,
-      async (err: VerifyErrors | null, decodedToken: any) => {
-        if (err) {
-          res.locals.user = null
-          next()
-        } else {
-          res.locals.user = await User.findById(decodedToken.id)
-          next()
-        }
-      }
-    )
-  } else {
-    res.locals.user = null
+    const data: any = jwt.verify(token, ACCESS_TOKEN_SECRET)
+
+    const user: IUser | null = await User.findOne({
+      _id: data.id,
+      'tokens.token': token,
+    })
+
+    if (!user) {
+      throw new Error()
+    }
+
+    res.locals.user = user
+    res.locals.token = token
+
     next()
+  } catch (error) {
+    res.status(401).json({
+      message: 'Not authorized to access this resource',
+      error: error.message,
+    })
   }
 }

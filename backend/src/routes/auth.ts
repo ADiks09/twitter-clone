@@ -2,21 +2,24 @@ import express, { Request, Response } from 'express'
 import { check, validationResult, Result } from 'express-validator'
 import jwt from 'jsonwebtoken'
 import bcryptjs from 'bcryptjs'
-import User, { IUser } from '../models/User'
-const router: express.Router = express.Router()
 import dotenv from 'dotenv'
-import { checkUser, requireAuth } from '../middleware/authCheker'
+import { auth } from '../middleware/authCheker'
+import { IToken, IUser } from '../interfaces'
+import User from '../models/User'
+
 dotenv.config()
+
+const router: express.Router = express.Router()
 
 const JWT: string = process.env.ACCESS_TOKEN_SECRET || ''
 const COOKIE_TITLE: string = process.env.COOKIE_TITLE || ''
 
 const maxAge: number = 3 * 24 * 60 * 60
-const createToken = (id: number) => {
-  return jwt.sign({ id }, JWT, {
+
+const createToken = (id: number) =>
+  jwt.sign({ id }, JWT, {
     expiresIn: maxAge,
   })
-}
 
 router.post(
   '/register',
@@ -35,7 +38,7 @@ router.post(
         })
       }
 
-      const { email, password } = req.body
+      const { email, password, name, phone, birthday } = req.body
 
       const candidate = await User.findOne({ email })
 
@@ -45,14 +48,18 @@ router.post(
 
       const hashedPassword: string = await bcryptjs.hash(password, 10)
 
-      const user: IUser = new User({ email, password: hashedPassword })
-
-      const token = createToken(user._id)
-
-      res.cookie(COOKIE_TITLE, token, {
-        httpOnly: true,
-        maxAge: maxAge * 1000,
+      const user: IUser = new User({
+        email,
+        password: hashedPassword,
+        name,
+        phone,
+        birthday,
       })
+
+      const token: string = createToken(user._id)
+      user.tokens = user.tokens.concat({ token })
+
+      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge })
 
       await user.save()
 
@@ -71,13 +78,9 @@ router.post(
   [
     check('email', 'Enter corrected email').normalizeEmail().isEmail(),
     check('password', 'Enter password').exists(),
-    checkUser,
   ],
   async (req: Request, res: Response) => {
     try {
-      if (res.locals.user) {
-        res.status(400).json({ message: 'you already auth' })
-      }
       const errors: Result = validationResult(req)
 
       if (!errors.isEmpty()) {
@@ -100,10 +103,20 @@ router.post(
         return res.status(400).json({ message: "Login data isn't correct" })
       }
 
-      const token = createToken(user._id)
-      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge * 1000 })
+      const candidateToken = req.cookies[COOKIE_TITLE]
+      if (candidateToken) {
+        return res.status(400).json({ message: 'you already authorize' })
+      }
 
-      res.json({ token, userId: user.id })
+      const token: string = createToken(user._id)
+
+      user.tokens = user.tokens.concat({ token })
+
+      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge })
+
+      await user.save()
+
+      res.status(200).json({ message: 'login has been successful', user })
     } catch (error) {
       res.send(500).json({
         message: 'Something went wrong, try again',
@@ -113,11 +126,24 @@ router.post(
   }
 )
 
-router.get('/logout', requireAuth, async (req: Request, res: Response) => {
-  res
-    .status(200)
-    .cookie(COOKIE_TITLE, '', { maxAge: 1 })
-    .json({ message: 'logout' })
+router.get('/logout', auth, async (req: Request, res: Response) => {
+  try {
+    res.locals.user.tokens = res.locals.user.tokens.filter((token: IToken) => {
+      return token.token !== res.locals.token
+    })
+
+    await res.locals.user.save()
+
+    res
+      .status(200)
+      .cookie(COOKIE_TITLE, '', { maxAge: 1 })
+      .json({ message: 'logout' })
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong, try again',
+      error: error.message,
+    })
+  }
 })
 
 export { router as auth }
