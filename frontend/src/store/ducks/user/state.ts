@@ -1,7 +1,8 @@
 export enum LoadingStatus {
   LOADED = 'LOADED',
   ERROR = 'ERROR',
-  NEVER = 'NEVER'
+  NEVER = 'NEVER',
+  LOADING = 'LOADING'
 }
 
 export interface IUser {

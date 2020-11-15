@@ -8,9 +8,10 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core'
 import * as yup from 'yup'
 import classes from './login.module.scss'
-import { IUser } from '../../store/ducks/user/contracts/state'
+import { IFullUserState, IUser } from '../../store/ducks/user/state'
 import { userFetchLogin } from '../../store/ducks/user/actionsCreators'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { IRootReducer } from '../../store/rootReducer'
 
 const CustomTextField = withStyles({
   root: {
@@ -58,6 +59,8 @@ const initialValue: IUser = {
 
 const SubmitForm: FC = () => {
   const dispatch = useDispatch()
+  const selector = useSelector((state: IRootReducer) => state.auth)
+  console.log('Llsdgsd', selector)
 
   const formik = useFormik({
     initialValues: initialValue,
