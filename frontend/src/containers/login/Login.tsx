@@ -6,9 +6,11 @@ import Container from '@material-ui/core/Container'
 import { Twitter } from '@material-ui/icons'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core'
-import axios from 'axios'
 import * as yup from 'yup'
 import classes from './login.module.scss'
+import { IUser } from '../../store/ducks/user/contracts/state'
+import { userFetchLogin } from '../../store/ducks/user/actionsCreators'
+import { useDispatch } from 'react-redux'
 
 const CustomTextField = withStyles({
   root: {
@@ -33,12 +35,7 @@ const CustomTextField = withStyles({
   },
 })(TextField)
 
-interface ILogin {
-  email: string;
-  password: string;
-}
-
-const validationSchema = yup.object<ILogin>({
+const validationSchema = yup.object<IUser>({
   email: yup
     .string()
     .email('Enter a valid email')
@@ -49,39 +46,23 @@ const validationSchema = yup.object<ILogin>({
     .required('Password is required'),
 })
 
-const initialValue: ILogin = {
+const initialValue: IUser = {
   email: '',
   password: '',
 }
 
-const submitForm = async (values: ILogin): Promise<void | Promise<any>> => {
-  const { email, password } = values
-  await axios
-    .post('/api/auth/login', {
-      email,
-      password,
-    })
-    .then((response) => {
-      alert(response.data.message)
-    })
-    .catch((error) => {
-      if (error.response) {
-        alert(error.response.data.message)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-      } else if (error.request) {
-        console.log(error.request)
-      } else {
-        console.log('Error', error.message)
-      }
-    })
-}
+// const submitForm = async (values: IUser): Promise<void | Promise<any>> => {
+//   const { email, password } = values
+//   userFetchLogin({ email, password })
+// }
 
 const SubmitForm: FC = () => {
+  const dispatch = useDispatch()
+
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: submitForm,
+    onSubmit: async (values: IUser) => dispatch(userFetchLogin(values)),
   })
 
   return (
