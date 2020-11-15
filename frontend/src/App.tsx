@@ -3,6 +3,8 @@ import { Box, Container } from '@material-ui/core'
 import { SideNav } from './containers/sidenav/SideNav'
 import { Home } from './containers/home/Home'
 import { SideBanners } from './containers/banners-offer/SideBanners'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { LogInForm } from './containers/login/Login'
 
 //TODO: remove data and image pre-deploy
 const posts = [
@@ -35,8 +37,7 @@ const posts = [
   },
   {
     userName: 'Дима',
-    text:
-      'Это топ мебель за 100 долларов россикйскиз сша рублей купи стул',
+    text: 'Это топ мебель за 100 долларов россикйскиз сша рублей купи стул',
     imgUrl: './slider-img.png',
     avatar: 'slider-img.png',
   },
@@ -50,12 +51,22 @@ const posts = [
 
 export const App: FC = () => {
   return (
-    <Container maxWidth={'lg'}>
-      <Box display="flex">
-        <SideNav />
-        <Home headerTitle="Home" posts={posts} />
-        <SideBanners />
-      </Box>
-    </Container>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/home" exact>
+          <Container maxWidth={'lg'}>
+            <Box display="flex">
+              <SideNav />
+              <Home headerTitle="Home" posts={posts} />
+              <SideBanners />
+            </Box>
+          </Container>
+        </Route>
+        <Route path="/sign" exact></Route>
+        <Route path="/login" exact>
+          <LogInForm />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   )
 }

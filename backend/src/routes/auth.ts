@@ -116,7 +116,17 @@ router.post(
 
       await user.save()
 
-      res.status(200).json({ message: 'login has been successful', user })
+      res.status(200).json({
+        message: 'login has been successful',
+        user: {
+          createdAt: user.createdAt,
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+          birthday: user.birthday,
+          token,
+        },
+      })
     } catch (error) {
       res.send(500).json({
         message: 'Something went wrong, try again',

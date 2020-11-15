@@ -12,4 +12,5 @@ export interface IUser extends Document {
   phone: string
   birthday: Date
   tokens: Array<IToken>
+  createdAt: Date
 }

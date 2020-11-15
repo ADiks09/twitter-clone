@@ -27,6 +27,10 @@ const User: Schema = new Schema({
     required: [true, 'password is required'],
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
   tokens: [
     {
       token: {
