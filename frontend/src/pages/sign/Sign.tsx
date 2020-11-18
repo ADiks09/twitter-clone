@@ -152,22 +152,6 @@ const SubmitForm: FC = () => {
             error={formik.touched.phone && Boolean(formik.errors.phone)}
             helperText={formik.touched.phone && formik.errors.phone}
           />
-          {/*<CustomTextField*/}
-          {/*  color="primary"*/}
-          {/*  variant="outlined"*/}
-          {/*  name="birthday"*/}
-          {/*  label="Birthday"*/}
-          {/*  style={{ width: 548 }}*/}
-          {/*  InputProps={{*/}
-          {/*    classes: {*/}
-          {/*      input: classes.input,*/}
-          {/*    },*/}
-          {/*  }}*/}
-          {/*  value={formik.values.birthday}*/}
-          {/*  onChange={formik.handleChange}*/}
-          {/*  error={formik.touched.birthday && Boolean(formik.errors.birthday)}*/}
-          {/*  helperText={formik.touched.birthday && formik.errors.birthday}*/}
-          {/*/>*/}
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               margin="normal"
