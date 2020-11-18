@@ -5,6 +5,7 @@ import { UserAction, UserTypes } from './actionsCreators'
 export const initialUserState: IFullUserState = {
   appUser: {},
   loading: LoadingStatus.NEVER,
+  requestError: {},
 }
 
 export const userReducer = produce(
@@ -26,6 +27,9 @@ export const userReducer = produce(
         break
       case UserTypes.USER_LOADING_STATUS:
         draft.loading = action.payload
+        break
+      case UserTypes.USER_REQUEST_FAILED:
+        draft.requestError = action.payload
         break
     }
   },

@@ -4,6 +4,7 @@ import {
   IUserSignInFetchAction,
   userLoadingStatus,
   userLogin,
+  userRequestFailedAction,
   userSignIn,
   UserTypes,
 } from './actionsCreators'
@@ -33,6 +34,7 @@ export function* userFetchLogin(action: IUserLoginFetchAction) {
     console.log('---LOG IN---', data)
     yield put(userLogin(data))
   } catch (e) {
+    yield put(userRequestFailedAction(e.response.data))
     yield put(userLoadingStatus(LoadingStatus.ERROR))
   }
 }
@@ -57,6 +59,7 @@ export function* userFetchSignIn(action: IUserSignInFetchAction) {
     console.log('---SIGN IN---', data)
     yield put(userSignIn(data))
   } catch (e) {
+    yield put(userRequestFailedAction(e.response.data))
     yield put(userLoadingStatus(LoadingStatus.ERROR))
   }
 }

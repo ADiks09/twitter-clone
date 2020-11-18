@@ -7,7 +7,22 @@ export enum UserTypes {
   USER_FETCH_LOGIN = 'USER_FETCH_LOGIN',
   USER_FETCH_SIGNIN = 'USER_FETCH_SIGNIN',
   USER_LOADING_STATUS = 'USER_LOADING_STATUS',
+  USER_REQUEST_FAILED = 'USER_REQUEST_FAILED',
 }
+
+export interface IUserRequestFailedAction extends Action<UserTypes> {
+  type: UserTypes.USER_REQUEST_FAILED;
+  payload: {
+    message: string,
+  };
+}
+
+export const userRequestFailedAction = (payload: {
+  message: string,
+}): IUserRequestFailedAction => ({
+  type: UserTypes.USER_REQUEST_FAILED,
+  payload,
+})
 
 export interface IUserSignInAction extends Action<UserTypes> {
   type: UserTypes.USER_SIGIN;
@@ -71,3 +86,4 @@ export type UserAction =
   | IUserLoadingStatus
   | IUserSignInAction
   | IUserSignInFetchAction
+  | IUserRequestFailedAction

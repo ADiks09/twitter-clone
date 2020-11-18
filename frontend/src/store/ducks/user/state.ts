@@ -13,12 +13,17 @@ export interface IUser {
 export interface IFullUser extends IUser {
   name: string
   phone: string
-  birthday: number | Date | string
+  birthday: Date
   createdAt?: Date
   token?: string
+}
+
+export interface IError {
+  message: string,
 }
 
 export interface IFullUserState {
   appUser: IFullUser | IUser | {},
   loading: LoadingStatus
+  requestError: IError | {}
 }

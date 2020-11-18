@@ -71,6 +71,17 @@ const SubmitForm: FC = () => {
     onSubmit: async (values: IFullUser) => dispatch(userFetchSignIn(values)),
   })
 
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+    new Date('2014-08-18T21:11:54')
+  )
+
+  const handleDateChange = (date: Date | null): void => {
+    setSelectedDate(date)
+    if (date) {
+      formik.values.birthday = date
+    }
+  }
+
   return (
     <>
       {isError && (
@@ -154,6 +165,7 @@ const SubmitForm: FC = () => {
           />
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+              name="birthday"
               margin="normal"
               id="date-picker-dialog"
               label="Birthday"
@@ -164,8 +176,8 @@ const SubmitForm: FC = () => {
                   input: classes.input,
                 },
               }}
-              value={formik.values.birthday}
-              onChange={formik.handleChange}
+              value={selectedDate}
+              onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
