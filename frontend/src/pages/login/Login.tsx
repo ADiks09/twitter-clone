@@ -1,9 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
-import { Twitter } from '@material-ui/icons'
 import * as yup from 'yup'
 import classes from './login.module.scss'
 import {
@@ -35,7 +32,7 @@ const initialValue: IUser = {
   password: '',
 }
 
-const SubmitForm: FC = () => {
+export const LogInForm: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
 
@@ -117,26 +114,5 @@ const SubmitForm: FC = () => {
         </Button>
       </form>
     </>
-  )
-}
-
-export const LogInForm: FC = () => {
-  return (
-    <Container component="main" maxWidth="sm">
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '50px 0 20px 0',
-        }}
-      >
-        <Twitter color="inherit" className={classes.logo} />
-        <Typography style={{ fontSize: 26, fontWeight: 700 }}>
-          Log in to Twitter
-        </Typography>
-      </div>
-      <SubmitForm />
-    </Container>
   )
 }

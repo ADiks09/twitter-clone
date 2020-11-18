@@ -6,6 +6,7 @@ import { SideBanners } from './containers/banners-offer/SideBanners'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import { LogInForm } from './pages/login/Login'
 import { Sign } from './pages/sign/Sign'
+import { AuthPageWrapper } from './containers/auth/AuthPageWrapper'
 
 //TODO: remove data and image pre-deploy
 const posts = [
@@ -64,10 +65,14 @@ export const App: FC = () => {
           </Container>
         </Route>
         <Route path="/sign" exact>
-          <Sign />
+          <AuthPageWrapper title="Sign to Twitter">
+            <Sign />
+          </AuthPageWrapper>
         </Route>
         <Route path="/login" exact>
-          <LogInForm />
+          <AuthPageWrapper title="Log in to Twitter">
+            <LogInForm />
+          </AuthPageWrapper>
         </Route>
       </Switch>
     </BrowserRouter>

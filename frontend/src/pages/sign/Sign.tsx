@@ -1,8 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import Container from '@material-ui/core/Container'
-import { Twitter } from '@material-ui/icons'
 import classes from '../login/login.module.scss'
-import Typography from '@material-ui/core/Typography'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   IFullUser,
@@ -53,7 +50,7 @@ const initialValue: IFullUser = {
   name: '',
 }
 
-const SubmitForm: FC = () => {
+export const Sign: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
 
@@ -200,26 +197,5 @@ const SubmitForm: FC = () => {
         </Button>
       </form>
     </>
-  )
-}
-
-export const Sign: FC = () => {
-  return (
-    <Container component="main" maxWidth="sm">
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '50px 0 20px 0',
-        }}
-      >
-        <Twitter color="inherit" className={classes.logo} />
-        <Typography style={{ fontSize: 26, fontWeight: 700 }}>
-          Sign in to Twitter
-        </Typography>
-      </div>
-      <SubmitForm />
-    </Container>
   )
 }

@@ -5,15 +5,7 @@
 }
 
 
-.logo {
-  transition: all 0.3s;
-  font-size: 48px;
-  &:hover {
-    color: #0c9ade;
-    transition: all 0.5s;
-    transform: rotate(30deg);
-  }
-}
+
 .root {
   padding: 2px 4px;
   display: flex;
