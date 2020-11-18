@@ -3,9 +3,33 @@ import { Action } from 'redux'
 
 export enum UserTypes {
   USER_LOGIN = 'USER_LOGIN',
+  USER_SIGIN = 'USER_SIGNIN',
   USER_FETCH_LOGIN = 'USER_FETCH_LOGIN',
+  USER_FETCH_SIGNIN = 'USER_FETCH_SIGNIN',
   USER_LOADING_STATUS = 'USER_LOADING_STATUS',
 }
+
+export interface IUserSignInAction extends Action<UserTypes> {
+  type: UserTypes.USER_SIGIN;
+  payload: IFullUser;
+}
+
+export const userSignIn = (payload: IFullUser): IUserSignInAction => ({
+  type: UserTypes.USER_SIGIN,
+  payload,
+})
+
+export interface IUserSignInFetchAction extends Action<UserTypes> {
+  type: UserTypes.USER_FETCH_SIGNIN;
+  payload: IFullUser;
+}
+
+export const userFetchSignIn = (
+  payload: IFullUser
+): IUserSignInFetchAction => ({
+  type: UserTypes.USER_FETCH_SIGNIN,
+  payload,
+})
 
 export interface IUserLoginFetchAction extends Action<UserTypes> {
   type: UserTypes.USER_FETCH_LOGIN;
@@ -45,3 +69,5 @@ export type UserAction =
   | IUserLoginAction
   | IUserLoginFetchAction
   | IUserLoadingStatus
+  | IUserSignInAction
+  | IUserSignInFetchAction

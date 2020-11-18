@@ -4,7 +4,8 @@ import { SideNav } from './containers/sidenav/SideNav'
 import { Home } from './containers/home/Home'
 import { SideBanners } from './containers/banners-offer/SideBanners'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
-import { LogInForm } from './containers/login/Login'
+import { LogInForm } from './pages/login/Login'
+import { Sign } from './pages/sign/Sign'
 
 //TODO: remove data and image pre-deploy
 const posts = [
@@ -62,7 +63,9 @@ export const App: FC = () => {
             </Box>
           </Container>
         </Route>
-        <Route path="/sign" exact></Route>
+        <Route path="/sign" exact>
+          <Sign />
+        </Route>
         <Route path="/login" exact>
           <LogInForm />
         </Route>

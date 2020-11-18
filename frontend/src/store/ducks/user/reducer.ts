@@ -17,6 +17,13 @@ export const userReducer = produce(
       case UserTypes.USER_FETCH_LOGIN:
         draft.loading = LoadingStatus.LOADING
         break
+      case UserTypes.USER_SIGIN:
+        draft.appUser = action.payload
+        draft.loading = LoadingStatus.LOADED
+        break
+      case UserTypes.USER_FETCH_SIGNIN:
+        draft.loading = LoadingStatus.LOADING
+        break
       case UserTypes.USER_LOADING_STATUS:
         draft.loading = action.payload
         break

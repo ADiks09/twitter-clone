@@ -11,11 +11,11 @@ export interface IUser {
 }
 
 export interface IFullUser extends IUser {
-  token: string
   name: string
   phone: string
-  birthday: Date
-  createdAt: Date
+  birthday: number | Date | string
+  createdAt?: Date
+  token?: string
 }
 
 export interface IFullUserState {

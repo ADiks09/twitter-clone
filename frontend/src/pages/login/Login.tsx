@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 import { Twitter } from '@material-ui/icons'
-import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core'
 import * as yup from 'yup'
 import classes from './login.module.scss'
 import {
@@ -19,29 +17,7 @@ import { IRootReducer } from '../../store/rootReducer'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { Redirect } from 'react-router-dom'
-
-const CustomTextField = withStyles({
-  root: {
-    marginBottom: 20,
-    '& label.Mui-focused': {
-      color: '#0c9ade',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#0c9ade',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#0c9ade',
-      },
-      '&:hover fieldset': {
-        borderColor: '#0c9ade',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#0c9ade',
-      },
-    },
-  },
-})(TextField)
+import { CustomTextField } from '../../services/components/CustomTextField'
 
 const validationSchema = yup.object<IUser>({
   email: yup
