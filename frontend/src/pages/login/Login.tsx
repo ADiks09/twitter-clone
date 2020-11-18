@@ -62,8 +62,7 @@ const SubmitForm: FC = () => {
           style={{ marginBottom: 30 }}
         >
           <AlertTitle>Login failed</AlertTitle>
-          This is an error alert —{' '}
-          <strong>check the correctness of the entered data!</strong>
+          <strong>{auth.requestError.message}!</strong>
         </Alert>
       )}
       {isRedirect && <Redirect to="/home" />}

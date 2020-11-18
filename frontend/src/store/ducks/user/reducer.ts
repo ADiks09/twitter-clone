@@ -5,7 +5,7 @@ import { UserAction, UserTypes } from './actionsCreators'
 export const initialUserState: IFullUserState = {
   appUser: {},
   loading: LoadingStatus.NEVER,
-  requestError: {},
+  requestError: { message: '' },
 }
 
 export const userReducer = produce(
