@@ -180,8 +180,6 @@ const SubmitForm: FC = () => {
                   input: classes.input,
                 },
               }}
-              // value={formik.values.birthday}
-              // onChange={formik.handleChange}
               value={formik.values.birthday}
               onChange={formik.handleChange}
               KeyboardButtonProps={{
