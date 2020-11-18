@@ -7,7 +7,7 @@ import {
   RepeatOutlined,
   SystemUpdateAltOutlined,
 } from '@material-ui/icons'
-import { PostContainer } from '../PostContainer/PostContainer'
+import { PostContainer } from '../post-container/PostContainer'
 import classes from './post.module.scss'
 
 type Props = {
