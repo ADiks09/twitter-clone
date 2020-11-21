@@ -8,7 +8,7 @@ import {
   IUser,
   LoadingStatus,
 } from '../../store/ducks/user/state'
-import { userFetchLogin } from '../../store/ducks/user/actionsCreators'
+import { userFetchLogin } from '../../store/ducks/user/actions/action'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import CircularProgress from '@material-ui/core/CircularProgress'

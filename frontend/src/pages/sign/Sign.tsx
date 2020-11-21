@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import * as yup from 'yup'
-import { userFetchSignIn } from '../../store/ducks/user/actionsCreators'
+import { userFetchSignIn } from '../../store/ducks/user/actions/action'
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,

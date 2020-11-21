@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import { AuthPageWrapper } from './containers/auth/AuthPageWrapper'
 import { LogInForm } from './pages/login/Login'
-import { Sign } from './pages/sign/Sign'
 import { HomePage } from './pages/home/HomePage'
+import { Sign } from './pages/sign/Sign'
 
 export const App: FC = () => {
   return (

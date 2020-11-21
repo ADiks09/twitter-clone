@@ -1,15 +1,14 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
+import axios from 'axios'
+import { LoadingStatus } from './state'
+import { IUserLoginFetchAction, IUserSignInFetchAction } from './actions/IUser'
 import {
-  IUserLoginFetchAction,
-  IUserSignInFetchAction,
   userLoadingStatus,
   userLogin,
   userRequestFailedAction,
   userSignIn,
-  UserTypes,
-} from './actionsCreators'
-import axios from 'axios'
-import { LoadingStatus } from './state'
+} from './actions/action'
+import { UserTypes } from './actions/userTypes'
 
 // .catch((error) => {
 //   if (error.response) {

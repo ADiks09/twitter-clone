@@ -1,6 +1,7 @@
 import produce, { Draft } from 'immer'
 import { IFullUserState, LoadingStatus } from './state'
-import { UserAction, UserTypes } from './actionsCreators'
+import { UserTypes } from './actions/userTypes'
+import { UserAction } from './actions/IUser'
 
 export const initialUserState: IFullUserState = {
   appUser: {},
