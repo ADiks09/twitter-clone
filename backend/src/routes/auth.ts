@@ -56,14 +56,18 @@ router.post(
         birthday,
       })
 
-      const token: string = createToken(user._id)
-      user.tokens = user.tokens.concat({ token })
-
-      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge })
-
       await user.save()
 
-      res.status(201).json({ message: 'user created', user })
+      res.status(201).json({
+        message: 'user created',
+        user: {
+          createdAt: user.createdAt,
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+          birthday: user.birthday,
+        },
+      })
     } catch (error) {
       res.status(500).json({
         message: 'Something went wrong, try again',
@@ -112,7 +116,7 @@ router.post(
 
       user.tokens = user.tokens.concat({ token })
 
-      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge })
+      res.cookie(COOKIE_TITLE, token, { httpOnly: false, maxAge: maxAge })
 
       await user.save()
 

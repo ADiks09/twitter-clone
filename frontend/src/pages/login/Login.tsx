@@ -42,6 +42,7 @@ export const LogInForm: FC = () => {
   useEffect(() => {
     setIsError(auth.loading === LoadingStatus.ERROR)
     setIsRedirect(auth.loading === LoadingStatus.LOADED)
+    console.log('auth', auth.loading)
   }, [auth.loading])
 
   const formik = useFormik({
@@ -50,19 +51,27 @@ export const LogInForm: FC = () => {
     onSubmit: async (values: IUser) => dispatch(userFetchLogin(values)),
   })
 
+  if (isRedirect) return <Redirect to="/home" />
+
+  if (isError) {
+    setTimeout(() => {
+      setIsError(false)
+    }, 3000)
+
+    return (
+      <Alert
+        onClose={() => setIsError(false)}
+        severity="error"
+        style={{ marginBottom: 30, transition: '0.2s' }}
+      >
+        <AlertTitle>Login failed</AlertTitle>
+        <strong>{auth.requestError.message}!</strong>
+      </Alert>
+    )
+  }
+
   return (
     <>
-      {isError && (
-        <Alert
-          onClose={() => setIsError(false)}
-          severity="error"
-          style={{ marginBottom: 30 }}
-        >
-          <AlertTitle>Login failed</AlertTitle>
-          <strong>{auth.requestError.message}!</strong>
-        </Alert>
-      )}
-      {isRedirect && <Redirect to="/home" />}
       <form onSubmit={formik.handleSubmit}>
         <div className={classes.wrapper}>
           <CustomTextField

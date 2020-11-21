@@ -9,7 +9,7 @@ import {
 import { IRootReducer } from '../../store/rootReducer'
 import { useFormik } from 'formik'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { CustomTextField } from '../../services/components/CustomTextField'
@@ -21,6 +21,7 @@ import {
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
+import { UniversalDialog } from '../../services/components/Dialog'
 
 const validationSchema = yup.object<IFullUser>({
   birthday: yup.date(),
@@ -50,6 +51,7 @@ const initialValue: IFullUser = {
   name: '',
 }
 
+// todo fix redirect to log in with react store
 export const Sign: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
@@ -91,7 +93,17 @@ export const Sign: FC = () => {
           <strong>{auth.requestError.message}!</strong>
         </Alert>
       )}
-      {isRedirect && <Redirect to="/home" />}
+      <UniversalDialog
+        open={isRedirect}
+        content="Go to the login page to confirm"
+        title="You have successfully registered"
+      >
+        <Button color="primary">
+          <Link onClick={() => setIsRedirect(false)} to="/login">
+            To login
+          </Link>
+        </Button>
+      </UniversalDialog>
       <form onSubmit={formik.handleSubmit}>
         <div className={classes.wrapper}>
           <CustomTextField

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 import { ThemeProvider, StylesProvider } from '@material-ui/styles'
+import { CookiesProvider } from 'react-cookie'
 import { theme } from './theme'
 import { App } from './App'
 import './styles/index.scss'
@@ -13,7 +14,9 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <StylesProvider injectFirst>
         <Provider store={store}>
-          <App />
+          <CookiesProvider>
+            <App />
+          </CookiesProvider>
         </Provider>
       </StylesProvider>
     </ThemeProvider>
