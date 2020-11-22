@@ -11,6 +11,8 @@ export interface IUser {
 }
 
 export interface IFullUser extends IUser {
+  firstName: string
+  lastName: string
   name: string
   phone: string
   birthday: Date
