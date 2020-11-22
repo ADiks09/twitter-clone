@@ -38,7 +38,15 @@ router.post(
         })
       }
 
-      const { email, password, name, phone, birthday } = req.body
+      const {
+        email,
+        password,
+        name,
+        phone,
+        birthday,
+        firstName,
+        lastName,
+      }: IUser = req.body
 
       const candidate = await User.findOne({ email })
 
@@ -54,6 +62,8 @@ router.post(
         name,
         phone,
         birthday,
+        firstName,
+        lastName,
       })
 
       await user.save()
@@ -61,6 +71,8 @@ router.post(
       res.status(201).json({
         message: 'user created',
         user: {
+          firstName: user.firstName,
+          lastName: user.lastName,
           createdAt: user.createdAt,
           email: user.email,
           name: user.name,

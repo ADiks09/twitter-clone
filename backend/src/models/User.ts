@@ -1,7 +1,15 @@
 import mongoose, { Schema } from 'mongoose'
 import { IUser } from '../interfaces'
 
-const User: Schema = new Schema({
+const User: Schema<IUser> = new Schema<IUser>({
+  firstName: {
+    type: String,
+    required: [true, 'First name is required'],
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last name is required'],
+  },
   email: {
     type: String,
     required: [true, 'Email is required'],

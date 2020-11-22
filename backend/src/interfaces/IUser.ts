@@ -10,6 +10,8 @@ export interface IUser extends Document {
   password: string
   name: string
   phone: string
+  firstName: string
+  lastName: string
   birthday: Date
   tokens: Array<IToken>
   createdAt: Date
