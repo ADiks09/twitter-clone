@@ -6,4 +6,11 @@ export const theme = createMuiTheme({
       main: '#0c9ade',
     },
   },
+  overrides: {
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(0,0,0,0.4)',
+      },
+    },
+  },
 })

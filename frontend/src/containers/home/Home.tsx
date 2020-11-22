@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { ScatterPlot } from '@material-ui/icons'
 import classes from './home.module.scss'
-import { HomeHeader } from '../../components/HomeHeader/HomeHeader'
+import { HomeHeader } from '../../components/home-header/HomeHeader'
 import { PostCreator } from './PostCreator'
-import { Posts } from '../../components/Post/Posts'
-import { PostContainer } from '../../components/PostContainer/PostContainer'
+import { Posts } from '../../components/post/Posts'
+import { PostContainer } from '../../components/post-container/PostContainer'
 
 type Post = {
   avatar: string,

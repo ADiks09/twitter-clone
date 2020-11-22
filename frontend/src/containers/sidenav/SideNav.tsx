@@ -14,7 +14,7 @@ import {
   Twitter as TwitterIcon,
 } from '@material-ui/icons'
 import { MenuButtons } from './MenuButtons'
-import { ChipTwit } from '../../components/Chip/ChipTwit'
+import { ChipTwit } from '../../components/chip/ChipTwit'
 import classes from './sideNav.module.scss'
 
 const buttonsData = [

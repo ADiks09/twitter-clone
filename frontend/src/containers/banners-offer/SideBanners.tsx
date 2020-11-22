@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import { Banner } from '../../components/BannerContainer/Banner'
-import { ThemeBanner } from '../../components/ThemeBanner/ThemeBanner'
-import { FollowBanner } from '../../components/FollowBanner/FollowBanner'
+import { Banner } from '../../components/banner-container/Banner'
+import { ThemeBanner } from '../../components/theme-banner/ThemeBanner'
+import { FollowBanner } from '../../components/follow-banner/FollowBanner'
 import { CustomizedInputBase } from './Input'
 
 //todo: remove fake data for visibly content
