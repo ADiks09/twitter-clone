@@ -22,8 +22,17 @@ import {
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import { UniversalDialog } from '../../services/components/Dialog'
+import { Field } from './Field'
 
 const validationSchema = yup.object<IFullUser>({
+  firstName: yup
+    .string()
+    .required('First name is required')
+    .min(5, 'Last name should be of minimum 5 characters length'),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .min(5, 'Last name should be of minimum 5 characters length'),
   birthday: yup.date(),
   name: yup
     .string()
@@ -44,6 +53,8 @@ const validationSchema = yup.object<IFullUser>({
 })
 
 const initialValue: IFullUser = {
+  lastName: '',
+  firstName: '',
   email: '',
   password: '',
   phone: '',
@@ -64,7 +75,7 @@ export const Sign: FC = () => {
     setIsRedirect(auth.loading === LoadingStatus.LOADED)
   }, [auth.loading])
 
-  const formik = useFormik({
+  const formik = useFormik<IFullUser>({
     initialValues: initialValue,
     validationSchema: validationSchema,
     onSubmit: async (values: IFullUser) => dispatch(userFetchSignIn(values)),
@@ -106,70 +117,53 @@ export const Sign: FC = () => {
       </UniversalDialog>
       <form onSubmit={formik.handleSubmit}>
         <div className={classes.wrapper}>
-          <CustomTextField
-            color="primary"
-            variant="outlined"
+          <Field
             name="email"
             label="Email"
-            style={{ width: 548 }}
-            InputProps={{
-              classes: {
-                input: classes.input,
-              },
-            }}
+            formik={formik}
             value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            errors={formik.errors.email}
+            touched={formik.touched.email}
           />
-          <CustomTextField
-            label="Password"
-            color="primary"
-            variant="outlined"
+          <Field
             name="password"
-            style={{ width: 548 }}
+            label="Password"
+            formik={formik}
             value={formik.values.password}
-            onChange={formik.handleChange}
-            className={classes.input}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            InputProps={{
-              classes: {
-                input: classes.input,
-              },
-            }}
+            errors={formik.errors.password}
+            touched={formik.touched.password}
           />
-          <CustomTextField
-            color="primary"
-            variant="outlined"
+          <Field
             name="name"
             label="Name"
-            style={{ width: 548 }}
-            InputProps={{
-              classes: {
-                input: classes.input,
-              },
-            }}
+            formik={formik}
             value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            errors={formik.errors.name}
+            touched={formik.touched.name}
           />
-          <CustomTextField
-            color="primary"
-            variant="outlined"
+          <Field
             name="phone"
             label="Phone"
-            style={{ width: 548 }}
-            InputProps={{
-              classes: {
-                input: classes.input,
-              },
-            }}
+            formik={formik}
             value={formik.values.phone}
-            onChange={formik.handleChange}
-            error={formik.touched.phone && Boolean(formik.errors.phone)}
-            helperText={formik.touched.phone && formik.errors.phone}
+            errors={formik.errors.phone}
+            touched={formik.touched.phone}
+          />
+          <Field
+            name="firstName"
+            label="First Name"
+            formik={formik}
+            value={formik.values.firstName}
+            errors={formik.errors.firstName}
+            touched={formik.touched.firstName}
+          />
+          <Field
+            name="lastName"
+            label="Last Name"
+            formik={formik}
+            value={formik.values.lastName}
+            errors={formik.errors.lastName}
+            touched={formik.touched.lastName}
           />
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker

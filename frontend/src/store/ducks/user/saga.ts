@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
-import { LoadingStatus } from './state'
+import { IFullUser, LoadingStatus } from './state'
 import { IUserLoginFetchAction, IUserSignInFetchAction } from './actions/IUser'
 import {
   userLoadingStatus,
@@ -44,17 +44,20 @@ export function* watchUserFetchLogin() {
 
 export function* userFetchSignIn(action: IUserSignInFetchAction) {
   try {
-    const data = yield call(() =>
+    const data = yield call(() => {
+      const postData: IFullUser = {
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        password: action.payload.password,
+        phone: action.payload.phone,
+        birthday: action.payload.birthday,
+        name: action.payload.name,
+      }
       axios
-        .post('/api/auth/register', {
-          email: action.payload.email,
-          password: action.payload.password,
-          phone: action.payload.phone,
-          birthday: action.payload.birthday,
-          name: action.payload.name,
-        })
+        .post('/api/auth/register', postData)
         .then((response) => response.data.user)
-    )
+    })
     console.log('---SIGN IN---', data)
     yield put(userSignIn(data))
   } catch (e) {
