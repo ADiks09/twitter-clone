@@ -51,7 +51,7 @@ router.post(
       const candidate = await User.findOne({ email })
 
       if (candidate) {
-        return res.status(400).json({ message: 'this person already exist' })
+        return res.status(400).json({ message: 'This person already register' })
       }
 
       const hashedPassword: string = await bcryptjs.hash(password, 10)
@@ -128,7 +128,7 @@ router.post(
 
       user.tokens = user.tokens.concat({ token })
 
-      res.cookie(COOKIE_TITLE, token, { httpOnly: false, maxAge: maxAge })
+      res.cookie(COOKIE_TITLE, token, { httpOnly: true, maxAge: maxAge })
 
       await user.save()
 
