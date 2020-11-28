@@ -135,6 +135,8 @@ router.post(
       res.status(200).json({
         message: 'login has been successful',
         user: {
+          firstName: user.firstName,
+          lastName: user.lastName,
           createdAt: user.createdAt,
           email: user.email,
           name: user.name,

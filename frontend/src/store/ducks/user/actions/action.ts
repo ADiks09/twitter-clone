@@ -29,7 +29,7 @@ export const userFetchSignIn = (
 })
 
 export const userFetchLogin = (
-  payload: IUser | IFullUser
+  payload: IFullUser //| IUser//IUser | IFullUser
 ): IUserLoginFetchAction => ({
   type: UserTypes.USER_FETCH_LOGIN,
   payload,
@@ -42,7 +42,9 @@ export const userLoadingStatus = (
   payload,
 })
 
-export const userLogin = (payload: IUser | IFullUser): IUserLoginAction => ({
+export const userLogin = (
+  payload: IFullUser /*| IUser*/
+): IUserLoginAction => ({
   type: UserTypes.USER_LOGIN,
   payload,
 })

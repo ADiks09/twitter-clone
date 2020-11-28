@@ -4,7 +4,15 @@ import { UserTypes } from './actions/userTypes'
 import { UserAction } from './actions/IUser'
 
 export const initialUserState: IFullUserState = {
-  appUser: {},
+  appUser: {
+    phone: '',
+    lastName: '',
+    firstName: '',
+    email: '',
+    birthday: new Date('2014-08-18T21:11:54'),
+    name: '',
+    password: '',
+  },
   loading: LoadingStatus.NEVER,
   requestError: { message: '' },
 }

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import * as yup from 'yup'
 import classes from './login.module.scss'
 import {
+  IFullUser,
   IFullUserState,
   IUser,
   LoadingStatus,
@@ -27,9 +28,14 @@ const validationSchema = yup.object<IUser>({
     .required('Password is required'),
 })
 
-const initialValue: IUser = {
+const initialValue: IFullUser /*IUser*/ = {
   email: '',
   password: '',
+  name: '',
+  birthday: new Date('2014-08-18T21:11:54'),
+  firstName: '',
+  lastName: '',
+  phone: '',
 }
 
 export const LogInForm: FC = () => {
@@ -48,7 +54,8 @@ export const LogInForm: FC = () => {
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: async (values: IUser) => dispatch(userFetchLogin(values)),
+    onSubmit: async (values: IFullUser /*IUser*/) =>
+      dispatch(userFetchLogin(values)),
   })
 
   if (isRedirect) return <Redirect to="/home" />

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Box, Button, Container } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { SideNav } from '../../containers/sidenav/SideNav'
-import { Home } from '../../containers/home/Home'
 import { SideBanners } from '../../containers/banners-offer/SideBanners'
 import { useCookies } from 'react-cookie'
+import { SideNav } from '../../containers/sidenav/SideNav'
+import { Home } from '../../containers/home/Home'
+import { useSelector } from 'react-redux'
+import { IRootReducer } from '../../store/rootReducer'
+import { IFullUser, IUser } from '../../store/ducks/user/state'
 
 //TODO: remove data and image pre-deploy
 const posts = [
@@ -54,6 +57,8 @@ export const HomePage = () => {
   const [cookies] = useCookies(['token'])
   const [redirect, setRedirect] = useState(false)
 
+  const user = useSelector((state: IRootReducer) => state.auth.appUser)
+
   useEffect(() => {
     setRedirect(!cookies.token)
   }, [cookies.token])
@@ -74,7 +79,7 @@ export const HomePage = () => {
       </UniversalDialog>
       <Container maxWidth={'lg'}>
         <Box display="flex">
-          <SideNav />
+          <SideNav firstName={user.firstName} tag={user.name} />
           <Home headerTitle="Home" posts={posts} />
           <SideBanners />
         </Box>

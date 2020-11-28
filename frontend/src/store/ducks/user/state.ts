@@ -25,7 +25,7 @@ export interface IError {
 }
 
 export interface IFullUserState {
-  appUser: IFullUser | IUser | {},
+  appUser: IFullUser //| IUser//| IUser | {},
   loading: LoadingStatus
   requestError: IError
 }
