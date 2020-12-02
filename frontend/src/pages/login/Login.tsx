@@ -3,12 +3,8 @@ import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
 import * as yup from 'yup'
 import classes from './login.module.scss'
-import {
-  IFullUser,
-  IFullUserState,
-  IUser,
-  LoadingStatus,
-} from '../../store/ducks/user/state'
+import { IFullUserState } from '../../store/ducks/user/state'
+
 import { userFetchLogin } from '../../store/ducks/user/actions/action'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
@@ -16,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
+import { IFullUser, IUser, LoadingStatus } from '../../store/ducks/common'
 
 const validationSchema = yup.object<IUser>({
   email: yup

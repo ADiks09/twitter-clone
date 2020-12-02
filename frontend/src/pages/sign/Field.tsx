@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { FormikProps } from 'formik'
-import { IFullUser } from '../../store/ducks/user/state'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import classes from '../login/login.module.scss'
+import { IFullUser } from '../../store/ducks/common'
 
 interface IProps {
   formik: FormikProps<IFullUser>

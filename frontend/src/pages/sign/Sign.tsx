@@ -1,11 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import classes from '../login/login.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  IFullUser,
-  IFullUserState,
-  LoadingStatus,
-} from '../../store/ducks/user/state'
+import { IFullUserState } from '../../store/ducks/user/state'
 import { IRootReducer } from '../../store/rootReducer'
 import { useFormik } from 'formik'
 import { Alert, AlertTitle } from '@material-ui/lab'
@@ -23,6 +19,7 @@ import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Field } from './Field'
+import { IFullUser, LoadingStatus } from '../../store/ducks/common'
 
 const validationSchema = yup.object<IFullUser>({
   firstName: yup

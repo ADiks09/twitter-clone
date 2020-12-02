@@ -1,12 +1,17 @@
 import { Action } from 'redux'
-import { IFullUser, IUser, LoadingStatus } from '../state'
 import { UserTypes } from './userTypes'
+import { IFullUser, IUser, LoadingStatus } from '../../common'
 
 export interface IUserRequestFailedAction extends Action<UserTypes> {
   type: UserTypes.USER_REQUEST_FAILED;
   payload: {
     message: string,
   };
+}
+
+export interface IUserReqestProfile extends Action<UserTypes> {
+  type: UserTypes.USER_REQUEST_FAILED;
+  payload: IFullUser;
 }
 
 export interface IUserSignInAction extends Action<UserTypes> {

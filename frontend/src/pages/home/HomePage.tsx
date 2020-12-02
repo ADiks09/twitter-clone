@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Box, Button, Container } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { SideBanners } from '../../containers/banners-offer/SideBanners'
 import { SideNav } from '../../containers/sidenav/SideNav'
 import { Home } from '../../containers/home/Home'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
+import { profileFetchData } from '../../store/ducks/profile/actions/action'
+import { LoadingStatus } from '../../store/ducks/common'
 
 //TODO: remove data and image pre-deploy
 const posts = [
@@ -54,7 +56,21 @@ const posts = [
 export const HomePage = () => {
   const [redirect, setRedirect] = useState(false)
 
-  const user = useSelector((state: IRootReducer) => state.auth.appUser)
+  const user = useSelector((state: IRootReducer) => state.profile)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    ;(async () => {
+      await dispatch(profileFetchData())
+    })()
+    console.log('dispatch')
+  }, [dispatch])
+
+  useEffect(() => {
+    if (user.loading === LoadingStatus.ERROR) {
+      console.log('redirect')
+      setRedirect((prevState) => !prevState)
+    }
+  }, [user.loading])
 
   return (
     <>
@@ -72,7 +88,7 @@ export const HomePage = () => {
       </UniversalDialog>
       <Container maxWidth={'lg'}>
         <Box display="flex">
-          <SideNav firstName={user.firstName} tag={user.name} />
+          <SideNav firstName={user.user.firstName} tag={user.user.name} />
           <Home headerTitle="Home" posts={posts} />
           <SideBanners />
         </Box>

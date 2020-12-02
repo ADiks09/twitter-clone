@@ -1,17 +1,25 @@
-import { IFullUser, IUser, LoadingStatus } from '../state'
 import { UserTypes } from './userTypes'
 import {
   IUserLoadingStatus,
   IUserLoginAction,
   IUserLoginFetchAction,
+  IUserReqestProfile,
   IUserRequestFailedAction,
   IUserSignInAction,
   IUserSignInFetchAction,
 } from './IUser'
+import { IError, IFullUser, IUser, LoadingStatus } from '../../common'
 
-export const userRequestFailedAction = (payload: {
-  message: string,
-}): IUserRequestFailedAction => ({
+export const userRequestFailedAction = (
+  payload: IError
+): IUserRequestFailedAction => ({
+  type: UserTypes.USER_REQUEST_FAILED,
+  payload,
+})
+
+export const userRequestProfileAction = (
+  payload: IFullUser
+): IUserReqestProfile => ({
   type: UserTypes.USER_REQUEST_FAILED,
   payload,
 })
