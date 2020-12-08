@@ -10,6 +10,7 @@ import {
 import { UserTypes } from './actions/userTypes'
 import { LoadingStatus } from '../common'
 import { API_USER } from './state'
+import { authAuthorized } from '../../auth'
 
 // .catch((error) => {
 //   if (error.response) {
@@ -32,6 +33,7 @@ export function* userFetchLogin(action: IUserLoginFetchAction) {
         .then((response) => response.data.user)
     )
     console.log('---LOG IN---', data)
+    yield put(authAuthorized())
     yield put(userLogin(data))
   } catch (e) {
     yield put(userRequestFailedAction(e.response.data))

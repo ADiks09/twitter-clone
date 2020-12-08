@@ -45,7 +45,6 @@ export const LogInForm: FC = () => {
   useEffect(() => {
     setIsError(auth.loading === LoadingStatus.ERROR)
     setIsRedirect(auth.loading === LoadingStatus.LOADED)
-    console.log('auth', auth.loading)
   }, [auth.loading])
 
   const formik = useFormik({
