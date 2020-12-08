@@ -3,11 +3,8 @@ import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
 import * as yup from 'yup'
 import classes from './login.module.scss'
-import {
-  IFullUserState,
-  IUser,
-  LoadingStatus,
-} from '../../store/ducks/user/state'
+import { IFullUserState } from '../../store/ducks/user/state'
+
 import { userFetchLogin } from '../../store/ducks/user/actions/action'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
@@ -15,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
+import { IFullUser, IUser, LoadingStatus } from '../../store/ducks/common'
 
 const validationSchema = yup.object<IUser>({
   email: yup
@@ -27,9 +25,14 @@ const validationSchema = yup.object<IUser>({
     .required('Password is required'),
 })
 
-const initialValue: IUser = {
+const initialValue: IFullUser /*IUser*/ = {
   email: '',
   password: '',
+  name: '',
+  birthday: new Date('2014-08-18T21:11:54'),
+  firstName: '',
+  lastName: '',
+  phone: '',
 }
 
 export const LogInForm: FC = () => {
@@ -42,13 +45,13 @@ export const LogInForm: FC = () => {
   useEffect(() => {
     setIsError(auth.loading === LoadingStatus.ERROR)
     setIsRedirect(auth.loading === LoadingStatus.LOADED)
-    console.log('auth', auth.loading)
   }, [auth.loading])
 
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: async (values: IUser) => dispatch(userFetchLogin(values)),
+    onSubmit: async (values: IFullUser /*IUser*/) =>
+      dispatch(userFetchLogin(values)),
   })
 
   if (isRedirect) return <Redirect to="/home" />

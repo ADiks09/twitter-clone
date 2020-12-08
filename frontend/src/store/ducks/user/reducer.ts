@@ -1,10 +1,19 @@
 import produce, { Draft } from 'immer'
-import { IFullUserState, LoadingStatus } from './state'
+import { IFullUserState } from './state'
 import { UserTypes } from './actions/userTypes'
 import { UserAction } from './actions/IUser'
+import { LoadingStatus } from '../common'
 
 export const initialUserState: IFullUserState = {
-  appUser: {},
+  appUser: {
+    phone: '',
+    lastName: '',
+    firstName: '',
+    email: '',
+    birthday: new Date('2014-08-18T21:11:54'),
+    name: '',
+    password: '',
+  },
   loading: LoadingStatus.NEVER,
   requestError: { message: '' },
 }

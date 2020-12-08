@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
-import { IFullUser, LoadingStatus } from './state'
 import { IUserLoginFetchAction, IUserSignInFetchAction } from './actions/IUser'
 import {
   userLoadingStatus,
@@ -9,6 +8,9 @@ import {
   userSignIn,
 } from './actions/action'
 import { UserTypes } from './actions/userTypes'
+import { LoadingStatus } from '../common'
+import { API_USER } from './state'
+import { authAuthorized } from '../../auth'
 
 // .catch((error) => {
 //   if (error.response) {
@@ -24,13 +26,14 @@ export function* userFetchLogin(action: IUserLoginFetchAction) {
   try {
     const data = yield call(() =>
       axios
-        .post('/api/auth/login', {
+        .post(API_USER.LOGIN, {
           email: action.payload.email,
           password: action.payload.password,
         })
         .then((response) => response.data.user)
     )
     console.log('---LOG IN---', data)
+    yield put(authAuthorized())
     yield put(userLogin(data))
   } catch (e) {
     yield put(userRequestFailedAction(e.response.data))
@@ -45,17 +48,8 @@ export function* watchUserFetchLogin() {
 export function* userFetchSignIn(action: IUserSignInFetchAction) {
   try {
     const data = yield call(() => {
-      const postData: IFullUser = {
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        email: action.payload.email,
-        password: action.payload.password,
-        phone: action.payload.phone,
-        birthday: action.payload.birthday,
-        name: action.payload.name,
-      }
       axios
-        .post('/api/auth/register', postData)
+        .post(API_USER.REGISTER, action.payload)
         .then((response) => response.data.user)
     })
     console.log('---SIGN IN---', data)

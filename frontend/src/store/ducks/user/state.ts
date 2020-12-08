@@ -1,31 +1,12 @@
-export enum LoadingStatus {
-  LOADED = 'LOADED',
-  ERROR = 'ERROR',
-  NEVER = 'NEVER',
-  LOADING = 'LOADING'
-}
+import { IError, IFullUser, LoadingStatus } from '../common'
 
-export interface IUser {
-  email: string;
-  password: string;
-}
-
-export interface IFullUser extends IUser {
-  firstName: string
-  lastName: string
-  name: string
-  phone: string
-  birthday: Date
-  createdAt?: Date
-  token?: string
-}
-
-export interface IError {
-  message: string,
+export enum API_USER {
+  REGISTER = '/api/auth/register',
+  LOGIN = '/api/auth/login'
 }
 
 export interface IFullUserState {
-  appUser: IFullUser | IUser | {},
+  appUser: IFullUser //| IUser//| IUser | {},
   loading: LoadingStatus
   requestError: IError
 }

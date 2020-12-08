@@ -28,7 +28,12 @@ const buttonsData = [
   { text: 'Setting', icon: <SettingsApplications /> },
 ]
 
-export const SideNav: FC = () => {
+interface IProps {
+  firstName: string;
+  tag: string;
+}
+
+export const SideNav: FC<IProps> = ({ firstName, tag }) => {
   return (
     <nav className={classes.sideNav}>
       <TwitterIcon className={classes.logo} />
@@ -38,8 +43,8 @@ export const SideNav: FC = () => {
       </Button>
       <ChipTwit
         classname={classes.chip}
-        name="John"
-        tag="@John0434"
+        name={firstName}
+        tag={tag}
         btn={<ExpandMoreRounded />}
         btnActive={<ExpandLessRounded />}
         img="https://openvisualfx.com/wp-content/uploads/2019/10/pnglot.com-twitter-bird-logo-png-139932.png"

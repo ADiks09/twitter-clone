@@ -14,7 +14,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies[COOKIE_TITLE]
 
     if (!token) {
-      res.status(401).json({ message: 'token is empty' })
+      res.status(401).json({ message: 'You not authorized' })
     }
 
     const data: any = jwt.verify(token, ACCESS_TOKEN_SECRET)

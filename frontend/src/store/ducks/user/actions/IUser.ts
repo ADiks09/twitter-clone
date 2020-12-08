@@ -1,12 +1,17 @@
 import { Action } from 'redux'
-import { IFullUser, IUser, LoadingStatus } from '../state'
 import { UserTypes } from './userTypes'
+import { IFullUser, IUser, LoadingStatus } from '../../common'
 
 export interface IUserRequestFailedAction extends Action<UserTypes> {
   type: UserTypes.USER_REQUEST_FAILED;
   payload: {
     message: string,
   };
+}
+
+export interface IUserReqestProfile extends Action<UserTypes> {
+  type: UserTypes.USER_REQUEST_FAILED;
+  payload: IFullUser;
 }
 
 export interface IUserSignInAction extends Action<UserTypes> {
@@ -21,7 +26,7 @@ export interface IUserSignInFetchAction extends Action<UserTypes> {
 
 export interface IUserLoginFetchAction extends Action<UserTypes> {
   type: UserTypes.USER_FETCH_LOGIN;
-  payload: IUser | IFullUser;
+  payload: IFullUser; //| IUser ;
 }
 
 export interface IUserLoadingStatus extends Action<UserTypes> {
@@ -31,7 +36,7 @@ export interface IUserLoadingStatus extends Action<UserTypes> {
 
 export interface IUserLoginAction extends Action<UserTypes> {
   type: UserTypes.USER_LOGIN;
-  payload: IUser | IFullUser;
+  payload: IFullUser; // | IUser;
 }
 
 export type UserAction =
