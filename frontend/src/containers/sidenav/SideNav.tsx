@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { Button, IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
 import {
-  AddAlert,
   BookmarkRounded,
   ExpandLessRounded,
   ExpandMoreRounded,

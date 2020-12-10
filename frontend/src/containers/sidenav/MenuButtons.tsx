@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import Button from '@material-ui/core/Button'
-import { Hidden, IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
+import { IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
 import { screenTablet } from '../../services/material/mediaQuery'
 
 type btnData = {
@@ -15,11 +15,12 @@ type Props = {
 
 export const MenuButtons: FC<Props> = ({ buttonsData, styles }) => {
   const matches = useMediaQuery(screenTablet())
+
   return (
     <>
       {buttonsData.map((btn, i) => (
         matches ? <Button
-            key={i}
+            key={i + btn.text}
             size="large"
             className={styles}
             style={{ marginBottom: '10px' }}
@@ -27,9 +28,8 @@ export const MenuButtons: FC<Props> = ({ buttonsData, styles }) => {
           >
             {btn.text}
           </Button>
-          : <Tooltip title={btn.text} >
+          : <Tooltip title={btn.text} key={i + btn.text}>
             <IconButton
-              key={i}
               className={styles}
               style={{ marginBottom: '10px' }}
             >
