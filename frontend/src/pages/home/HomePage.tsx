@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { UniversalDialog } from '../../services/components/Dialog'
-import { Box, Button, Container } from '@material-ui/core'
+import { Box, Button, Container, useMediaQuery } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { SideBanners } from '../../containers/banners-offer/SideBanners'
 import { SideNav } from '../../containers/sidenav/SideNav'
@@ -8,6 +8,7 @@ import { Home } from '../../containers/home/Home'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
+import { screenTablet } from '../../services/material/mediaQuery'
 //TODO: remove data and image pre-deploy
 const posts = [
   {
@@ -54,6 +55,8 @@ const posts = [
 export const HomePage = () => {
   const [auth, setAuth] = useState(false)
 
+  const matches = useMediaQuery(screenTablet())
+
   const user = useSelector((state: IRootReducer) => state.profile)
   const authStore = useSelector((state: IRootReducer) => state.authorized.auth)
 
@@ -87,7 +90,7 @@ export const HomePage = () => {
         <Box display="flex">
           <SideNav firstName={user.user.firstName} tag={user.user.name} />
           <Home headerTitle="Home" posts={posts} />
-          <SideBanners />
+          {matches && <SideBanners />}
         </Box>
       </Container>
     </>
