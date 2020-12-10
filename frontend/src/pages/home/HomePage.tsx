@@ -8,6 +8,7 @@ import { Home } from '../../containers/home/Home'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
+import { screenTablet } from '../../services/material/mediaQuery'
 //TODO: remove data and image pre-deploy
 const posts = [
   {
@@ -53,7 +54,9 @@ const posts = [
 
 export const HomePage = () => {
   const [auth, setAuth] = useState(false)
-  const matches = useMediaQuery('(min-width:772px)')
+
+  const matches = useMediaQuery(screenTablet())
+
   const user = useSelector((state: IRootReducer) => state.profile)
   const authStore = useSelector((state: IRootReducer) => state.authorized.auth)
 

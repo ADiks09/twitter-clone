@@ -18,6 +18,7 @@ import {
 import { MenuButtons } from './MenuButtons'
 import { ChipTwit } from '../../components/chip/ChipTwit'
 import classes from './sideNav.module.scss'
+import { screenTablet } from '../../services/material/mediaQuery'
 
 const buttonsData = [
   { text: 'Home', icon: <HomeRounded /> },
@@ -36,7 +37,8 @@ interface IProps {
 }
 
 export const SideNav: FC<IProps> = ({ firstName, tag }) => {
-  const matches = useMediaQuery('(min-width:772px)')
+  const matches = useMediaQuery(screenTablet())
+
   return (
     <nav className={classes.sideNav}>
       <TwitterIcon className={classes.logo} />

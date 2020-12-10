@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import { Avatar, useMediaQuery } from '@material-ui/core'
 import classes from './chip.module.scss'
+import { screenTablet } from '../../services/material/mediaQuery'
 
 type Props = {
   name: string,
@@ -13,8 +14,11 @@ type Props = {
 
 export const ChipTwit: FC<Props> = ({ name, tag, img, btn, btnActive, classname }) => {
   const [click, setClick] = useState<boolean>(false)
+
   const styles = classes.chip + ' ' + classname
-  const matches = useMediaQuery('(min-width:772px)')
+
+  const matches = useMediaQuery(screenTablet())
+
   return (
     <>
       {
