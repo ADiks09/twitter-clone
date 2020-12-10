@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
 import {
+  AddAlert,
   BookmarkRounded,
   ExpandLessRounded,
   ExpandMoreRounded,
@@ -11,6 +12,7 @@ import {
   PersonOutline,
   SearchRounded,
   SettingsApplications,
+  Create as CreateIcon,
   Twitter as TwitterIcon,
 } from '@material-ui/icons'
 import { MenuButtons } from './MenuButtons'
@@ -34,13 +36,23 @@ interface IProps {
 }
 
 export const SideNav: FC<IProps> = ({ firstName, tag }) => {
+  const matches = useMediaQuery('(min-width:772px)')
   return (
     <nav className={classes.sideNav}>
       <TwitterIcon className={classes.logo} />
       <MenuButtons buttonsData={buttonsData} styles={classes.sideNavBtn} />
-      <Button className={classes.btn} variant={'contained'} color={'primary'}>
-        Tweet
-      </Button>
+      {matches ? (
+        <Button className={classes.btn} variant={'contained'} color={'primary'}>
+          Tweet
+        </Button>
+      ) : (
+        <Tooltip title="Add new Tweet">
+          <IconButton color={'primary'} style={{ marginBottom: '115px' }}>
+            <CreateIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+
       <ChipTwit
         classname={classes.chip}
         name={firstName}
