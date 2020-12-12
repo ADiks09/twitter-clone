@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
 import { screenTablet } from '../../services/material/mediaQuery'
-//TODO: remove data and image pre-deploy
+
 const posts = [
   {
     avatar: './bg.jpg',
