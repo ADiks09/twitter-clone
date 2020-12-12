@@ -4,7 +4,6 @@ import { ThemeBanner } from '../../components/theme-banner/ThemeBanner'
 import { FollowBanner } from '../../components/follow-banner/FollowBanner'
 import { CustomizedInputBase } from './Input'
 
-//todo: remove fake data for visibly content
 const data = {
   actual: 'Ukraine',
   theme: 'DOKA 2',
