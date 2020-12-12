@@ -27,23 +27,20 @@ export const Home: FC<Props> = ({ headerTitle, posts }) => {
         icon={<ScatterPlot color="primary" fontSize={'small'} />}
         title={headerTitle}
       />
-      {/*TODO: fix problems with scroll*/}
-      <div className={classes.scrollContainer}>
-        <div className={classes.wrapper}>
-          <PostContainer imgSrc="none">
-            <PostCreator />
-          </PostContainer>
-        </div>
-
-        <div className={classes.emptyBox}> </div>
-
-        {
-          // <h2>You don't have posts</h2> ||
-          posts.map((data, index) => (
-            <Posts {...data} key={index} />
-          ))
-        }
+      <div className={classes.wrapper}>
+        <PostContainer imgSrc="none">
+          <PostCreator />
+        </PostContainer>
       </div>
+
+      <div className={classes.emptyBox}> </div>
+
+      {
+        // <h2>You don't have posts</h2> ||
+        posts.map((data, index) => (
+          <Posts {...data} key={index} />
+        ))
+      }
     </div>
   )
 }
