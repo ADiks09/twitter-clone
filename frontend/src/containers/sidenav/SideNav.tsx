@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
 import {
   BookmarkRounded,
   ExpandLessRounded,
@@ -11,11 +11,13 @@ import {
   PersonOutline,
   SearchRounded,
   SettingsApplications,
+  Create as CreateIcon,
   Twitter as TwitterIcon,
 } from '@material-ui/icons'
 import { MenuButtons } from './MenuButtons'
 import { ChipTwit } from '../../components/chip/ChipTwit'
 import classes from './sideNav.module.scss'
+import { screenTablet } from '../../services/material/mediaQuery'
 
 const buttonsData = [
   { text: 'Home', icon: <HomeRounded /> },
@@ -28,18 +30,34 @@ const buttonsData = [
   { text: 'Setting', icon: <SettingsApplications /> },
 ]
 
-export const SideNav: FC = () => {
+interface IProps {
+  firstName: string;
+  tag: string;
+}
+
+export const SideNav: FC<IProps> = ({ firstName, tag }) => {
+  const matches = useMediaQuery(screenTablet())
+
   return (
     <nav className={classes.sideNav}>
       <TwitterIcon className={classes.logo} />
       <MenuButtons buttonsData={buttonsData} styles={classes.sideNavBtn} />
-      <Button className={classes.btn} variant={'contained'} color={'primary'}>
-        Tweet
-      </Button>
+      {matches ? (
+        <Button className={classes.btn} variant={'contained'} color={'primary'}>
+          Tweet
+        </Button>
+      ) : (
+        <Tooltip title="Add new Tweet">
+          <IconButton color={'primary'} style={{ marginBottom: '115px' }}>
+            <CreateIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+
       <ChipTwit
         classname={classes.chip}
-        name="John"
-        tag="@John0434"
+        name={firstName}
+        tag={tag}
         btn={<ExpandMoreRounded />}
         btnActive={<ExpandLessRounded />}
         img="https://openvisualfx.com/wp-content/uploads/2019/10/pnglot.com-twitter-bird-logo-png-139932.png"

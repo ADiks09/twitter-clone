@@ -4,6 +4,7 @@ import { AuthPageWrapper } from './containers/auth/AuthPageWrapper'
 import { LogInForm } from './pages/login/Login'
 import { HomePage } from './pages/home/HomePage'
 import { Sign } from './pages/sign/Sign'
+import { NotFound } from './pages/not-found/NotFound'
 
 export const App: FC = () => {
   return (
@@ -21,6 +22,9 @@ export const App: FC = () => {
           <AuthPageWrapper title="Log in to Twitter">
             <LogInForm />
           </AuthPageWrapper>
+        </Route>
+        <Route>
+          <NotFound/>
         </Route>
       </Switch>
     </BrowserRouter>

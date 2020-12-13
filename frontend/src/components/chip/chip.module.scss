@@ -37,3 +37,10 @@
 .tag {
   color: gray;
 }
+
+@media (max-width: 772px) {
+  .avatar {
+    width: 45px;
+    height: 45px;
+  }
+}

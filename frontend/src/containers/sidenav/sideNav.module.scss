@@ -26,3 +26,10 @@
 .sideNavBtn {
   @include transparentBtn(18px, 700);
 }
+
+@media (max-width: 772px) {
+  .sideNav {
+    align-items: center;
+    margin-right: 25px;
+  }
+}
