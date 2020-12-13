@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import { IFullUser, IUser, LoadingStatus } from '../../store/ducks/common'
 
@@ -38,14 +38,18 @@ const initialValue: IFullUser /*IUser*/ = {
 export const LogInForm: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
+  const authorized: boolean = useSelector(
+    (state: IRootReducer) => state.authorized.auth
+  )
 
   const [isError, setIsError] = useState(false)
   const [isRedirect, setIsRedirect] = useState(false)
 
   useEffect(() => {
     setIsError(auth.loading === LoadingStatus.ERROR)
-    setIsRedirect(auth.loading === LoadingStatus.LOADED)
-  }, [auth.loading])
+    //todo this is copied problems redirect sign
+    setIsRedirect(authorized)
+  }, [auth.loading, authorized])
 
   const formik = useFormik({
     initialValues: initialValue,

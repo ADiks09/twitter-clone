@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
 import { screenTablet } from '../../services/material/mediaQuery'
-//TODO: remove data and image pre-deploy
+
 const posts = [
   {
     avatar: './bg.jpg',
@@ -53,7 +53,7 @@ const posts = [
 ]
 
 export const HomePage = () => {
-  const [auth, setAuth] = useState(false)
+  const [isRedirectToLogin, setIsRedirectToLogin] = useState(false)
 
   const matches = useMediaQuery(screenTablet())
 
@@ -69,19 +69,19 @@ export const HomePage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    setAuth(!authStore)
+    setIsRedirectToLogin(!authStore)
   }, [authStore])
 
   return (
     <>
       <UniversalDialog
-        open={auth}
+        open={isRedirectToLogin}
         content="Click the button to go to the authorization page for further
                   use of the Twitter Clone service"
         title="You are not authorized"
       >
         <Button color="primary">
-          <Link onClick={() => setAuth(false)} to="/login">
+          <Link onClick={() => setIsRedirectToLogin(false)} to="/login">
             To login
           </Link>
         </Button>

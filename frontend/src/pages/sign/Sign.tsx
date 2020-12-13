@@ -61,11 +61,11 @@ const initialValue: IFullUser = {
 
 // todo fix redirect to log in with react store
 export const Sign: FC = () => {
-  const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
 
   const [isError, setIsError] = useState(false)
   const [isRedirect, setIsRedirect] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setIsError(auth.loading === LoadingStatus.ERROR)
@@ -78,7 +78,7 @@ export const Sign: FC = () => {
     onSubmit: async (values: IFullUser) => dispatch(userFetchSignIn(values)),
   })
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date('2014-08-18T21:11:54')
   )
 
