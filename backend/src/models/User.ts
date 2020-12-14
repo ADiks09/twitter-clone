@@ -39,6 +39,10 @@ const User: Schema<IUser> = new Schema<IUser>({
     type: Date,
     default: Date.now(),
   },
+  postsId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Posts',
+  },
   tokens: [
     {
       token: {

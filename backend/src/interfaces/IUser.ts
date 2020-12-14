@@ -1,4 +1,4 @@
-import { Document } from "mongoose"
+import { Document, Schema } from 'mongoose'
 
 export interface IToken {
   _id?: string
@@ -15,4 +15,5 @@ export interface IUser extends Document {
   birthday: Date
   tokens: Array<IToken>
   createdAt: Date
+  postsId: Schema.Types.ObjectId
 }

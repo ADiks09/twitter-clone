@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import { auth } from '../middleware/authCheker'
 import { IToken, IUser } from '../interfaces'
 import User from '../models/User'
+import Posts from '../models/Posts'
 
 dotenv.config()
 
@@ -66,6 +67,15 @@ router.post(
         lastName,
       })
 
+      const posts = await new Posts({ author: user.id })
+
+      if (!posts) {
+        res.status(400).json({ message: 'Error, posts not has created' })
+      }
+
+      user.postsId = posts.id
+
+      await posts.save()
       await user.save()
 
       res.status(201).json({
