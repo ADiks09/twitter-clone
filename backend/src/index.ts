@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { auth } from './routes/auth'
 import { profile } from './routes/profile'
+import { post } from './routes/post'
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(cookieParser())
 
 app.use('/api/auth', auth)
 app.use('/api/profile', profile)
+app.use('/api/post', post)
 
 app.get('/', async (_, res) => {
   res.send('Twitter API')
