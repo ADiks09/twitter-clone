@@ -16,7 +16,7 @@ const posts = [
     userName: 'TwitterOfficial',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad at aut mollitia quis quisquam quod voluptas? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? asdsad dsad',
-    imgUrl: './bg.jpg',
+    imgUrl: 'http://localhost:5000/api/post/posts/a.jpeg',
     userTag: '@antondikson',
     time: '39 min',
   },
