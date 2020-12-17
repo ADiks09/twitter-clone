@@ -3,8 +3,6 @@ import { auth } from '../middleware/authCheker'
 import Posts from '../models/Posts'
 import { IPost } from '../interfaces'
 import { uploadFile } from '../middleware/upload'
-import fs from 'fs'
-import path from 'path'
 
 const router = express.Router()
 
@@ -25,7 +23,18 @@ router.post('/create', auth, uploadFile, async (req, res) => {
     })
 
     if (posts) {
-      const post: IPost = { text, collectionId: posts.id }
+      const post: IPost = {
+        text,
+        collectionId: posts.id,
+        media: req.file && [
+          {
+            originalName: req.file.originalname,
+            url: req.file.filename,
+            mediaType: req.file.mimetype,
+            mediaSize: req.file.size,
+          },
+        ],
+      }
       posts.posts.push(post)
       await posts.save()
     } else {
@@ -38,38 +47,9 @@ router.post('/create', auth, uploadFile, async (req, res) => {
   }
 })
 
-router.get('/posts/:name', async (req, res) => {
-  // const user = res.locals.user
-  //
-  // if (!user) return new Error()
-
-  const directoryPath = 'D:\\Web-Project\\twitter-clone\\backend\\uploads\\'
-  const fileName = req.params.name
-  const result = directoryPath + fileName
-  console.log(result)
-  res.sendFile(result)
-  //
-  // fs.readdir(directoryPath, (err, files) => {
-  //   if (err) {
-  //     res.status(500 ).send({
-  //       message: 'Unable to scan files!',
-  //     })
-  //   }
-  //
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   const fileInfos = []
-  //
-  //   files.forEach((file) => {
-  //     fileInfos.push({
-  //       name: file,
-  //       url: process.env.LOCAL_DEV_URL + file,
-  //     })
-  //   })
-  //
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   res.status(200).send(fileInfos)
-  // })
+router.get('/img/:name', async (req, res) => {
+  res.sendFile(process.env.LOCAL_DIRECTORY_PATH + req.params.name, (e) =>
+    res.status(500).json({ error: e.message, message: 'Error of return img' })
+  )
 })
 export { router as post }
