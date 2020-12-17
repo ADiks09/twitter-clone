@@ -4,7 +4,6 @@ interface IMedia {
   url: string
   originalName: string
   mediaType: string
-  mediaSize: number
 }
 
 export interface IPost {

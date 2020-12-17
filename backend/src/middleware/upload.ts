@@ -1,11 +1,12 @@
 import util from 'util'
 import multer from 'multer'
 import fs from 'fs'
+
 const MAX_SIZE = 2 * 10024 * 1024
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = 'uploads'
+    const dir = 'uploads/original'
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
     }

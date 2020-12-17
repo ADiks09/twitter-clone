@@ -4,7 +4,6 @@ import { IPost, IPosts } from '../interfaces'
 const Media = new Schema(
   {
     mediaType: { type: String },
-    mediaSize: { type: Number },
     url: { type: String, required: true },
     originalName: { type: String, required: true },
   },
