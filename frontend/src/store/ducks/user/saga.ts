@@ -22,7 +22,7 @@ import { authAuthorized } from '../../auth'
 //   }
 // })
 
-export function* userFetchLogin(action: IUserLoginFetchAction) {
+function* userFetchLogin(action: IUserLoginFetchAction) {
   try {
     const data = yield call(() =>
       axios
@@ -45,7 +45,7 @@ export function* watchUserFetchLogin() {
   yield takeEvery(UserTypes.USER_FETCH_LOGIN, userFetchLogin)
 }
 
-export function* userFetchSignIn(action: IUserSignInFetchAction) {
+function* userFetchSignIn(action: IUserSignInFetchAction) {
   try {
     const data = yield call(() => {
       axios

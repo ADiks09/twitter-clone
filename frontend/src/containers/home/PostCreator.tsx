@@ -10,6 +10,10 @@ import {
   SentimentSatisfiedRounded,
 } from '@material-ui/icons'
 import classes from './home.module.scss'
+import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
+import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
+import { IPost } from '../../store/ducks/post/actions/IPost'
 
 const btnData: JSX.Element[] = [
   <ImageOutlined color="primary" />,
@@ -19,33 +23,52 @@ const btnData: JSX.Element[] = [
   <Event color="primary" />,
 ]
 
-export const PostCreator: FC = () => (
-  <>
-    <TextareaAutosize
-      placeholder="Do you mind?"
-      className={classes.input}
-      rowsMax={7}
-      maxLength={306}
-    />
+export const PostCreator: FC = () => {
+  const dispatch = useDispatch()
+  const formik = useFormik({
+    initialValues: {
+      text: '',
+    },
+    onSubmit: async (values: IPost) =>
+      dispatch(postRequestCreateAction(values)),
+  })
 
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginLeft: '-15px',
-      }}
-    >
-      <span>
-        {btnData.map((icon, index) => (
-          <IconButton className={classes.iconBtn} key={index}>
-            {icon}
-          </IconButton>
-        ))}
-      </span>
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <TextareaAutosize
+        placeholder="Do you mind?"
+        className={classes.input}
+        rowsMax={7}
+        maxLength={306}
+        name="text"
+        value={formik.values.text}
+        onChange={formik.handleChange}
+      />
 
-      <Button className={classes.btn} variant="contained" color="primary">
-        Tweet
-      </Button>
-    </div>
-  </>
-)
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginLeft: '-15px',
+        }}
+      >
+        <span>
+          {btnData.map((icon, index) => (
+            <IconButton className={classes.iconBtn} key={index}>
+              {icon}
+            </IconButton>
+          ))}
+        </span>
+
+        <Button
+          onClick={() => formik.handleSubmit()}
+          className={classes.btn}
+          variant="contained"
+          color="primary"
+        >
+          Tweet
+        </Button>
+      </div>
+    </form>
+  )
+}

@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { auth } from './routes/auth'
 import { profile } from './routes/profile'
+import { post } from './routes/post'
+import multer from 'multer'
 
 dotenv.config()
 
@@ -17,9 +19,12 @@ const MONGO_URL: string = process.env.MONGO_URL || ''
 app.use(cors())
 app.use(bodyParser.json())
 app.use(cookieParser())
+//TODO removed maybe
+app.use(express.static(__dirname))
 
 app.use('/api/auth', auth)
 app.use('/api/profile', profile)
+app.use('/api/post', post)
 
 app.get('/', async (_, res) => {
   res.send('Twitter API')

@@ -1,11 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { ProfileTypes } from './actions/profileTypes'
 import axios from 'axios'
-import { IFullUser, LoadingStatus } from '../common'
 import { API_PROFILE } from './state'
 import { profileData, profileRequestFailedAction } from './actions/action'
 import { authAuthorized, authUnauthorized } from '../../auth'
-  
+
 function* errorHandel(error: any) {
   if (error.response) {
     if (error.response.status === 401) {
@@ -20,7 +19,7 @@ function* errorHandel(error: any) {
   }
 }
 
-export function* profileFetchData() {
+function* profileFetchData() {
   try {
     const data = yield call(() =>
       axios.get(API_PROFILE.PROFILE_USER).then((response) => response.data.user)
