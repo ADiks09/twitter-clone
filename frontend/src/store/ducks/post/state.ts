@@ -10,5 +10,6 @@ export interface IPostState {
     data : IPost
     loading: LoadingStatus
     requestError: IError
+    successful: { message: string }
   }
 }

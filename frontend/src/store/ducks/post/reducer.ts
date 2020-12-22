@@ -11,6 +11,7 @@ export const initialPostState: IPostState = {
     },
     loading: LoadingStatus.NEVER,
     requestError: { message: '' },
+    successful: { message: '' },
   },
 }
 
@@ -23,6 +24,10 @@ export const postReducer = produce(
         break
       case PostTypes.POST_CREATE_LOADING_STATUS:
         draft.create.loading = action.payload
+        break
+      case PostTypes.POST_CREATE_SET_SUCCESSFUL:
+        draft.create.successful = action.payload
+        break
     }
   },
   initialPostState

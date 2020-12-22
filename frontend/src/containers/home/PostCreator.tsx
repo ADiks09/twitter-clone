@@ -18,6 +18,7 @@ import * as yup from 'yup'
 import { IRootReducer } from '../../store/rootReducer'
 import { LoadingStatus } from '../../store/ducks/common'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,
@@ -52,7 +53,17 @@ export const PostCreator: FC = () => {
     onSubmit: handleOnSubmit,
   })
 
-  console.log(postCreate)
+  //todo show successful about send post
+
+  // if (postCreate.successful.message) {
+  //   return (
+  //     <Alert severity="success" color="info">
+  //       <AlertTitle>Success</AlertTitle>
+  //       This is a success alert —{' '}
+  //       <strong>{postCreate.successful.message}</strong>
+  //     </Alert>
+  //   )
+  // }
 
   return (
     <form onSubmit={formik.handleSubmit}>
