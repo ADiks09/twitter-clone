@@ -1,5 +1,6 @@
 import { Action } from 'redux'
 import { PostTypes } from './postTypes'
+import { LoadingStatus } from '../../common'
 
 export interface IPost {
   text: string
@@ -15,12 +16,15 @@ export interface IPostCreateAction extends Action<PostTypes> {
   payload: IPost
 }
 
-
+export interface IPostLoadingStatusAction extends Action<PostTypes> {
+  type: PostTypes.POST_CREATE_LOADING_STATUS,
+  payload: LoadingStatus
+}
 // export interface IPostCreatedAction extends Action<PostTypes> {
 //   type: PostTypes.CREATED
 //   payload: IPostCreated
 // }
 
 
-export type PostAction = IPostCreateAction
+export type PostAction = IPostCreateAction | IPostLoadingStatusAction
   // | IPostCreatedAction

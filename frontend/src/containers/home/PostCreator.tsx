@@ -11,10 +11,13 @@ import {
 } from '@material-ui/icons'
 import classes from './home.module.scss'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
 import { IPost } from '../../store/ducks/post/actions/IPost'
 import * as yup from 'yup'
+import { IRootReducer } from '../../store/rootReducer'
+import { LoadingStatus } from '../../store/ducks/common'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,
@@ -35,6 +38,8 @@ const initialValues: IPost = {
 export const PostCreator: FC = () => {
   const dispatch = useDispatch()
 
+  const postCreate = useSelector((state: IRootReducer) => state.post.create)
+
   const inputFile = useRef<HTMLInputElement>(null)
   const [countUploads, setCountUploads] = useState(0)
 
@@ -46,6 +51,8 @@ export const PostCreator: FC = () => {
     validationSchema,
     onSubmit: handleOnSubmit,
   })
+
+  console.log(postCreate)
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -106,12 +113,16 @@ export const PostCreator: FC = () => {
         />
 
         <Button
-          onClick={() => formik.handleSubmit()}
+          type="submit"
           className={classes.btn}
           variant="contained"
           color="primary"
         >
-          Tweet
+          {postCreate.loading === LoadingStatus.LOADING ? (
+            <CircularProgress />
+          ) : (
+            'Tweet'
+          )}
         </Button>
       </div>
     </form>

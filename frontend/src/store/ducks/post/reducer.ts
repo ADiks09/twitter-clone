@@ -20,6 +20,9 @@ export const postReducer = produce(
       case PostTypes.CREATE:
         draft.create.data = action.payload
         draft.create.loading = LoadingStatus.LOADING
+        break
+      case PostTypes.POST_CREATE_LOADING_STATUS:
+        draft.create.loading = action.payload
     }
   },
   initialPostState
