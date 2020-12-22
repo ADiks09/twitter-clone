@@ -1,3 +1,4 @@
 export enum PostTypes {
-  CREATE = 'CREATE',
+  CREATE = 'POST_CREATE',
+  // CREATED = 'CREATED',
 }
