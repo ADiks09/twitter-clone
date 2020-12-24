@@ -1,7 +1,10 @@
 import { all } from 'redux-saga/effects'
 import { watchUserFetchLogin, watchUserFetchSignIn } from './ducks/user/saga'
 import { watchProfileFetchData } from './ducks/profile/saga'
-import { watchPostRequestCreate } from './ducks/post/saga'
+import {
+  watchPostFetchCollection,
+  watchPostRequestCreate,
+} from './ducks/post/saga'
 
 export function* rootSaga() {
   yield all([
@@ -9,5 +12,6 @@ export function* rootSaga() {
     watchUserFetchSignIn(),
     watchProfileFetchData(),
     watchPostRequestCreate(),
+    watchPostFetchCollection(),
   ])
 }

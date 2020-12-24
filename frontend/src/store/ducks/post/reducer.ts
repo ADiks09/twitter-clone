@@ -13,6 +13,12 @@ export const initialPostState: IPostState = {
     requestError: { message: '' },
     successful: { message: '' },
   },
+  posts: {
+    userName: '',
+    loading: LoadingStatus.NEVER,
+    requestError: { message: '' },
+    data: [],
+  },
 }
 
 export const postReducer = produce(
@@ -27,6 +33,14 @@ export const postReducer = produce(
         break
       case PostTypes.POST_CREATE_SET_SUCCESSFUL:
         draft.create.successful = action.payload
+        break
+      case PostTypes.POST_GET_ACTION:
+        draft.posts.loading = LoadingStatus.LOADING
+        draft.posts.userName = action.payload.userName
+        break
+      case PostTypes.POST_SET_COLLECTION:
+        draft.posts.loading = LoadingStatus.LOADED
+        draft.posts.data = action.payload
         break
     }
   },

@@ -1,7 +1,10 @@
 import {
   IPost,
   IPostCreateAction,
+  IPostFetchCollectionAction,
+  IPostGet,
   IPostLoadingStatusAction,
+  IPostSetCollectionAction,
   IPostSetCreateSuccessfulAction,
 } from './IPost'
 import { PostTypes } from './postTypes'
@@ -26,6 +29,16 @@ export const postCreateSetSuccessful = (
   payload: { message: payload },
 })
 
+export const postFetchCollectionAction = (payload: {
+  userName: string,
+}): IPostFetchCollectionAction => ({ type: PostTypes.POST_GET_ACTION, payload })
+
+export const postSetCollectionAction = (
+  payload: Array<IPostGet>
+): IPostSetCollectionAction => ({
+  type: PostTypes.POST_SET_COLLECTION,
+  payload,
+})
 // export const postCreatedAction = (
 //   payload: IPostCreated
 // ): IPostCreatedAction => ({

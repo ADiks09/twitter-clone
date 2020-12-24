@@ -7,6 +7,18 @@ export interface IPost {
   file?: string
 }
 
+export interface IMedia {
+  url: string
+  originalName: string
+}
+
+export interface IPostGet {
+  text: string
+  createdAt: Date
+  media?: Array<IMedia>
+}
+
+
 export interface IPostCreated {
   message: string
 }
@@ -26,11 +38,26 @@ export interface IPostSetCreateSuccessfulAction extends Action<PostTypes> {
   payload: { message: string }
 }
 
+export interface IPostFetchCollectionAction extends Action<PostTypes> {
+  type: PostTypes.POST_GET_ACTION,
+  payload: { userName: string }
+}
+
+export interface IPostSetCollectionAction extends Action<PostTypes> {
+  type: PostTypes.POST_SET_COLLECTION
+  payload: Array<IPostGet>
+}
+
 // export interface IPostCreatedAction extends Action<PostTypes> {
 //   type: PostTypes.CREATED
 //   payload: IPostCreated
 // }
 
 
-export type PostAction = IPostCreateAction | IPostLoadingStatusAction | IPostSetCreateSuccessfulAction
+export type PostAction =
+  IPostCreateAction
+  | IPostLoadingStatusAction
+  | IPostSetCreateSuccessfulAction
+  | IPostFetchCollectionAction
+| IPostSetCollectionAction
 // | IPostCreatedAction

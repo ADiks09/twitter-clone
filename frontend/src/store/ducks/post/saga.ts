@@ -1,11 +1,12 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { PostTypes } from './actions/postTypes'
-import { IPostCreateAction } from './actions/IPost'
+import { IPostCreateAction, IPostFetchCollectionAction } from './actions/IPost'
 import axios from 'axios'
 import { API_POST } from './state'
 import {
   postCreateLoadingStatusAction,
   postCreateSetSuccessful,
+  postSetCollectionAction,
 } from './actions/action'
 import { LoadingStatus } from '../common'
 
@@ -33,4 +34,20 @@ function* postRequestCreate(action: IPostCreateAction) {
 
 export function* watchPostRequestCreate() {
   yield takeLatest(PostTypes.CREATE, postRequestCreate)
+}
+
+function* postFetchCollectionAction(action: IPostFetchCollectionAction) {
+  try {
+    const data = yield call(() =>
+      axios
+        .get(`${API_POST.GET_POST_COLLECTION}/${action.payload.userName}`)
+        .then((r) => r.data)
+    )
+    console.log(data)
+    yield put(postSetCollectionAction(data))
+  } catch (e) {}
+}
+
+export function* watchPostFetchCollection() {
+  yield takeLatest(PostTypes.POST_GET_ACTION, postFetchCollectionAction)
 }
