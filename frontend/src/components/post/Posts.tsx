@@ -16,7 +16,7 @@ type Props = {
   userName?: string,
   userTag?: string,
   time?: string,
-  avatar: string,
+  avatar?: string,
   like?: string,
   comments?: string,
   share?: string,
@@ -34,7 +34,7 @@ export const Posts: FC<Props> = ({
   share,
 }) => (
   <div className={classes.container}>
-    <PostContainer imgSrc={avatar}>
+    <PostContainer imgSrc={avatar ? avatar : ' '}>
       <div className={classes.postHeader}>
         <span>
           <strong>{userName || 'No user'}</strong>
