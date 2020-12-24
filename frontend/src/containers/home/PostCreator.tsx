@@ -1,7 +1,5 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Badge, IconButton } from '@material-ui/core'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import Button from '@material-ui/core/Button'
 import {
   EqualizerRounded,
   Event,
@@ -10,15 +8,16 @@ import {
   SentimentSatisfiedRounded,
 } from '@material-ui/icons'
 import classes from './home.module.scss'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
-import { IPost } from '../../store/ducks/post/actions/IPost'
 import * as yup from 'yup'
+import { Alert, AlertTitle } from '@material-ui/lab'
+import { IPost } from '../../store/ducks/post/actions/IPost'
 import { IRootReducer } from '../../store/rootReducer'
 import { LoadingStatus } from '../../store/ducks/common'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { Alert, AlertTitle } from '@material-ui/lab'
+import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
+import { SubmitButton } from '../../components/SubmitButton'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,
@@ -42,10 +41,15 @@ export const PostCreator: FC = () => {
   const postCreate = useSelector((state: IRootReducer) => state.post.create)
 
   const inputFile = useRef<HTMLInputElement>(null)
-  const [countUploads, setCountUploads] = useState(0)
 
-  const handleOnSubmit = async (values: IPost) =>
+  const [countUploads, setCountUploads] = useState(0)
+  const [successful, setSuccessful] = useState(false)
+
+  const handleOnSubmit = async (values: IPost) => {
     dispatch(postRequestCreateAction(values))
+    formik.resetForm()
+    setCountUploads(0)
+  }
 
   const formik = useFormik({
     initialValues,
@@ -53,17 +57,27 @@ export const PostCreator: FC = () => {
     onSubmit: handleOnSubmit,
   })
 
-  //todo show successful about send post
+  useEffect(() => {
+    setSuccessful(!!postCreate.successful.message)
+  }, [postCreate, postCreate.successful.message])
 
-  // if (postCreate.successful.message) {
-  //   return (
-  //     <Alert severity="success" color="info">
-  //       <AlertTitle>Success</AlertTitle>
-  //       This is a success alert —{' '}
-  //       <strong>{postCreate.successful.message}</strong>
-  //     </Alert>
-  //   )
-  // }
+  if (successful) {
+    setTimeout(() => {
+      setSuccessful(false)
+    }, 3000)
+
+    return (
+      <Alert
+        severity="success"
+        color="info"
+        onClose={() => setSuccessful(false)}
+      >
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert —{' '}
+        <strong>{postCreate.successful.message}</strong>
+      </Alert>
+    )
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -123,18 +137,11 @@ export const PostCreator: FC = () => {
           style={{ display: 'none' }}
         />
 
-        <Button
-          type="submit"
-          className={classes.btn}
-          variant="contained"
-          color="primary"
-        >
-          {postCreate.loading === LoadingStatus.LOADING ? (
-            <CircularProgress />
-          ) : (
-            'Tweet'
-          )}
-        </Button>
+        <SubmitButton
+          loading={postCreate.loading === LoadingStatus.LOADING}
+          classes={classes.btn}
+          text="Tweet"
+        />
       </div>
     </form>
   )

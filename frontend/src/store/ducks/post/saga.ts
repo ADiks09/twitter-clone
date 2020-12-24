@@ -1,6 +1,6 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { PostTypes } from './actions/postTypes'
-import { IPost, IPostCreateAction } from './actions/IPost'
+import { IPostCreateAction } from './actions/IPost'
 import axios from 'axios'
 import { API_POST } from './state'
 import {
@@ -32,5 +32,5 @@ function* postRequestCreate(action: IPostCreateAction) {
 }
 
 export function* watchPostRequestCreate() {
-  yield takeEvery(PostTypes.CREATE, postRequestCreate)
+  yield takeLatest(PostTypes.CREATE, postRequestCreate)
 }
