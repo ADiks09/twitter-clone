@@ -1,13 +1,16 @@
 import React, { FC, useEffect } from 'react'
-import { ScatterPlot } from '@material-ui/icons'
-import classes from './home.module.scss'
-import { HomeHeader } from '../../components/home-header/HomeHeader'
-import { PostCreator } from './PostCreator'
-import { Posts } from '../../components/post/Posts'
-import { PostContainer } from '../../components/post-container/PostContainer'
 import { useDispatch, useSelector } from 'react-redux'
+import { ScatterPlot } from '@material-ui/icons'
 import { postFetchCollectionAction } from '../../store/ducks/post/actions/action'
 import { IRootReducer } from '../../store/rootReducer'
+import { PostContainer } from '../../components/post-container/PostContainer'
+import { HomeHeader } from '../../components/home-header/HomeHeader'
+import { Posts } from '../../components/post/Posts'
+import { PostCreator } from './PostCreator'
+import classes from './home.module.scss'
+import { LoadingStatus } from '../../store/ducks/common'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { Skeleton } from '@material-ui/lab'
 
 type Props = {
   headerTitle: string,
@@ -17,7 +20,7 @@ export const Home: FC<Props> = ({ headerTitle }) => {
   const dispatch = useDispatch()
 
   const userName = useSelector((state: IRootReducer) => state.profile.user.name)
-  const posts = useSelector((state: IRootReducer) => state.post.posts.data)
+  const posts = useSelector((state: IRootReducer) => state.post.posts)
 
   useEffect(() => {
     ;(async () => {
@@ -39,12 +42,13 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
       <div className={classes.emptyBox}></div>
 
-      {
-        // <h2>You don't have posts</h2> ||
-        posts.map((data, index) => (
-          <Posts {...data} key={index} />
-        ))
-      }
+      {posts.loading === LoadingStatus.LOADING
+        ? Array.from(new Array(10)).map((item, index) => (
+            <Posts {...item} key={index} loading />
+          ))
+        : posts.data.map((data, index) => (
+            <Posts {...data} key={index} loading={false} />
+          ))}
     </div>
   )
 }
