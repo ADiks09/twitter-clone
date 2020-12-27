@@ -87,8 +87,6 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
 })
 
 router.get('/img/minify/:name', async (req, res) => {
-  res.sendFile(
-    process.env.LOCAL_DIRECTORY_PATH + 'minify/' + req.params.name
-  )
+  res.sendFile(process.env.LOCAL_DIRECTORY_PATH + 'minify/' + req.params.name)
 })
 export { router as post }
