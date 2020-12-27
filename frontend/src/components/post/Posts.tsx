@@ -9,70 +9,113 @@ import {
 } from '@material-ui/icons'
 import { PostContainer } from '../post-container/PostContainer'
 import classes from './post.module.scss'
+import { IPostGet } from '../../store/ducks/post/actions/IPost'
+import { Skeleton } from '@material-ui/lab'
 
-type Props = {
-  imgUrl?: string,
-  text?: string,
-  userName?: string,
-  userTag?: string,
-  time?: string,
-  avatar?: string,
-  like?: string,
-  comments?: string,
-  share?: string,
+interface IProps extends IPostGet {
+  loading: boolean;
 }
 
-export const Posts: FC<Props> = ({
-  imgUrl,
-  text,
-  userName,
-  userTag,
-  time,
-  avatar,
-  like,
-  comments,
-  share,
-}) => (
-  <div className={classes.container}>
-    <PostContainer imgSrc={avatar ? avatar : ' '}>
-      <div className={classes.postHeader}>
-        <span>
-          <strong>{userName || 'No user'}</strong>
-          <span className={classes.userTag}>
-            {userTag || '@undefined'} : {time || '1 min'}
-          </span>
-        </span>
-        <IconButton className={classes.iconBtn} style={{ padding: '2px' }}>
-          <ExpandMoreRounded fontSize="small" color="primary" />
-        </IconButton>
-      </div>
-      <p className={classes.postDescription}>{text}</p>
-      {imgUrl ? <img className={classes.postMedia} src={imgUrl} alt="" /> : ''}
-      <div className={classes.wrapBtn}>
-        <Button
-          className={classes.btnAction}
-          startIcon={<InsertCommentOutlined fontSize="small" color="primary" />}
-        >
-          {comments || '3,3 тыс'}
-        </Button>
-        <Button
-          className={classes.btnAction}
-          startIcon={<RepeatOutlined fontSize="small" color="primary" />}
-        >
-          {share || '30,1 тыс.'}
-        </Button>
-        <Button
-          className={classes.btnAction}
-          startIcon={
-            <FavoriteBorderOutlined fontSize="small" color="primary" />
-          }
-        >
-          {like || 300}
-        </Button>
-        <IconButton className={classes.iconBtn}>
-          <SystemUpdateAltOutlined fontSize="small" color="primary" />
-        </IconButton>
-      </div>
-    </PostContainer>
-  </div>
-)
+//todo avatar userName userTag time
+export const Posts: FC<IProps> = ({ loading, text, createdAt, media }) => {
+  return (
+    <div className={classes.container}>
+      <PostContainer imgSrc={' '} loading={loading}>
+        <div className={classes.postHeader}>
+          {loading ? (
+            <Skeleton
+              animation="wave"
+              variant="text"
+              width="60%"
+              style={{ marginBottom: 6 }}
+            />
+          ) : (
+            <span>
+              <strong>{'No user'}</strong>
+              <span className={classes.userTag}>
+                {'@undefined'} : {'1 min'}
+              </span>
+            </span>
+          )}
+          <IconButton className={classes.iconBtn} style={{ padding: '2px' }}>
+            <ExpandMoreRounded fontSize="small" color="primary" />
+          </IconButton>
+        </div>
+        {loading && (
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height="300"
+            className={classes.postDescription}
+          />
+        )}
+        <p className={classes.postDescription}>{text}</p>
+        {media &&
+          media.map((m) => (
+            <img
+              className={classes.postMedia}
+              src={'api/post/img/minify/' + m.url}
+              alt={m.originalName}
+            />
+          ))}
+        <div className={classes.wrapBtn}>
+          {loading ? (
+            <>
+              <Skeleton
+                animation="wave"
+                variant="rect"
+                width={72}
+                height={26}
+                style={{ borderRadius: '10px', marginLeft: '5px' }}
+              />
+              <Skeleton
+                animation="wave"
+                variant="rect"
+                width={72}
+                height={26}
+                style={{ borderRadius: '10px', marginLeft: '5px' }}
+              />
+              <Skeleton
+                animation="wave"
+                variant="rect"
+                width={72}
+                height={26}
+                style={{ borderRadius: '10px', marginLeft: '5px' }}
+              />
+            </>
+          ) : (
+            <>
+              <Button
+                className={classes.btnAction}
+                startIcon={
+                  <InsertCommentOutlined fontSize="small" color="primary" />
+                }
+              >
+                {'3,3 тыс'}
+              </Button>
+
+              <Button
+                className={classes.btnAction}
+                startIcon={<RepeatOutlined fontSize="small" color="primary" />}
+              >
+                {'30,1 тыс.'}
+              </Button>
+              <Button
+                className={classes.btnAction}
+                startIcon={
+                  <FavoriteBorderOutlined fontSize="small" color="primary" />
+                }
+              >
+                {300}
+              </Button>
+            </>
+          )}
+
+          <IconButton className={classes.iconBtn}>
+            <SystemUpdateAltOutlined fontSize="small" color="primary" />
+          </IconButton>
+        </div>
+      </PostContainer>
+    </div>
+  )
+}
