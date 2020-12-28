@@ -112,11 +112,7 @@ export const PostCreator: FC = () => {
               if (current) current.click()
             }}
           >
-            <Badge
-              badgeContent={countUploads}
-              color="primary"
-              onClick={() => {}}
-            >
+            <Badge badgeContent={countUploads} color="primary">
               <ImageOutlined color="primary" />
             </Badge>
           </IconButton>

@@ -5,12 +5,10 @@ import { postFetchCollectionAction } from '../../store/ducks/post/actions/action
 import { IRootReducer } from '../../store/rootReducer'
 import { PostContainer } from '../../components/post-container/PostContainer'
 import { HomeHeader } from '../../components/home-header/HomeHeader'
-import { Posts } from '../../components/post/Posts'
+import { Post } from '../../components/post/Post'
 import { PostCreator } from './PostCreator'
 import classes from './home.module.scss'
 import { LoadingStatus } from '../../store/ducks/common'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { Skeleton } from '@material-ui/lab'
 
 type Props = {
   headerTitle: string,
@@ -43,11 +41,11 @@ export const Home: FC<Props> = ({ headerTitle }) => {
       <div className={classes.emptyBox}></div>
 
       {posts.loading === LoadingStatus.LOADING
-        ? Array.from(new Array(10)).map((item, index) => (
-            <Posts {...item} key={index} loading />
+        ? Array.from(new Array(10)).map((data, index) => (
+            <Post {...data} key={index} loading />
           ))
         : posts.data.map((data, index) => (
-            <Posts {...data} key={index} loading={false} />
+            <Post {...data} key={index} loading={false} />
           ))}
     </div>
   )
