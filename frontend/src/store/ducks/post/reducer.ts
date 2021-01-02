@@ -17,7 +17,13 @@ export const initialPostState: IPostState = {
     userName: '',
     loading: LoadingStatus.NEVER,
     requestError: { message: '' },
-    data: [],
+    data: {
+      posts: [],
+      author: {
+        avatarUrl: '',
+        userName: '',
+      },
+    },
   },
 }
 

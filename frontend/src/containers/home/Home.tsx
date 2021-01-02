@@ -38,14 +38,19 @@ export const Home: FC<Props> = ({ headerTitle }) => {
         </PostContainer>
       </div>
 
-      <div className={classes.emptyBox}></div>
+      <div className={classes.emptyBox} />
 
       {posts.loading === LoadingStatus.LOADING
         ? Array.from(new Array(10)).map((data, index) => (
             <Post {...data} key={index} loading />
           ))
-        : posts.data.map((data, index) => (
-            <Post {...data} key={index} loading={false} />
+        : posts.data.posts.map((data, index) => (
+            <Post
+              post={data}
+              author={posts.data.author}
+              key={index}
+              loading={false}
+            />
           ))}
     </div>
   )

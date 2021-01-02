@@ -15,9 +15,16 @@ export interface IMedia {
 export interface IPostGet {
   text: string
   createdAt: Date
-  media?: Array<IMedia>
+  media?: IMedia[]
 }
 
+export interface IPostGetCollection {
+  posts: IPostGet[]
+  author: {
+    userName: string
+    avatarUrl: string
+  }
+}
 
 export interface IPostCreated {
   message: string
@@ -45,7 +52,7 @@ export interface IPostFetchCollectionAction extends Action<PostTypes> {
 
 export interface IPostSetCollectionAction extends Action<PostTypes> {
   type: PostTypes.POST_SET_COLLECTION
-  payload: Array<IPostGet>
+  payload: IPostGetCollection
 }
 
 // export interface IPostCreatedAction extends Action<PostTypes> {
@@ -55,9 +62,9 @@ export interface IPostSetCollectionAction extends Action<PostTypes> {
 
 
 export type PostAction =
-  IPostCreateAction
+    IPostCreateAction
   | IPostLoadingStatusAction
   | IPostSetCreateSuccessfulAction
   | IPostFetchCollectionAction
-| IPostSetCollectionAction
+  | IPostSetCollectionAction
 // | IPostCreatedAction
