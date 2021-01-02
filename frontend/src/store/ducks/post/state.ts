@@ -1,5 +1,5 @@
 import { IError, LoadingStatus } from '../common'
-import { IPost, IPostGet } from './actions/IPost'
+import { IPost, IPostGetCollection } from './actions/IPost'
 
 export enum API_POST {
   CREATE = '/api/post/create',
@@ -17,6 +17,6 @@ export interface IPostState {
     userName: string
     loading: LoadingStatus
     requestError: IError
-    data: Array<IPostGet>
+    data: IPostGetCollection
   }
 }

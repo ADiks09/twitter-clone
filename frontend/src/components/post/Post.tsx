@@ -12,16 +12,19 @@ import { IPostGet } from '../../store/ducks/post/actions/IPost'
 import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
+import { Link } from 'react-router-dom'
 
-interface IProps extends IPostGet {
-  loading: boolean;
+interface IProps {
+  loading: boolean
+  post: IPostGet
+  author: { userName: string, avatarUrl: string }
 }
 
 //todo avatar userName userTag time
-export const Post: FC<IProps> = ({ loading, text, createdAt, media }) => {
+export const Post: FC<IProps> = ({ loading, post, author }) => {
   return (
     <div className={classes.container}>
-      <PostContainer imgSrc={' '} loading={loading}>
+      <PostContainer imgSrc={author && 'api/post/img/minify/' + author.userName + '.jpeg'} loading={loading}>
         <div className={classes.postHeader}>
           {loading ? (
             <Skeleton
@@ -32,17 +35,20 @@ export const Post: FC<IProps> = ({ loading, text, createdAt, media }) => {
             />
           ) : (
             <span>
-              <strong>{'No user'}</strong>
+              <strong>{author && author.userName}</strong>
+              <Link className={classes.userTag} to={`/users/profile/${author && author.userName}`}>
+                {`@${author.userName}`}
+              </Link>
               <span className={classes.userTag}>
-                {'@undefined'} * {/*todo fixed this shit*/}
-                {new Date(createdAt).getHours() +
-                  ':' +
-                  new Date(createdAt).getMinutes()}
+                {' * '}
+                {new Date(post.createdAt).getHours() +
+                ':' +
+                new Date(post.createdAt).getMinutes()}
               </span>
             </span>
           )}
           <IconButton className={classes.iconBtn} style={{ padding: '2px' }}>
-            <ExpandMoreRounded fontSize="small" color="primary" />
+            <ExpandMoreRounded fontSize="small" color="primary"/>
           </IconButton>
         </div>
         {loading && (
@@ -54,37 +60,37 @@ export const Post: FC<IProps> = ({ loading, text, createdAt, media }) => {
             style={{ borderRadius: '20px' }}
           />
         )}
-        <p className={classes.postDescription}>{text}</p>
-        {media &&
-          media.map((m, i) => (
-            <img
-              className={classes.postMedia}
-              src={'api/post/img/minify/' + m.url}
-              alt={m.originalName}
-              key={i + m.originalName}
-            />
-          ))}
+        <p className={classes.postDescription}>{post && post.text}</p>
+        {post && post.media &&
+        post.media.map((m, i) => (
+          <img
+            className={classes.postMedia}
+            src={'api/post/img/minify/' + m.url}
+            alt={m.originalName}
+            key={i + m.originalName}
+          />
+        ))}
         <div className={classes.wrapBtn}>
           <PostButton
             loading={loading}
             content="3,3 тыс"
-            icon={<InsertCommentOutlined fontSize="small" color="primary" />}
+            icon={<InsertCommentOutlined fontSize="small" color="primary"/>}
             className={classes.btnAction}
           />
           <PostButton
-            icon={<RepeatOutlined fontSize="small" color="primary" />}
+            icon={<RepeatOutlined fontSize="small" color="primary"/>}
             content="30 тыс"
             loading={loading}
             className={classes.btnAction}
           />
           <PostButton
-            icon={<FavoriteBorderOutlined fontSize="small" color="primary" />}
+            icon={<FavoriteBorderOutlined fontSize="small" color="primary"/>}
             content="300"
             loading={loading}
             className={classes.btnAction}
           />
           <IconButton className={classes.iconBtn}>
-            <SystemUpdateAltOutlined fontSize="small" color="primary" />
+            <SystemUpdateAltOutlined fontSize="small" color="primary"/>
           </IconButton>
         </div>
       </PostContainer>

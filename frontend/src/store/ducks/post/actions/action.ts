@@ -2,7 +2,7 @@ import {
   IPost,
   IPostCreateAction,
   IPostFetchCollectionAction,
-  IPostGet,
+  IPostGetCollection,
   IPostLoadingStatusAction,
   IPostSetCollectionAction,
   IPostSetCreateSuccessfulAction,
@@ -34,7 +34,7 @@ export const postFetchCollectionAction = (payload: {
 }): IPostFetchCollectionAction => ({ type: PostTypes.POST_GET_ACTION, payload })
 
 export const postSetCollectionAction = (
-  payload: Array<IPostGet>
+  payload: IPostGetCollection
 ): IPostSetCollectionAction => ({
   type: PostTypes.POST_SET_COLLECTION,
   payload,

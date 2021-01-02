@@ -26,7 +26,7 @@ function* postRequestCreate(action: IPostCreateAction) {
     })
     yield put(postCreateLoadingStatusAction(LoadingStatus.LOADED))
     yield put(postCreateSetSuccessful(data.message))
-    console.log(data)
+    console.log('---POST CREATE RESPONSE---', data)
   } catch (e) {
     yield put(postCreateLoadingStatusAction(LoadingStatus.ERROR))
   }
@@ -43,7 +43,7 @@ function* postFetchCollectionAction(action: IPostFetchCollectionAction) {
         .get(`${API_POST.GET_POST_COLLECTION}/${action.payload.userName}`)
         .then((r) => r.data)
     )
-    console.log(data)
+    console.log('---GET POST BY USER NAME---', data)
     yield put(postSetCollectionAction(data))
   } catch (e) {}
 }
