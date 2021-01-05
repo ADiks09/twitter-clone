@@ -13,7 +13,7 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { IPost } from '../../store/ducks/post/actions/IPost'
+import { IPostCreate } from '../../store/ducks/post/actions/IPost'
 import { IRootReducer } from '../../store/rootReducer'
 import { LoadingStatus } from '../../store/ducks/common'
 import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
@@ -26,11 +26,11 @@ const btnData: JSX.Element[] = [
   <Event color="primary" />,
 ]
 
-const validationSchema = yup.object<IPost>({
+const validationSchema = yup.object<IPostCreate>({
   text: yup.string().required('Text your post is required'),
 })
 
-const initialValues: IPost = {
+const initialValues: IPostCreate = {
   text: '',
   file: '',
 }
@@ -45,7 +45,7 @@ export const PostCreator: FC = () => {
   const [countUploads, setCountUploads] = useState(0)
   const [successful, setSuccessful] = useState(false)
 
-  const handleOnSubmit = async (values: IPost) => {
+  const handleOnSubmit = async (values: IPostCreate) => {
     dispatch(postRequestCreateAction(values))
     formik.resetForm()
     setCountUploads(0)

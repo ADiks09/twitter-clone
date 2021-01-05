@@ -1,5 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
-import axios from 'axios'
+import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { IUserLoginFetchAction, IUserSignInFetchAction } from './actions/IUser'
 import {
   userLoadingStatus,
@@ -9,57 +8,42 @@ import {
 } from './actions/action'
 import { UserTypes } from './actions/userTypes'
 import { LoadingStatus } from '../common'
-import { API_USER } from './state'
 import { authAuthorized } from '../../auth'
-
-// .catch((error) => {
-//   if (error.response) {
-//     alert(error.response.data.message)
-//   } else if (error.request) {
-//     console.log(error.request)
-//   } else {
-//     console.log('Error', error.message)
-//   }
-// })
+import { userApiLogin, userApiSignIn } from '../../../services/api/userApi'
 
 function* userFetchLogin(action: IUserLoginFetchAction) {
-  try {
-    const data = yield call(() =>
-      axios
-        .post(API_USER.LOGIN, {
-          email: action.payload.email,
-          password: action.payload.password,
-        })
-        .then((response) => response.data.user)
-    )
-    console.log('---LOG IN---', data)
-    yield put(authAuthorized())
-    yield put(userLogin(data))
-  } catch (e) {
-    yield put(userRequestFailedAction(e.response.data))
+  const { data, error } = yield call(() => userApiLogin(action.payload))
+  if (error) {
+    console.error('---LOG IN ERROR---', error.response)
+    yield put(userRequestFailedAction(error.response.data))
     yield put(userLoadingStatus(LoadingStatus.ERROR))
+    return
   }
+  console.log('---LOG IN SUCCESSFULLY---', data)
+  yield put(authAuthorized())
+  yield put(userLogin(data))
 }
 
-export function* watchUserFetchLogin() {
+function* watchUserFetchLogin() {
   yield takeEvery(UserTypes.USER_FETCH_LOGIN, userFetchLogin)
 }
 
 function* userFetchSignIn(action: IUserSignInFetchAction) {
-  try {
-    const data = yield call(() => {
-      axios
-        .post(API_USER.REGISTER, action.payload)
-        .then((response) => response.data.user)
-    })
-    console.log('---SIGN IN---', data)
-    yield put(userSignIn(data))
-  } catch (e) {
-    yield put(userRequestFailedAction(e.response.data))
+  const { data, error } = yield call(() => userApiSignIn(action.payload))
+  if (error) {
+    console.error('---SIGN IN ERROR---', error.response)
+    yield put(userRequestFailedAction(error.response.data))
     yield put(userLoadingStatus(LoadingStatus.ERROR))
+    return
   }
+  console.log('---SIGN IN SUCCESSFULLY---', data)
+  yield put(userSignIn(data))
 }
 
-export function* watchUserFetchSignIn() {
-  yield takeEvery(UserTypes.USER_FETCH_SIGNIN, userFetchSignIn)
+function* watchUserFetchSignIn() {
+  yield takeEvery(UserTypes.USER_FETCH_SIGN, userFetchSignIn)
+}
+
+export function* userRootSaga() {
+  yield all([watchUserFetchLogin(), watchUserFetchSignIn()])
 }

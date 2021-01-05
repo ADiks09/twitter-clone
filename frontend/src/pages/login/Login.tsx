@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import { IFullUser, IUser, LoadingStatus } from '../../store/ducks/common'
 

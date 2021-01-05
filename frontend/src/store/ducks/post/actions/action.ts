@@ -1,8 +1,8 @@
 import {
-  IPost,
+  IPostCreate,
   IPostCreateAction,
   IPostFetchCollectionAction,
-  IPostGetCollection,
+  IPostByUserNameCollection,
   IPostLoadingStatusAction,
   IPostSetCollectionAction,
   IPostSetCreateSuccessfulAction,
@@ -10,8 +10,10 @@ import {
 import { PostTypes } from './postTypes'
 import { LoadingStatus } from '../../common'
 
-export const postRequestCreateAction = (payload: IPost): IPostCreateAction => ({
-  type: PostTypes.CREATE,
+export const postRequestCreateAction = (
+  payload: IPostCreate
+): IPostCreateAction => ({
+  type: PostTypes.POST_CREATE,
   payload,
 })
 
@@ -34,14 +36,8 @@ export const postFetchCollectionAction = (payload: {
 }): IPostFetchCollectionAction => ({ type: PostTypes.POST_GET_ACTION, payload })
 
 export const postSetCollectionAction = (
-  payload: IPostGetCollection
+  payload: IPostByUserNameCollection
 ): IPostSetCollectionAction => ({
   type: PostTypes.POST_SET_COLLECTION,
   payload,
 })
-// export const postCreatedAction = (
-//   payload: IPostCreated
-// ): IPostCreatedAction => ({
-//   type: PostTypes.CREATED,
-//   payload,
-// })

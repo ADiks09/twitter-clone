@@ -30,12 +30,12 @@
 }
 
 .postMedia {
+  object-fit: contain;
   margin-top: 10px;
   border: 1px solid $border-color;
   border-radius: 15px;
   width: 96%;
-  max-height: 250px;
-  object-fit:  cover;
+  max-height: 302px;
 }
 
 .wrapBtn {
