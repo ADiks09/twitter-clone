@@ -3,12 +3,12 @@ import {
   IUserLoadingStatus,
   IUserLoginAction,
   IUserLoginFetchAction,
-  IUserReqestProfile,
+  IUserRequestProfile,
   IUserRequestFailedAction,
   IUserSignInAction,
   IUserSignInFetchAction,
 } from './IUser'
-import { IError, IFullUser, IUser, LoadingStatus } from '../../common'
+import { IError, IFullUser, LoadingStatus } from '../../common'
 
 export const userRequestFailedAction = (
   payload: IError
@@ -19,26 +19,24 @@ export const userRequestFailedAction = (
 
 export const userRequestProfileAction = (
   payload: IFullUser
-): IUserReqestProfile => ({
+): IUserRequestProfile => ({
   type: UserTypes.USER_REQUEST_FAILED,
   payload,
 })
 
 export const userSignIn = (payload: IFullUser): IUserSignInAction => ({
-  type: UserTypes.USER_SIGIN,
+  type: UserTypes.USER_SIGN,
   payload,
 })
 
 export const userFetchSignIn = (
   payload: IFullUser
 ): IUserSignInFetchAction => ({
-  type: UserTypes.USER_FETCH_SIGNIN,
+  type: UserTypes.USER_FETCH_SIGN,
   payload,
 })
 
-export const userFetchLogin = (
-  payload: IFullUser //| IUser//IUser | IFullUser
-): IUserLoginFetchAction => ({
+export const userFetchLogin = (payload: IFullUser): IUserLoginFetchAction => ({
   type: UserTypes.USER_FETCH_LOGIN,
   payload,
 })
@@ -50,9 +48,7 @@ export const userLoadingStatus = (
   payload,
 })
 
-export const userLogin = (
-  payload: IFullUser /*| IUser*/
-): IUserLoginAction => ({
+export const userLogin = (payload: IFullUser): IUserLoginAction => ({
   type: UserTypes.USER_LOGIN,
   payload,
 })

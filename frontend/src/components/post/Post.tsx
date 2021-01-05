@@ -8,7 +8,7 @@ import {
 } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import { IPostGet } from '../../store/ducks/post/actions/IPost'
+import { IPost } from '../../store/ducks/post/actions/IPost'
 import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 
 interface IProps {
   loading: boolean
-  post: IPostGet
+  post: IPost
   author: { userName: string, avatarUrl: string }
 }
 
