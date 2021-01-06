@@ -59,7 +59,7 @@ const initialValue: IFullUser = {
 }
 
 // todo fix redirect to log in with react store
-export const Sign: FC = () => {
+const Sign: FC = () => {
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
 
   const [isError, setIsError] = useState(false)
@@ -193,3 +193,5 @@ export const Sign: FC = () => {
     </>
   )
 }
+
+export default Sign

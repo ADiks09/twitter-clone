@@ -10,7 +10,7 @@ import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
 import { screenTablet } from '../../services/material/mediaQuery'
 
-export const HomePage = () => {
+const HomePage = () => {
   const [isRedirectToLogin, setIsRedirectToLogin] = useState(false)
 
   const matches = useMediaQuery(screenTablet())
@@ -54,3 +54,5 @@ export const HomePage = () => {
     </>
   )
 }
+
+export default HomePage

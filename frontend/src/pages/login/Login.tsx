@@ -35,7 +35,7 @@ const initialValue: IFullUser /*IUser*/ = {
   phone: '',
 }
 
-export const LogInForm: FC = () => {
+const LogInForm: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
   const authorized: boolean = useSelector(
@@ -132,3 +132,5 @@ export const LogInForm: FC = () => {
     </>
   )
 }
+
+export default LogInForm
