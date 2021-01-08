@@ -2,7 +2,7 @@ import { Action } from 'redux'
 import { PostTypes } from './postTypes'
 import { LoadingStatus } from '../../common'
 
-export interface IPost {
+export interface IPostCreate {
   text: string
   file?: string
 }
@@ -12,27 +12,23 @@ export interface IMedia {
   originalName: string
 }
 
-export interface IPostGet {
+export interface IPost {
   text: string
   createdAt: Date
   media?: IMedia[]
 }
 
-export interface IPostGetCollection {
-  posts: IPostGet[]
+export interface IPostByUserNameCollection {
+  posts: IPost[]
   author: {
     userName: string
     avatarUrl: string
   }
 }
 
-export interface IPostCreated {
-  message: string
-}
-
 export interface IPostCreateAction extends Action<PostTypes> {
-  type: PostTypes.CREATE
-  payload: IPost
+  type: PostTypes.POST_CREATE
+  payload: IPostCreate
 }
 
 export interface IPostLoadingStatusAction extends Action<PostTypes> {
@@ -52,13 +48,8 @@ export interface IPostFetchCollectionAction extends Action<PostTypes> {
 
 export interface IPostSetCollectionAction extends Action<PostTypes> {
   type: PostTypes.POST_SET_COLLECTION
-  payload: IPostGetCollection
+  payload: IPostByUserNameCollection
 }
-
-// export interface IPostCreatedAction extends Action<PostTypes> {
-//   type: PostTypes.CREATED
-//   payload: IPostCreated
-// }
 
 
 export type PostAction =
@@ -67,4 +58,3 @@ export type PostAction =
   | IPostSetCreateSuccessfulAction
   | IPostFetchCollectionAction
   | IPostSetCollectionAction
-// | IPostCreatedAction

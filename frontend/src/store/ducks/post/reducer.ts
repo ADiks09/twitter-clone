@@ -30,7 +30,7 @@ export const initialPostState: IPostState = {
 export const postReducer = produce(
   (draft: Draft<IPostState>, action: PostAction) => {
     switch (action.type) {
-      case PostTypes.CREATE:
+      case PostTypes.POST_CREATE:
         draft.create.data = action.payload
         draft.create.loading = LoadingStatus.LOADING
         break
@@ -39,6 +39,7 @@ export const postReducer = produce(
         break
       case PostTypes.POST_CREATE_SET_SUCCESSFUL:
         draft.create.successful = action.payload
+        draft.create.loading = LoadingStatus.LOADED
         break
       case PostTypes.POST_GET_ACTION:
         draft.posts.loading = LoadingStatus.LOADING

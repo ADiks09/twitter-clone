@@ -1,6 +1,6 @@
-import { IError, IFullUser } from '../../common'
-import { ProfileTypes } from './profileTypes'
 import { Action } from 'redux'
+import { ProfileTypes } from './profileTypes'
+import { IError, IFullUser } from '../../common'
 
 export interface IProfile extends IFullUser {}
 
