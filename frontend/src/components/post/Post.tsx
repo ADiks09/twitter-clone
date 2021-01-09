@@ -13,6 +13,7 @@ import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
 import { Link } from 'react-router-dom'
+import { PhotoSlider } from './PhotoSlider'
 
 interface IProps {
   loading: boolean
@@ -61,15 +62,7 @@ export const Post: FC<IProps> = ({ loading, post, author }) => {
           />
         )}
         <p className={classes.postDescription}>{post && post.text}</p>
-        {post && post.media &&
-        post.media.map((m, i) => (
-          <img
-            className={classes.postMedia}
-            src={'api/post/img/minify/' + m.url}
-            alt={m.originalName}
-            key={i + m.originalName}
-          />
-        ))}
+        { post && post.media && post.media.length > 0 && <PhotoSlider media={post.media}/>}
         <div className={classes.wrapBtn}>
           <PostButton
             loading={loading}

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import { Badge, IconButton } from '@material-ui/core'
+import { Badge, IconButton, Tooltip } from '@material-ui/core'
 import {
   EqualizerRounded,
   Event,
@@ -105,17 +105,19 @@ export const PostCreator: FC = () => {
             </IconButton>
           ))}
 
-          <IconButton
-            className={classes.iconBtn}
-            onClick={() => {
-              const current = inputFile.current
-              if (current) current.click()
-            }}
-          >
-            <Badge badgeContent={countUploads} color="primary">
-              <ImageOutlined color="primary" />
-            </Badge>
-          </IconButton>
+          <Tooltip title="Upload images" placement="bottom">
+            <IconButton
+              className={classes.iconBtn}
+              onClick={() => {
+                const current = inputFile.current
+                if (current) current.click()
+              }}
+            >
+              <Badge badgeContent={countUploads} color="primary">
+                <ImageOutlined color="primary" />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </span>
 
         <input
