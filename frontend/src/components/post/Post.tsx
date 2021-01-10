@@ -21,6 +21,11 @@ interface IProps {
   author: { userName: string, avatarUrl: string }
 }
 
+const getDate = (date: Date): string => {
+  const day = new Date(Date.now()).getDate() - new Date(date).getDate()
+  return day === 0 ? 'today' : `${day} day ago`
+}
+
 //todo avatar userName userTag time
 export const Post: FC<IProps> = ({ loading, post, author }) => {
   return (
@@ -37,14 +42,12 @@ export const Post: FC<IProps> = ({ loading, post, author }) => {
           ) : (
             <span>
               <strong>{author && author.userName}</strong>
-              <Link className={classes.userTag} to={`/users/profile/${author && author.userName}`}>
+              <Link className={classes.userTag} to={`profile/${author && author.userName}`}>
                 {`@${author.userName}`}
               </Link>
-              <span className={classes.userTag}>
-                {' * '}
-                {new Date(post.createdAt).getHours() +
-                ':' +
-                new Date(post.createdAt).getMinutes()}
+              <span className={classes.date}>
+                <span style={{marginRight: '5px'}}>{'\u2022'}</span>
+                {getDate(post.createdAt)}
               </span>
             </span>
           )}
