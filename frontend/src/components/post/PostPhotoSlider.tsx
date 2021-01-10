@@ -26,7 +26,7 @@ const Image = ({
  * This component render image for post, if them > 1 when render Slider
  * @param media {IMedia[]} - array media data for render
  */
-export const PhotoSlider: React.FC<IProps> = ({ media }) => {
+export const PostPhotoSlider: React.FC<IProps> = ({ media }) => {
   const [activeStep, setActiveStep] = React.useState<number>(0)
   const maxStep = media.length
 
