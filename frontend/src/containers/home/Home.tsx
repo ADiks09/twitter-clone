@@ -9,6 +9,7 @@ import { Post } from '../../components/post/Post'
 import { PostCreator } from './PostCreator'
 import classes from './home.module.scss'
 import { LoadingStatus } from '../../store/ducks/common'
+import { PostSkeleton } from '../../components/post/PostSkeleton'
 
 type Props = {
   headerTitle: string,
@@ -42,7 +43,7 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
       {posts.loading === LoadingStatus.LOADING
         ? Array.from(new Array(10)).map((data, index) => (
-            <Post {...data} key={index} loading />
+            <PostSkeleton key={index} />
           ))
         : posts.data.posts.map((data, index) => (
             <Post
