@@ -1,26 +1,32 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
-import classes from './home.module.scss'
-import { HomeHeader } from '../../components/home-header/HomeHeader'
-import { PostCreator } from './PostCreator'
-import { Posts } from '../../components/post/Posts'
+import { postFetchCollectionAction } from '../../store/ducks/post/actions/action'
+import { IRootReducer } from '../../store/rootReducer'
 import { PostContainer } from '../../components/post-container/PostContainer'
-
-type Post = {
-  avatar: string,
-  userName?: string,
-  text?: string,
-  imgUrl?: string,
-  time?: string,
-  userTag?: string,
-}
+import { HomeHeader } from '../../components/home-header/HomeHeader'
+import { Post } from '../../components/post/Post'
+import { PostCreator } from './PostCreator'
+import classes from './home.module.scss'
+import { LoadingStatus } from '../../store/ducks/common'
+import { PostSkeleton } from '../../components/post/PostSkeleton'
 
 type Props = {
   headerTitle: string,
-  posts: Array<Post>,
 }
 
-export const Home: FC<Props> = ({ headerTitle, posts }) => {
+export const Home: FC<Props> = ({ headerTitle }) => {
+  const dispatch = useDispatch()
+
+  const userName = useSelector((state: IRootReducer) => state.profile.user.name)
+  const posts = useSelector((state: IRootReducer) => state.post.posts)
+
+  useEffect(() => {
+    ;(async () => {
+      if (userName) await dispatch(postFetchCollectionAction({ userName }))
+    })()
+  }, [dispatch, userName])
+
   return (
     <div className={classes.home}>
       <HomeHeader
@@ -33,14 +39,20 @@ export const Home: FC<Props> = ({ headerTitle, posts }) => {
         </PostContainer>
       </div>
 
-      <div className={classes.emptyBox}> </div>
+      <div className={classes.emptyBox} />
 
-      {
-        // <h2>You don't have posts</h2> ||
-        posts.map((data, index) => (
-          <Posts {...data} key={index} />
-        ))
-      }
+      {posts.loading === LoadingStatus.LOADING
+        ? Array.from(new Array(10)).map((data, index) => (
+            <PostSkeleton key={index} />
+          ))
+        : posts.data.posts.map((data, index) => (
+            <Post
+              post={data}
+              author={posts.data.author}
+              key={index}
+              loading={false}
+            />
+          ))}
     </div>
   )
 }

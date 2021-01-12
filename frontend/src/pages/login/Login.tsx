@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IRootReducer } from '../../store/rootReducer'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import { IFullUser, IUser, LoadingStatus } from '../../store/ducks/common'
 
@@ -35,7 +35,7 @@ const initialValue: IFullUser /*IUser*/ = {
   phone: '',
 }
 
-export const LogInForm: FC = () => {
+const LogInForm: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
   const authorized: boolean = useSelector(
@@ -132,3 +132,5 @@ export const LogInForm: FC = () => {
     </>
   )
 }
+
+export default LogInForm

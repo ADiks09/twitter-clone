@@ -1,14 +1,17 @@
 import { IError, LoadingStatus } from '../common'
-import { IPost } from './actions/IPost'
-
-export enum API_POST {
-  CREATE= '/api/post/create'
-}
+import { IPostCreate, IPostByUserNameCollection } from './actions/IPost'
 
 export interface IPostState {
   create: {
-    data : IPost
+    data: IPostCreate
     loading: LoadingStatus
     requestError: IError
+    successful: { message: string }
+  }
+  posts: {
+    userName: string
+    loading: LoadingStatus
+    requestError: IError
+    data: IPostByUserNameCollection
   }
 }

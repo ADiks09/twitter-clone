@@ -15,7 +15,7 @@ const router: express.Router = express.Router()
 const JWT: string = process.env.ACCESS_TOKEN_SECRET || ''
 const COOKIE_TITLE: string = process.env.COOKIE_TITLE || ''
 
-const maxAge: number = 3 * 24 * 60 * 60
+const maxAge: number = 3 * 24 * 60 * 60 * 10
 
 const createToken = (id: number) =>
   jwt.sign({ id }, JWT, {

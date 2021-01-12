@@ -1,25 +1,24 @@
 import React, { FC, useEffect, useState } from 'react'
-import classes from '../login/login.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { IFullUserState } from '../../store/ducks/user/state'
-import { IRootReducer } from '../../store/rootReducer'
-import { useFormik } from 'formik'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Link, Redirect } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { CustomTextField } from '../../services/components/CustomTextField'
-import * as yup from 'yup'
-import { userFetchSignIn } from '../../store/ducks/user/actions/action'
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import 'date-fns'
+import { IRootReducer } from '../../store/rootReducer'
+import { useFormik } from 'formik'
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+import * as yup from 'yup'
 import DateFnsUtils from '@date-io/date-fns'
+import { userFetchSignIn } from '../../store/ducks/user/actions/action'
+import { IFullUserState } from '../../store/ducks/user/state'
+import { IFullUser, LoadingStatus } from '../../store/ducks/common'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Field } from './Field'
-import { IFullUser, LoadingStatus } from '../../store/ducks/common'
+import { SubmitButton } from '../../components/SubmitButton'
+import classes from '../login/login.module.scss'
 
 const validationSchema = yup.object<IFullUser>({
   firstName: yup
@@ -60,7 +59,7 @@ const initialValue: IFullUser = {
 }
 
 // todo fix redirect to log in with react store
-export const Sign: FC = () => {
+const Sign: FC = () => {
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
 
   const [isError, setIsError] = useState(false)
@@ -185,20 +184,14 @@ export const Sign: FC = () => {
             />
           </MuiPickersUtilsProvider>
         </div>
-        <Button
-          className={classes.btn}
-          variant={'contained'}
-          color={'primary'}
-          type="submit"
-          disabled={auth.loading === LoadingStatus.LOADING}
-        >
-          {auth.loading === LoadingStatus.LOADING ? (
-            <CircularProgress />
-          ) : (
-            'Sign in'
-          )}
-        </Button>
+        <SubmitButton
+          loading={auth.loading === LoadingStatus.LOADING}
+          text="Sign in"
+          classes={classes.btn}
+        />
       </form>
     </>
   )
 }
+
+export default Sign

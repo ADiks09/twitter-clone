@@ -79,18 +79,16 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
       })
     }
 
-    // todo remove this))))
-    res.status(200).send(postsCandidate.posts.reverse())
+    res.status(200).json({
+      posts: postsCandidate.posts.reverse(),
+      author: { userName, avatarUrl: userName },
+    })
   } catch (error) {
     res.status(500).json({ error: error.message, message: 'Error' })
   }
 })
 
 router.get('/img/minify/:name', async (req, res) => {
-  res.sendFile(
-    process.env.LOCAL_DIRECTORY_PATH + 'minify/' + req.params.name,
-    (e) =>
-      res.status(500).json({ error: e.message, message: 'Error of return img' })
-  )
+  res.sendFile(process.env.LOCAL_DIRECTORY_PATH + 'minify/' + req.params.name)
 })
 export { router as post }

@@ -1,13 +1,60 @@
 import { Action } from 'redux'
 import { PostTypes } from './postTypes'
+import { LoadingStatus } from '../../common'
+
+export interface IPostCreate {
+  text: string
+  file?: string
+}
+
+export interface IMedia {
+  url: string
+  originalName: string
+}
 
 export interface IPost {
   text: string
+  createdAt: Date
+  media?: IMedia[]
+}
+
+export interface IPostByUserNameCollection {
+  posts: IPost[]
+  author: {
+    userName: string
+    avatarUrl: string
+  }
 }
 
 export interface IPostCreateAction extends Action<PostTypes> {
-  type: PostTypes.CREATE
-  payload: IPost
+  type: PostTypes.POST_CREATE
+  payload: IPostCreate
 }
 
-export type PostAction = IPostCreateAction
+export interface IPostLoadingStatusAction extends Action<PostTypes> {
+  type: PostTypes.POST_CREATE_LOADING_STATUS,
+  payload: LoadingStatus
+}
+
+export interface IPostSetCreateSuccessfulAction extends Action<PostTypes> {
+  type: PostTypes.POST_CREATE_SET_SUCCESSFUL,
+  payload: { message: string }
+}
+
+export interface IPostFetchCollectionAction extends Action<PostTypes> {
+  type: PostTypes.POST_GET_ACTION,
+  payload: { userName: string }
+}
+
+export interface IPostSetCollectionAction extends Action<PostTypes> {
+  type: PostTypes.POST_SET_COLLECTION
+  payload: IPostByUserNameCollection
+}
+
+
+export type PostAction =
+    IPostCreateAction
+  | IPostLoadingStatusAction
+  | IPostSetCreateSuccessfulAction
+  | IPostFetchCollectionAction
+  | IPostSetCollectionAction

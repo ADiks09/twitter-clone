@@ -1,7 +1,5 @@
-import React, { FC } from 'react'
-import { IconButton } from '@material-ui/core'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import Button from '@material-ui/core/Button'
+import React, { FC, useEffect, useRef, useState } from 'react'
+import { Badge, IconButton, Tooltip } from '@material-ui/core'
 import {
   EqualizerRounded,
   Event,
@@ -10,28 +8,76 @@ import {
   SentimentSatisfiedRounded,
 } from '@material-ui/icons'
 import classes from './home.module.scss'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import * as yup from 'yup'
+import { Alert, AlertTitle } from '@material-ui/lab'
+import { IPostCreate } from '../../store/ducks/post/actions/IPost'
+import { IRootReducer } from '../../store/rootReducer'
+import { LoadingStatus } from '../../store/ducks/common'
 import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
-import { IPost } from '../../store/ducks/post/actions/IPost'
+import { SubmitButton } from '../../components/SubmitButton'
 
 const btnData: JSX.Element[] = [
-  <ImageOutlined color="primary" />,
   <Gif color="primary" />,
   <EqualizerRounded color="primary" />,
   <SentimentSatisfiedRounded color="primary" />,
   <Event color="primary" />,
 ]
 
+const validationSchema = yup.object<IPostCreate>({
+  text: yup.string().required('Text your post is required'),
+})
+
+const initialValues: IPostCreate = {
+  text: '',
+  file: '',
+}
+
 export const PostCreator: FC = () => {
   const dispatch = useDispatch()
+
+  const postCreate = useSelector((state: IRootReducer) => state.post.create)
+
+  const inputFile = useRef<HTMLInputElement>(null)
+
+  const [countUploads, setCountUploads] = useState(0)
+  const [successful, setSuccessful] = useState(false)
+
+  const handleOnSubmit = async (values: IPostCreate) => {
+    dispatch(postRequestCreateAction(values))
+    formik.resetForm()
+    setCountUploads(0)
+  }
+
   const formik = useFormik({
-    initialValues: {
-      text: '',
-    },
-    onSubmit: async (values: IPost) =>
-      dispatch(postRequestCreateAction(values)),
+    initialValues,
+    validationSchema,
+    onSubmit: handleOnSubmit,
   })
+
+  useEffect(() => {
+    setSuccessful(!!postCreate.successful.message)
+  }, [postCreate, postCreate.successful.message])
+
+  if (successful) {
+    setTimeout(() => {
+      setSuccessful(false)
+    }, 3000)
+
+    return (
+      <Alert
+        severity="success"
+        color="info"
+        onClose={() => setSuccessful(false)}
+      >
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert —{' '}
+        <strong>{postCreate.successful.message}</strong>
+      </Alert>
+    )
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -58,16 +104,42 @@ export const PostCreator: FC = () => {
               {icon}
             </IconButton>
           ))}
+
+          <Tooltip title="Upload images" placement="bottom">
+            <IconButton
+              className={classes.iconBtn}
+              onClick={() => {
+                const current = inputFile.current
+                if (current) current.click()
+              }}
+            >
+              <Badge badgeContent={countUploads} color="primary">
+                <ImageOutlined color="primary" />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </span>
 
-        <Button
-          onClick={() => formik.handleSubmit()}
-          className={classes.btn}
-          variant="contained"
-          color="primary"
-        >
-          Tweet
-        </Button>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          ref={inputFile}
+          onChange={(event) => {
+            const files = event.currentTarget.files
+            if (files) {
+              formik.setFieldValue('file', files[0])
+              setCountUploads(countUploads + 1)
+            }
+          }}
+          style={{ display: 'none' }}
+        />
+
+        <SubmitButton
+          loading={postCreate.loading === LoadingStatus.LOADING}
+          classes={classes.btn}
+          text="Tweet"
+        />
       </div>
     </form>
   )

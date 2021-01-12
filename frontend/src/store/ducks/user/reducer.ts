@@ -10,7 +10,7 @@ export const initialUserState: IFullUserState = {
     lastName: '',
     firstName: '',
     email: '',
-    birthday: new Date('2014-08-18T21:11:54'),
+    birthday: new Date(Date.now()),
     name: '',
     password: '',
   },
@@ -28,11 +28,11 @@ export const userReducer = produce(
       case UserTypes.USER_FETCH_LOGIN:
         draft.loading = LoadingStatus.LOADING
         break
-      case UserTypes.USER_SIGIN:
+      case UserTypes.USER_SIGN:
         draft.appUser = action.payload
         draft.loading = LoadingStatus.LOADED
         break
-      case UserTypes.USER_FETCH_SIGNIN:
+      case UserTypes.USER_FETCH_SIGN:
         draft.loading = LoadingStatus.LOADING
         break
       case UserTypes.USER_LOADING_STATUS:
