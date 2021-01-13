@@ -3,6 +3,7 @@ import classes from './post.module.scss'
 import { Link } from 'react-router-dom'
 import { IconButton } from '@material-ui/core'
 import { ExpandMoreRounded } from '@material-ui/icons'
+import { IPostAuthor } from '../../store/ducks/post/actions/IPost'
 
 const getDate = (date: Date): string => {
   const day = new Date(Date.now()).getDate() - new Date(date).getDate()
@@ -11,14 +12,16 @@ const getDate = (date: Date): string => {
 
 interface IProps {
   createdAt: Date
-  author: { userName: string, avatarUrl: string }
+  author: Omit<IPostAuthor, 'avatarUrl'>
 }
 
 export const PostHeader: React.FC<IProps> = ({ author, createdAt }) => {
   return (
     <div className={classes.postHeader}>
         <span>
-          <strong>{author.userName}</strong>
+          <strong>{author.firstName}</strong>
+          {' '}
+          <strong>{author.lastName}</strong>
           <Link
             className={classes.userTag}
             to={`profile/${author.userName}`}

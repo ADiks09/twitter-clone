@@ -22,6 +22,8 @@ export const initialPostState: IPostState = {
       author: {
         avatarUrl: '',
         userName: '',
+        firstName: '',
+        lastName: '',
       },
     },
   },

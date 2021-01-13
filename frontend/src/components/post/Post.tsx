@@ -6,7 +6,7 @@ import {
   SystemUpdateAltOutlined,
 } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
-import { IPost } from '../../store/ducks/post/actions/IPost'
+import { IPost, IPostAuthor } from '../../store/ducks/post/actions/IPost'
 import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
@@ -14,11 +14,6 @@ import { PostPhotoSlider } from './PostPhotoSlider'
 import { PostHeader } from './PostHeader'
 import { PostSkeleton } from './PostSkeleton'
 
-interface IProps {
-  loading: boolean
-  post: IPost
-  author: { userName: string, avatarUrl: string }
-}
 
 // todo later, this is a temporary solution
 const PostButtons = ({loading}: {loading: boolean}) => (
@@ -44,7 +39,13 @@ const PostButtons = ({loading}: {loading: boolean}) => (
   </>
 )
 
-//todo avatar userName userTag time
+interface IProps {
+  loading: boolean
+  post: IPost
+  author: IPostAuthor
+}
+
+//todo avatar
 export const Post: FC<IProps> = ({ loading, post, author }) => {
 
   if (loading) {
