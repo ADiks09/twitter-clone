@@ -83,7 +83,12 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
 
     res.status(200).json({
       posts: postsCandidate.posts.reverse(),
-      author: { userName, avatarUrl: userName },
+      author: {
+        userName,
+        avatarUrl: userName,
+        firstName: userCandidate.firstName,
+        lastName: userCandidate.lastName,
+      },
     })
   } catch (error) {
     res.status(500).json({ error: error.message, message: 'Error' })
