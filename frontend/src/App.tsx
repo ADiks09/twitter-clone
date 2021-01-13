@@ -13,7 +13,7 @@ export const App: FC = () => {
     <BrowserRouter>
       <Suspense fallback={<CircularProgress />}>
         <Switch>
-          <Route path="/home" exact>
+          <Route path={['/', '/home']} exact>
             <Home />
           </Route>
           <Route path="/sign" exact>
