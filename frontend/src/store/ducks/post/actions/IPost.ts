@@ -18,12 +18,16 @@ export interface IPost {
   media?: IMedia[]
 }
 
+export interface IPostAuthor {
+  userName: string
+  avatarUrl: string
+  firstName: string
+  lastName: string
+}
+
 export interface IPostByUserNameCollection {
   posts: IPost[]
-  author: {
-    userName: string
-    avatarUrl: string
-  }
+  author: IPostAuthor
 }
 
 export interface IPostCreateAction extends Action<PostTypes> {
