@@ -38,12 +38,14 @@ router.post('/create', auth, uploadFile, async (req, res) => {
           mediaType: req.file.mimetype,
         },
       ],
+      createdAt: Date.now(),
     }
+
     posts.posts.push(post)
 
     await posts.save()
 
-    res.status(201).json({ message: 'created', post })
+    res.status(201).json({ message: 'post has been created', post })
   } catch (e) {
     res.status(500).json({ error: e.message, message: 'Error' })
   }
