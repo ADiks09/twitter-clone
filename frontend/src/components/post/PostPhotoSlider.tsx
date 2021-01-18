@@ -3,7 +3,7 @@ import classes from './post.module.scss'
 import { Button, MobileStepper } from '@material-ui/core'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 import { IMedia } from '../../store/ducks/post/actions/IPost'
-import { Skeleton } from '@material-ui/lab'
+import { Alert, Skeleton } from '@material-ui/lab'
 
 interface IProps {
   media: IMedia[];
@@ -12,29 +12,34 @@ interface IProps {
 const Image = ({
   url,
   originalName,
+  setLoadError,
 }: {
   url: string,
   originalName: string,
+  setLoadError: Function,
 }) => {
   const [loading, setLoading] = React.useState<boolean>(true)
 
   return (
     <>
       <img
-          loading="lazy"
-          style={{overflow: loading ? 'hidden' : 'visible'}}
-          className={loading ? '' : classes.postMedia}
-          onLoad={() => setLoading(false)}
-          src={'api/post/img/minify/' + url}
-          alt={originalName}
+        loading="lazy"
+        style={{ overflow: loading ? 'hidden' : 'visible' }}
+        className={loading ? '' : classes.postMedia}
+        onLoad={() => setLoading(false)}
+        onError={() => setLoadError(true)}
+        src={'api/post/img/minify/' + url}
+        alt={originalName}
       />
-      {loading && <Skeleton
-        animation="wave"
-        variant="rect"
-        height="200px"
-        className={classes.postMedia}
-        style={{ borderRadius: '20px' }}
-      />}
+      {loading && (
+        <Skeleton
+          animation="wave"
+          variant="rect"
+          height="200px"
+          className={classes.postMedia}
+          style={{ borderRadius: '20px' }}
+        />
+      )}
     </>
   )
 }
@@ -45,10 +50,31 @@ const Image = ({
  */
 export const PostPhotoSlider: React.FC<IProps> = ({ media }) => {
   const [activeStep, setActiveStep] = React.useState<number>(0)
+  const [loadError, setLoadError] = React.useState<boolean>(false)
+  const [visiblyAlert, setVisiblyAlert] = React.useState<boolean>(true)
+
+  if (loadError) {
+    return (
+      <>
+        {visiblyAlert && (
+          <Alert onClose={() => setVisiblyAlert(false)} severity="error">
+            The image of this post could not be loaded
+          </Alert>
+        )}
+      </>
+    )
+  }
+
   const maxStep = media.length
 
   if (maxStep === 1) {
-    return <Image url={media[0].url} originalName={media[0].originalName} />
+    return (
+      <Image
+        setLoadError={setLoadError}
+        url={media[0].url}
+        originalName={media[0].originalName}
+      />
+    )
   }
 
   const nextStep = () => {
@@ -64,6 +90,7 @@ export const PostPhotoSlider: React.FC<IProps> = ({ media }) => {
   return (
     <>
       <Image
+        setLoadError={setLoadError}
         url={media[activeStep].url}
         originalName={media[activeStep].originalName}
       />

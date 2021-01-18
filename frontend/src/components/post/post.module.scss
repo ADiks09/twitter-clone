@@ -37,6 +37,7 @@
 }
 
 .postMedia {
+  pointer-events: none;
   object-fit: contain;
   margin-top: 10px;
   border: 1px solid $border-color;
