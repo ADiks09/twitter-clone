@@ -54,6 +54,7 @@ router.post('/create', auth, uploadFile, async (req, res) => {
 router.get('/postsByUserName/:userName', auth, async (req, res) => {
   try {
     const { userName } = req.params
+    const { limit = 0, skip = 0 } = req.query
 
     if (!userName) {
       return res.status(400).json({
@@ -82,7 +83,9 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
     }
 
     res.status(200).json({
-      posts: postsCandidate.posts.reverse(),
+      posts: !limit
+        ? postsCandidate.posts.reverse()
+        : postsCandidate.posts.reverse().slice(+skip, +skip + +limit),
       author: {
         userName,
         avatarUrl: userName,
