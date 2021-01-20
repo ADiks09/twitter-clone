@@ -86,6 +86,7 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
       posts: !limit
         ? postsCandidate.posts.reverse()
         : postsCandidate.posts.reverse().slice(+skip, +skip + +limit),
+      postsTotal: postsCandidate.posts.length,
       author: {
         userName,
         avatarUrl: userName,
