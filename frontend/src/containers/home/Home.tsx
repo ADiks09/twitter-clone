@@ -57,9 +57,7 @@ export const Home: FC<Props> = ({ headerTitle }) => {
       ))}
 
       {posts.loading === LoadingStatus.LOADING &&
-        Array.from(new Array(10)).map((_, i) =>
-          <PostSkeleton key={i} />
-      )}
+        Array.from(new Array(10)).map((_, i) => <PostSkeleton key={i} />)}
 
       <Button
         onClick={() => setSkip(skip + 10)}
