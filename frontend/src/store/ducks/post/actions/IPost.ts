@@ -28,6 +28,7 @@ export interface IPostAuthor {
 export interface IPostByUserNameCollection {
   posts: IPost[]
   author: IPostAuthor
+  postsLength: number
 }
 
 export interface IPostCreateAction extends Action<PostTypes> {
@@ -45,9 +46,17 @@ export interface IPostSetCreateSuccessfulAction extends Action<PostTypes> {
   payload: { message: string }
 }
 
+export interface IPostFetchCollectionPayload {
+  userName: string,
+  query: {
+    limit: number | string
+    skip: number | string
+  }
+}
+
 export interface IPostFetchCollectionAction extends Action<PostTypes> {
   type: PostTypes.POST_GET_ACTION,
-  payload: { userName: string }
+  payload: IPostFetchCollectionPayload
 }
 
 export interface IPostSetCollectionAction extends Action<PostTypes> {

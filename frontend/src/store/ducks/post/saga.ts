@@ -25,7 +25,7 @@ function* watchPostRequestCreate() {
 }
 
 function* postFetchCollectionAction({ payload }: IPostFetchCollectionAction) {
-  const { data, error } = yield call(() => postsByUserName(payload.userName))
+  const { data, error } = yield call(() => postsByUserName(payload))
   if (error) {
     console.error('---GET POST BY USER NAME ERROR---', error)
   }
