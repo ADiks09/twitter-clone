@@ -6,19 +6,12 @@ import {
   SystemUpdateAltOutlined,
 } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
-import { IPost } from '../../store/ducks/post/actions/IPost'
+import { IPost, IPostAuthor } from '../../store/ducks/post/actions/IPost'
 import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
 import { PostPhotoSlider } from './PostPhotoSlider'
 import { PostHeader } from './PostHeader'
-import { PostSkeleton } from './PostSkeleton'
-
-interface IProps {
-  loading: boolean
-  post: IPost
-  author: { userName: string, avatarUrl: string }
-}
 
 // todo later, this is a temporary solution
 const PostButtons = ({loading}: {loading: boolean}) => (
@@ -44,21 +37,20 @@ const PostButtons = ({loading}: {loading: boolean}) => (
   </>
 )
 
-//todo avatar userName userTag time
-export const Post: FC<IProps> = ({ loading, post, author }) => {
+interface IProps {
+  post: IPost
+  author: IPostAuthor
+}
 
-  if (loading) {
-    return <PostSkeleton/>
-  }
-
-  return (
+//todo avatar
+export const Post: FC<IProps> = ({ post, author }) => (
     <div className={classes.container}>
-      <PostContainer imgSrc={'api/post/img/minify/' + author.userName + '.jpeg'} loading={loading}>
+      <PostContainer imgSrc={'api/post/img/minify/' + author.userName + '.jpeg'} loading={false}>
         <PostHeader author={author} createdAt={post.createdAt}/>
         <p className={classes.postDescription}>{post.text}</p>
         {post.media && post.media.length > 0 && <PostPhotoSlider media={post.media}/>}
         <div className={classes.wrapBtn}>
-          <PostButtons loading={loading}/>
+          <PostButtons loading={false}/>
           <IconButton className={classes.iconBtn}>
             <SystemUpdateAltOutlined fontSize="small" color="primary"/>
           </IconButton>
@@ -66,4 +58,3 @@ export const Post: FC<IProps> = ({ loading, post, author }) => {
       </PostContainer>
     </div>
   )
-}

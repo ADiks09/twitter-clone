@@ -38,12 +38,14 @@ router.post('/create', auth, uploadFile, async (req, res) => {
           mediaType: req.file.mimetype,
         },
       ],
+      createdAt: Date.now(),
     }
+
     posts.posts.push(post)
 
     await posts.save()
 
-    res.status(201).json({ message: 'created', post })
+    res.status(201).json({ message: 'post has been created', post })
   } catch (e) {
     res.status(500).json({ error: e.message, message: 'Error' })
   }
@@ -52,6 +54,7 @@ router.post('/create', auth, uploadFile, async (req, res) => {
 router.get('/postsByUserName/:userName', auth, async (req, res) => {
   try {
     const { userName } = req.params
+    const { limit = 0, skip = 0 } = req.query
 
     if (!userName) {
       return res.status(400).json({
@@ -80,8 +83,16 @@ router.get('/postsByUserName/:userName', auth, async (req, res) => {
     }
 
     res.status(200).json({
-      posts: postsCandidate.posts.reverse(),
-      author: { userName, avatarUrl: userName },
+      posts: !limit
+        ? postsCandidate.posts.reverse()
+        : postsCandidate.posts.reverse().slice(+skip, +skip + +limit),
+      postsTotal: postsCandidate.posts.length,
+      author: {
+        userName,
+        avatarUrl: userName,
+        firstName: userCandidate.firstName,
+        lastName: userCandidate.lastName,
+      },
     })
   } catch (error) {
     res.status(500).json({ error: error.message, message: 'Error' })

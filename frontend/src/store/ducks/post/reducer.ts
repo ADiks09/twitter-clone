@@ -22,7 +22,10 @@ export const initialPostState: IPostState = {
       author: {
         avatarUrl: '',
         userName: '',
+        firstName: '',
+        lastName: '',
       },
+      postsLength: 0,
     },
   },
 }
@@ -47,7 +50,12 @@ export const postReducer = produce(
         break
       case PostTypes.POST_SET_COLLECTION:
         draft.posts.loading = LoadingStatus.LOADED
-        draft.posts.data = action.payload
+        draft.posts.data.author = action.payload.author
+        draft.posts.data.postsLength = action.payload.postsLength
+        draft.posts.data.posts = [
+          ...draft.posts.data.posts,
+          ...action.payload.posts,
+        ]
         break
     }
   },

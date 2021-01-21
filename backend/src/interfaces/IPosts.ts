@@ -10,7 +10,7 @@ export interface IPost {
   collectionId: Schema.Types.ObjectId
   text: string
   media?: Array<IMedia>
-  createdAt?: Date
+  createdAt?: Date | number
 }
 
 export interface IPosts extends Document {

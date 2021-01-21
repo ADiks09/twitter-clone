@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { Badge, IconButton, Tooltip } from '@material-ui/core'
 import {
   EqualizerRounded,
@@ -56,6 +56,19 @@ export const PostCreator: FC = () => {
     validationSchema,
     onSubmit: handleOnSubmit,
   })
+
+  const fileInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.currentTarget.files
+    if (!files) return
+
+    const types = ['jpeg', 'jpg', 'png']
+    if (!types.find((t) => files[0].name.includes(t))) {
+      alert("Your file type doesn't match")
+      return
+    }
+    formik.setFieldValue('file', files[0])
+    setCountUploads(countUploads + 1)
+  }
 
   useEffect(() => {
     setSuccessful(!!postCreate.successful.message)
@@ -125,13 +138,8 @@ export const PostCreator: FC = () => {
           name="file"
           id="file"
           ref={inputFile}
-          onChange={(event) => {
-            const files = event.currentTarget.files
-            if (files) {
-              formik.setFieldValue('file', files[0])
-              setCountUploads(countUploads + 1)
-            }
-          }}
+          accept=".png, .jpg, .jpeg"
+          onChange={fileInputHandler}
           style={{ display: 'none' }}
         />
 
