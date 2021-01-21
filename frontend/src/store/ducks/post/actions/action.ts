@@ -6,6 +6,7 @@ import {
   IPostLoadingStatusAction,
   IPostSetCollectionAction,
   IPostSetCreateSuccessfulAction,
+  IPostFetchCollectionPayload,
 } from './IPost'
 import { PostTypes } from './postTypes'
 import { LoadingStatus } from '../../common'
@@ -31,9 +32,12 @@ export const postCreateSetSuccessful = (
   payload: { message: payload },
 })
 
-export const postFetchCollectionAction = (payload: {
-  userName: string,
-}): IPostFetchCollectionAction => ({ type: PostTypes.POST_GET_ACTION, payload })
+export const postFetchCollectionAction = (
+  payload: IPostFetchCollectionPayload
+): IPostFetchCollectionAction => ({
+  type: PostTypes.POST_GET_ACTION,
+  payload,
+})
 
 export const postSetCollectionAction = (
   payload: IPostByUserNameCollection
