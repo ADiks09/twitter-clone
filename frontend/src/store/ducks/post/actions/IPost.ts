@@ -28,7 +28,7 @@ export interface IPostAuthor {
 export interface IPostByUserNameCollection {
   posts: IPost[]
   author: IPostAuthor
-  postsLength: number
+  postsTotal: number
 }
 
 export interface IPostCreateAction extends Action<PostTypes> {
