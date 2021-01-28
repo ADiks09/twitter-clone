@@ -21,22 +21,36 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
   const userName = useSelector((state: IRootReducer) => state.profile.user.name)
   const posts = useSelector((state: IRootReducer) => state.post.posts)
+
   const [skip, setSkip] = useState(0)
+  const [disabled, setDisabled] = useState<boolean>(false)
 
   useEffect(() => {
     ;(async () => {
-      if (userName)
-        await dispatch(
-          postFetchCollectionAction({
-            userName,
-            query: {
-              skip: skip,
-              limit: 10,
-            },
-          })
-        )
+      if (!userName) return
+
+      await dispatch(
+        postFetchCollectionAction({
+          userName,
+          query: {
+            skip: skip,
+            limit: 10,
+          },
+        })
+      )
     })()
   }, [dispatch, userName, skip])
+
+  const handleLoadMore = () => {
+    const totalSkip = skip + 10
+
+    if (totalSkip >= posts.data.postsTotal) {
+      setDisabled(true)
+      return
+    }
+
+    setSkip(totalSkip)
+  }
 
   return (
     <div className={classes.home}>
@@ -60,7 +74,8 @@ export const Home: FC<Props> = ({ headerTitle }) => {
         Array.from(new Array(10)).map((_, i) => <PostSkeleton key={i} />)}
 
       <Button
-        onClick={() => setSkip(skip + 10)}
+        onClick={handleLoadMore}
+        disabled={disabled}
         fullWidth
         variant="outlined"
         color="primary"
