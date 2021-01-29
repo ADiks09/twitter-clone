@@ -14,7 +14,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies[COOKIE_TITLE]
 
     if (!token) {
-      res.status(401).json({ message: 'You not authorized' })
+      return res.status(401).json({ message: 'You not authorized' })
     }
 
     const data: any = jwt.verify(token, ACCESS_TOKEN_SECRET)
@@ -25,13 +25,13 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     })
 
     if (!user) {
-      throw new Error()
+      return new Error()
     }
 
     res.locals.user = user
     res.locals.token = token
 
-    next()
+    return next()
   } catch (error) {
     res.status(401).json({
       message: 'Not authorized to access this resource',

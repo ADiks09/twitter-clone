@@ -10,49 +10,7 @@ import { IRootReducer } from '../../store/rootReducer'
 import { profileFetchData } from '../../store/ducks/profile/actions/action'
 import { screenTablet } from '../../services/material/mediaQuery'
 
-const posts = [
-  {
-    avatar: './bg.jpg',
-    userName: 'TwitterOfficial',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad at aut mollitia quis quisquam quod voluptas? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? asdsad dsad',
-    imgUrl: './bg.jpg',
-    userTag: '@antondikson',
-    time: '39 min',
-  },
-  {
-    avatar: './contBcg-3.jpeg',
-    userName: 'Tоликмашина',
-    text: 'Эма машина делает бРРррр',
-    imgUrl: './contBcg-1.jpeg',
-    userTag: '@antondikson',
-    time: '39 min',
-  },
-  {
-    avatar: './contBcg-1.jpeg',
-    userName: 'TwitterOfficial',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad at aut mollitia quis quisquam quod voluptas? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? Adipisci autem distinctio error expedita ipsum obcaecati quod ullam. Dolor dolorem doloremque soluta? Ea? asdsad dsad',
-  },
-  {
-    avatar: 'product-2.png',
-    text: 'Если волк думает, значит у него есть мозги!!!',
-  },
-  {
-    userName: 'Дима',
-    text: 'Это топ мебель за 100 долларов россикйскиз сша рублей купи стул',
-    imgUrl: './slider-img.png',
-    avatar: 'slider-img.png',
-  },
-  {
-    avatar: './bg.jpg',
-    text:
-      'Невероятный пейзаж Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus assumenda cupiditate delectus enim expedita explicabo harum illo inventore magnam molestias quas, quasi quos repellat repellendus soluta suscipit, voluptate! Ipsa, ut?',
-    imgUrl: './bg.jpg',
-  },
-]
-
-export const HomePage = () => {
+const HomePage = () => {
   const [isRedirectToLogin, setIsRedirectToLogin] = useState(false)
 
   const matches = useMediaQuery(screenTablet())
@@ -89,10 +47,12 @@ export const HomePage = () => {
       <Container maxWidth={'lg'}>
         <Box display="flex">
           <SideNav firstName={user.user.firstName} tag={user.user.name} />
-          <Home headerTitle="Home" posts={posts} />
+          <Home headerTitle="Home" />
           {matches && <SideBanners />}
         </Box>
       </Container>
     </>
   )
 }
+
+export default HomePage

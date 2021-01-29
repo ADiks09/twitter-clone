@@ -30,6 +30,7 @@ const User: Schema<IUser> = new Schema<IUser>({
   name: {
     required: [true, 'Your name is required'],
     type: String,
+    unique: [true, 'Nick name already exist'],
   },
   password: {
     required: [true, 'password is required'],
@@ -38,6 +39,10 @@ const User: Schema<IUser> = new Schema<IUser>({
   createdAt: {
     type: Date,
     default: Date.now(),
+  },
+  postsId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Posts',
   },
   tokens: [
     {

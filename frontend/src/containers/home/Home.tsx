@@ -1,26 +1,57 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
-import classes from './home.module.scss'
+import { Button } from '@material-ui/core'
+import { postFetchCollectionAction } from '../../store/ducks/post/actions/action'
+import { IRootReducer } from '../../store/rootReducer'
+import { PostContainer } from '../../components/post-container/PostContainer'
 import { HomeHeader } from '../../components/home-header/HomeHeader'
 import { PostCreator } from './PostCreator'
-import { Posts } from '../../components/post/Posts'
-import { PostContainer } from '../../components/post-container/PostContainer'
-
-type Post = {
-  avatar: string,
-  userName?: string,
-  text?: string,
-  imgUrl?: string,
-  time?: string,
-  userTag?: string,
-}
+import { LoadingStatus } from '../../store/ducks/common'
+import { PostSkeleton } from '../../components/post/PostSkeleton'
+import { Post } from '../../components/post/Post'
+import classes from './home.module.scss'
 
 type Props = {
   headerTitle: string,
-  posts: Array<Post>,
 }
 
-export const Home: FC<Props> = ({ headerTitle, posts }) => {
+export const Home: FC<Props> = ({ headerTitle }) => {
+  const dispatch = useDispatch()
+
+  const userName = useSelector((state: IRootReducer) => state.profile.user.name)
+  const posts = useSelector((state: IRootReducer) => state.post.posts)
+
+  const [skip, setSkip] = useState(0)
+  const [disabled, setDisabled] = useState<boolean>(false)
+
+  useEffect(() => {
+    ;(async () => {
+      if (!userName) return
+
+      await dispatch(
+        postFetchCollectionAction({
+          userName,
+          query: {
+            skip: skip,
+            limit: 10,
+          },
+        })
+      )
+    })()
+  }, [dispatch, userName, skip])
+
+  const handleLoadMore = () => {
+    const totalSkip = skip + 10
+
+    if (totalSkip >= posts.data.postsTotal) {
+      setDisabled(true)
+      return
+    }
+
+    setSkip(totalSkip)
+  }
+
   return (
     <div className={classes.home}>
       <HomeHeader
@@ -33,14 +64,24 @@ export const Home: FC<Props> = ({ headerTitle, posts }) => {
         </PostContainer>
       </div>
 
-      <div className={classes.emptyBox}> </div>
+      <div className={classes.emptyBox} />
 
-      {
-        // <h2>You don't have posts</h2> ||
-        posts.map((data, index) => (
-          <Posts {...data} key={index} />
-        ))
-      }
+      {posts.data.posts.map((data, index) => (
+        <Post post={data} author={posts.data.author} key={index} />
+      ))}
+
+      {posts.loading === LoadingStatus.LOADING &&
+        Array.from(new Array(10)).map((_, i) => <PostSkeleton key={i} />)}
+
+      <Button
+        onClick={handleLoadMore}
+        disabled={disabled}
+        fullWidth
+        variant="outlined"
+        color="primary"
+      >
+        Load more...
+      </Button>
     </div>
   )
 }

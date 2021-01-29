@@ -2,7 +2,7 @@
 
 .container {
   min-height: 120px;
-  max-height: 480px;
+  max-height: 530px;
   border-bottom: 1px solid gray;
   padding: 0 10px;
   &:hover {
@@ -16,10 +16,17 @@
   align-items: center;
 }
 
-.userTag {
+.userTag, .date {
   margin-left: 7px;
-  font-size: 14px;
+  font-size: 15px;
   color: gray;
+}
+
+.userTag {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .postDescription {
@@ -30,12 +37,13 @@
 }
 
 .postMedia {
+  pointer-events: none;
+  object-fit: contain;
   margin-top: 10px;
   border: 1px solid $border-color;
   border-radius: 15px;
   width: 96%;
-  max-height: 250px;
-  object-fit:  cover;
+  max-height: 302px;
 }
 
 .wrapBtn {

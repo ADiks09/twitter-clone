@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import { auth } from '../middleware/authCheker'
 import { IToken, IUser } from '../interfaces'
 import User from '../models/User'
+import Posts from '../models/Posts'
 
 dotenv.config()
 
@@ -14,7 +15,7 @@ const router: express.Router = express.Router()
 const JWT: string = process.env.ACCESS_TOKEN_SECRET || ''
 const COOKIE_TITLE: string = process.env.COOKIE_TITLE || ''
 
-const maxAge: number = 3 * 24 * 60 * 60
+const maxAge: number = 3 * 24 * 60 * 60 * 10
 
 const createToken = (id: number) =>
   jwt.sign({ id }, JWT, {
@@ -66,6 +67,15 @@ router.post(
         lastName,
       })
 
+      const posts = await new Posts({ author: user.id })
+
+      if (!posts) {
+        res.status(400).json({ message: 'Error, posts not has created' })
+      }
+
+      user.postsId = posts.id
+
+      await posts.save()
       await user.save()
 
       res.status(201).json({
