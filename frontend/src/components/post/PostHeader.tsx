@@ -6,7 +6,14 @@ import { ExpandMoreRounded } from '@material-ui/icons'
 import { IPostAuthor } from '../../store/ducks/post/actions/IPost'
 
 const getDate = (date: Date): string => {
-  const day = new Date(Date.now()).getDate() - new Date(date).getDate()
+  const dateNow = new Date(Date.now())
+  const datePost = new Date(date)
+
+  if (dateNow.getMonth() !== datePost.getMonth())
+    return datePost.toLocaleDateString()
+
+  const day = dateNow.getDate() - datePost.getDate()
+
   return day === 0 ? 'today' : `${day} day ago`
 }
 
