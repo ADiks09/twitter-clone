@@ -50,18 +50,24 @@ export const Home: FC<Props> = ({ headerTitle }) => {
       if (observer.current) observer.current.disconnect()
 
       // @ts-ignore
-      observer.current = new IntersectionObserver(([entries]) => {
-        if (entries.isIntersecting) {
-          const totalSkip = skip + 10
+      observer.current = new IntersectionObserver(
+        ([entries]) => {
+          if (entries.isIntersecting) {
+            const totalSkip = skip + 10
 
-          if (totalSkip >= posts.data.postsTotal) {
-            setDisabled(true)
-            return
+            if (totalSkip >= posts.data.postsTotal) {
+              setDisabled(true)
+              return
+            }
+
+            setSkip(totalSkip)
           }
-
-          setSkip(totalSkip)
+        },
+        {
+          rootMargin: '20px',
+          threshold: 0.2,
         }
-      })
+      )
 
       if (node) observer.current.observe(node)
     },
