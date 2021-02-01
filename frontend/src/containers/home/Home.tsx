@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
 import { Button } from '@material-ui/core'
@@ -41,16 +41,32 @@ export const Home: FC<Props> = ({ headerTitle }) => {
     })()
   }, [dispatch, userName, skip])
 
-  const handleLoadMore = () => {
-    const totalSkip = skip + 10
+  const observer = useRef<IntersectionObserver>(null)
 
-    if (totalSkip >= posts.data.postsTotal) {
-      setDisabled(true)
-      return
-    }
+  const lastElementRef = useCallback(
+    (node) => {
+      if (posts.loading === LoadingStatus.LOADING) return
 
-    setSkip(totalSkip)
-  }
+      if (observer.current) observer.current.disconnect()
+
+      // @ts-ignore
+      observer.current = new IntersectionObserver(([entries]) => {
+        if (entries.isIntersecting) {
+          const totalSkip = skip + 10
+
+          if (totalSkip >= posts.data.postsTotal) {
+            setDisabled(true)
+            return
+          }
+
+          setSkip(totalSkip)
+        }
+      })
+
+      if (node) observer.current.observe(node)
+    },
+    [posts.data.postsTotal, posts.loading, skip]
+  )
 
   return (
     <div className={classes.home}>
@@ -74,13 +90,13 @@ export const Home: FC<Props> = ({ headerTitle }) => {
         Array.from(new Array(10)).map((_, i) => <PostSkeleton key={i} />)}
 
       <Button
-        onClick={handleLoadMore}
         disabled={disabled}
         fullWidth
         variant="outlined"
         color="primary"
+        ref={lastElementRef}
       >
-        Load more...
+        {disabled ? 'Your posts collection has empty' : 'Load more...'}
       </Button>
     </div>
   )
