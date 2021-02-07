@@ -1,15 +1,10 @@
-import {
-  $postsByUserName,
-  getPostByUserNameFx,
-  $postByUserNamePosts,
-} from './index'
+import { $author, $posts, $total, getPostByUserNameFx } from './index'
 import { postsByUserNameEffector } from '../../services/api/postApi'
 
 getPostByUserNameFx.use(postsByUserNameEffector)
 
-$postsByUserName.on(getPostByUserNameFx.doneData, (state, data) => data)
+$total.on(getPostByUserNameFx.doneData, (_, { postsTotal }) => postsTotal)
 
-$postByUserNamePosts.on(getPostByUserNameFx.doneData, (state, { posts }) => [
-  ...state,
-  ...posts,
-])
+$author.on(getPostByUserNameFx.doneData, (_, { author }) => author)
+
+$posts.on(getPostByUserNameFx.doneData, (s, { posts }) => [...s, ...posts])
