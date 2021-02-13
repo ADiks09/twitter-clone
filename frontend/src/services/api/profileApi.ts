@@ -9,3 +9,8 @@ export const profileApiUser = () =>
       data: response.data.user,
     }))
     .catch((error) => ({ error }))
+
+export const getProfileUserApi = () =>
+  axios
+    .get(API.PROFILE.USER)
+    .then((res: AxiosResponse<{ user: IFullUser }>) => res.data.user)

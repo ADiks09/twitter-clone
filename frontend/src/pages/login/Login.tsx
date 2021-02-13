@@ -25,7 +25,7 @@ const validationSchema = yup.object<IUser>({
     .required('Password is required'),
 })
 
-const initialValue: IFullUser /*IUser*/ = {
+const initialValue: IFullUser = {
   email: '',
   password: '',
   name: '',
@@ -38,6 +38,7 @@ const initialValue: IFullUser /*IUser*/ = {
 const LogInForm: FC = () => {
   const dispatch = useDispatch()
   const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
+
   const authorized: boolean = useSelector(
     (state: IRootReducer) => state.authorized.auth
   )

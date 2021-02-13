@@ -5,30 +5,27 @@ import { Link } from 'react-router-dom'
 import { SideBanners } from '../../containers/banners-offer/SideBanners'
 import { SideNav } from '../../containers/sidenav/SideNav'
 import { Home } from '../../containers/home/Home'
-import { useDispatch, useSelector } from 'react-redux'
-import { IRootReducer } from '../../store/rootReducer'
-import { profileFetchData } from '../../store/ducks/profile/actions/action'
 import { screenTablet } from '../../services/material/mediaQuery'
+import { useStore } from 'effector-react'
+import { $profile, getUserProfileFx } from '../../models/profile'
+import { $authError } from '../../models/auth'
 
 const HomePage = () => {
   const [isRedirectToLogin, setIsRedirectToLogin] = useState(false)
 
   const matches = useMediaQuery(screenTablet())
 
-  const user = useSelector((state: IRootReducer) => state.profile)
-  const authStore = useSelector((state: IRootReducer) => state.authorized.auth)
-
-  const dispatch = useDispatch()
+  const profile = useStore($profile)
+  const auth = useStore($authError)
 
   useEffect(() => {
-    ;(async () => {
-      await dispatch(profileFetchData())
-    })()
-  }, [dispatch])
+    if (!auth) return
+    setIsRedirectToLogin(true)
+  }, [auth])
 
   useEffect(() => {
-    setIsRedirectToLogin(!authStore)
-  }, [authStore])
+    ;(async () => await getUserProfileFx())()
+  }, [])
 
   return (
     <>
@@ -46,7 +43,7 @@ const HomePage = () => {
       </UniversalDialog>
       <Container maxWidth={'lg'}>
         <Box display="flex">
-          <SideNav firstName={user.user.firstName} tag={user.user.name} />
+          <SideNav firstName={profile.firstName} tag={profile.name} />
           <Home headerTitle="Home" />
           {matches && <SideBanners />}
         </Box>

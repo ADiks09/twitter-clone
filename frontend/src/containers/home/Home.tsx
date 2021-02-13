@@ -15,13 +15,14 @@ import {
   getPostByUserNameFx,
 } from '../../models/postsByUserName'
 import { useScrollObserver } from '../../services/hooks/useScrollObserver.hook'
+import { $profile } from '../../models/profile'
 
 type Props = {
   headerTitle: string,
 }
 
 export const Home: FC<Props> = ({ headerTitle }) => {
-  const userName = useSelector((state: IRootReducer) => state.profile.user.name)
+  const { name } = useStore($profile)
 
   const { loading, error, data } = useStore($postsByUserNameStore)
 
@@ -30,17 +31,17 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
   useEffect(() => {
     ;(async () => {
-      if (!userName) return
+      if (!name) return
 
       await getPostByUserNameFx({
-        userName,
+        userName: name,
         query: {
           skip: skip,
           limit: 10,
         },
       })
     })()
-  }, [userName, skip])
+  }, [name, skip])
 
   const elemObserver = useScrollObserver(() => {
     const totalSkip = skip + 10
