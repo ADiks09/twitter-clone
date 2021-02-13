@@ -20,5 +20,6 @@ export const $userLoginData = createStore<IFullUser>({
 
 export const $userLoginStore = combine({
   error: restore<AxiosError>(postUserLoginFx.failData, null),
-  user: postUserLoginFx.doneData,
+  user: $userLoginData,
+  loading: postUserLoginFx.pending,
 })

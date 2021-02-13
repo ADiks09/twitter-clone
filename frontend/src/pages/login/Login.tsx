@@ -9,6 +9,7 @@ import { CustomTextField } from '../../services/components/CustomTextField'
 import { IFullUser, IUser } from '../../store/ducks/common'
 import { $userLoginStore, postUserLoginFx } from '../../models/auth'
 import { useStore } from 'effector-react'
+import { CircularProgress } from '@material-ui/core'
 
 const validationSchema = yup.object<IUser>({
   email: yup
@@ -34,7 +35,7 @@ const initialValue: IFullUser = {
 const LogInForm: FC = () => {
   const [isError, setIsError] = useState(false)
 
-  const { error } = useStore($userLoginStore)
+  const { error, loading, user } = useStore($userLoginStore)
 
   useEffect(() => {
     if (error) {
@@ -49,7 +50,7 @@ const LogInForm: FC = () => {
     onSubmit: async (values: IFullUser) => await postUserLoginFx(values),
   })
 
-  // if (isRedirect) return <Redirect to="/home" />
+  if (user.name) return <Redirect to="/home" />
 
   if (isError && error) {
     setTimeout(() => {
@@ -111,8 +112,9 @@ const LogInForm: FC = () => {
           variant={'contained'}
           color={'primary'}
           type="submit"
+          disabled={loading}
         >
-          'Log in'
+          {loading ? <CircularProgress /> : 'Log in'}
         </Button>
       </form>
     </>
