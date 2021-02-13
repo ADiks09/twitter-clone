@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
 import { Button } from '@material-ui/core'
@@ -14,6 +14,7 @@ import {
   $postsByUserNameStore,
   getPostByUserNameFx,
 } from '../../models/postsByUserName'
+import { useScrollObserver } from '../../services/hooks/useScrollObserver.hook'
 
 type Props = {
   headerTitle: string,
@@ -41,37 +42,16 @@ export const Home: FC<Props> = ({ headerTitle }) => {
     })()
   }, [userName, skip])
 
-  const observer = useRef<IntersectionObserver>(null)
+  const elemObserver = useScrollObserver(() => {
+    const totalSkip = skip + 10
 
-  const lastElementRef = useCallback(
-    (node) => {
-      if (loading) return
+    if (totalSkip >= data.postsTotal) {
+      setDisabled(true)
+      return
+    }
 
-      if (observer.current) observer.current.disconnect()
-      // @ts-ignore
-      observer.current = new IntersectionObserver(
-        ([entries]) => {
-          if (!entries.isIntersecting) return
-
-          const totalSkip = skip + 10
-
-          if (totalSkip >= data.postsTotal) {
-            setDisabled(true)
-            return
-          }
-
-          setSkip(totalSkip)
-        },
-        {
-          rootMargin: '20px',
-          threshold: 0.2,
-        }
-      )
-
-      if (node) observer.current.observe(node)
-    },
-    [data.postsTotal, loading, skip]
-  )
+    setSkip(totalSkip)
+  }, loading)
 
   if (error) {
     return <h1>{error}</h1>
@@ -103,7 +83,7 @@ export const Home: FC<Props> = ({ headerTitle }) => {
         fullWidth
         variant="outlined"
         color="primary"
-        ref={lastElementRef}
+        ref={elemObserver}
       >
         {disabled ? 'Your posts collection has empty' : 'Load more...'}
       </Button>
