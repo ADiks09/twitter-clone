@@ -13,3 +13,5 @@ api.onCreateEffect((fx) => {
 })
 
 $userLoginData.on(postUserLoginFx.doneData, (_, data) => data)
+
+$authError.reset(postUserLoginFx.done)
