@@ -2,9 +2,7 @@ import {
   IPostCreate,
   IPostCreateAction,
   IPostFetchCollectionAction,
-  IPostByUserNameCollection,
   IPostLoadingStatusAction,
-  IPostSetCollectionAction,
   IPostSetCreateSuccessfulAction,
   IPostFetchCollectionPayload,
 } from './IPost'
@@ -36,12 +34,5 @@ export const postFetchCollectionAction = (
   payload: IPostFetchCollectionPayload
 ): IPostFetchCollectionAction => ({
   type: PostTypes.POST_GET_ACTION,
-  payload,
-})
-
-export const postSetCollectionAction = (
-  payload: IPostByUserNameCollection
-): IPostSetCollectionAction => ({
-  type: PostTypes.POST_SET_COLLECTION,
   payload,
 })

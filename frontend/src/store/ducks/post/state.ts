@@ -1,5 +1,5 @@
 import { IError, LoadingStatus } from '../common'
-import { IPostCreate, IPostByUserNameCollection } from './actions/IPost'
+import { IPostCreate } from './actions/IPost'
 
 export interface IPostState {
   create: {
@@ -7,11 +7,5 @@ export interface IPostState {
     loading: LoadingStatus
     requestError: IError
     successful: { message: string }
-  }
-  posts: {
-    userName: string
-    loading: LoadingStatus
-    requestError: IError
-    data: IPostByUserNameCollection
   }
 }

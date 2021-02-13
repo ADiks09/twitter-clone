@@ -7,18 +7,13 @@ import {
 } from '../../store/ducks/post/actions/IPost'
 import { API } from './endpoint'
 
-export const postsByUserName = ({
+export const postsByUserNameEffector = ({
   userName,
   query,
-}: IPostFetchCollectionPayload) => {
+}: IPostFetchCollectionPayload): Promise<IPostByUserNameCollection> => {
   const url = `${API.POST.GET_COLLECTION_BY_USER_NAME}/${userName}`
   const params = `?limit=${query.limit}&skip=${query.skip}`
-  return axios
-    .get(url + params)
-    .then((response: AxiosResponse<IPostByUserNameCollection>) => ({
-      data: response.data,
-    }))
-    .catch((error) => ({ error }))
+  return axios.get(url + params).then((res) => res.data)
 }
 
 export const postApiCreate = ({ text, file }: IPostCreate) => {

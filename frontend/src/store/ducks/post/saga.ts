@@ -1,13 +1,12 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { PostTypes } from './actions/postTypes'
-import { IPostCreateAction, IPostFetchCollectionAction } from './actions/IPost'
+import { IPostCreateAction } from './actions/IPost'
 import {
   postCreateLoadingStatusAction,
   postCreateSetSuccessful,
-  postSetCollectionAction,
 } from './actions/action'
 import { LoadingStatus } from '../common'
-import { postApiCreate, postsByUserName } from '../../../services/api/postApi'
+import { postApiCreate } from '../../../services/api/postApi'
 
 function* postRequestCreate(action: IPostCreateAction) {
   const { data, error } = yield call(() => postApiCreate(action.payload))
@@ -24,19 +23,6 @@ function* watchPostRequestCreate() {
   yield takeLatest(PostTypes.POST_CREATE, postRequestCreate)
 }
 
-function* postFetchCollectionAction({ payload }: IPostFetchCollectionAction) {
-  const { data, error } = yield call(() => postsByUserName(payload))
-  if (error) {
-    console.error('---GET POST BY USER NAME ERROR---', error)
-  }
-  console.log('---GET POST BY USER NAME SUCCESSFULLY---', data)
-  yield put(postSetCollectionAction(data))
-}
-
-function* watchPostFetchCollection() {
-  yield takeLatest(PostTypes.POST_GET_ACTION, postFetchCollectionAction)
-}
-
 export function* postRootSaga() {
-  yield all([watchPostRequestCreate(), watchPostFetchCollection()])
+  yield all([watchPostRequestCreate()])
 }
