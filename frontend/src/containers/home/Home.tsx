@@ -22,9 +22,7 @@ type Props = {
 export const Home: FC<Props> = ({ headerTitle }) => {
   const userName = useSelector((state: IRootReducer) => state.profile.user.name)
 
-  const { loading, error, author, posts, total } = useStore(
-    $postsByUserNameStore
-  )
+  const { loading, error, data } = useStore($postsByUserNameStore)
 
   const [skip, setSkip] = useState(0)
   const [disabled, setDisabled] = useState<boolean>(false)
@@ -53,16 +51,16 @@ export const Home: FC<Props> = ({ headerTitle }) => {
       // @ts-ignore
       observer.current = new IntersectionObserver(
         ([entries]) => {
-          if (entries.isIntersecting) {
-            const totalSkip = skip + 10
+          if (!entries.isIntersecting) return
 
-            if (totalSkip >= total) {
-              setDisabled(true)
-              return
-            }
+          const totalSkip = skip + 10
 
-            setSkip(totalSkip)
+          if (totalSkip >= data.postsTotal) {
+            setDisabled(true)
+            return
           }
+
+          setSkip(totalSkip)
         },
         {
           rootMargin: '20px',
@@ -72,7 +70,7 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
       if (node) observer.current.observe(node)
     },
-    [total, loading, skip]
+    [data.postsTotal, loading, skip]
   )
 
   if (error) {
@@ -93,8 +91,8 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
       <div className={classes.emptyBox} />
 
-      {posts.map((post, index) => (
-        <Post post={post} author={author} key={index} />
+      {data.posts.map((post, index) => (
+        <Post post={post} author={data.author} key={index} />
       ))}
 
       {loading &&
