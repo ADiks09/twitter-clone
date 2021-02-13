@@ -1,8 +1,6 @@
 import { UserTypes } from './userTypes'
 import {
   IUserLoadingStatus,
-  IUserLoginAction,
-  IUserLoginFetchAction,
   IUserRequestProfile,
   IUserRequestFailedAction,
   IUserSignInAction,
@@ -36,19 +34,9 @@ export const userFetchSignIn = (
   payload,
 })
 
-export const userFetchLogin = (payload: IFullUser): IUserLoginFetchAction => ({
-  type: UserTypes.USER_FETCH_LOGIN,
-  payload,
-})
-
 export const userLoadingStatus = (
   payload: LoadingStatus
 ): IUserLoadingStatus => ({
   type: UserTypes.USER_LOADING_STATUS,
-  payload,
-})
-
-export const userLogin = (payload: IFullUser): IUserLoginAction => ({
-  type: UserTypes.USER_LOGIN,
   payload,
 })

@@ -21,13 +21,6 @@ export const initialUserState: IFullUserState = {
 export const userReducer = produce(
   (draft: Draft<IFullUserState>, action: UserAction) => {
     switch (action.type) {
-      case UserTypes.USER_LOGIN:
-        draft.appUser = action.payload
-        draft.loading = LoadingStatus.LOADED
-        break
-      case UserTypes.USER_FETCH_LOGIN:
-        draft.loading = LoadingStatus.LOADING
-        break
       case UserTypes.USER_SIGN:
         draft.appUser = action.payload
         draft.loading = LoadingStatus.LOADED

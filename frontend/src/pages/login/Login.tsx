@@ -38,10 +38,7 @@ const LogInForm: FC = () => {
   const { error, loading, user } = useStore($userLoginStore)
 
   useEffect(() => {
-    if (error) {
-      console.log(error.message, error.response?.data)
-      setIsError(true)
-    }
+    if (error) setIsError(true)
   }, [error])
 
   const formik = useFormik({

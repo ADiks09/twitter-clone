@@ -1,6 +1,6 @@
 import { combine, createDomain, createStore, restore } from 'effector'
 import { IFullUser, IUser } from '../../store/ducks/common'
-import { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError } from 'axios'
 
 export const api = createDomain()
 
