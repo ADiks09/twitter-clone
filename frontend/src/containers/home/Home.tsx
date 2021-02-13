@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
 import { Button } from '@material-ui/core'
-import { IRootReducer } from '../../store/rootReducer'
 import { PostContainer } from '../../components/post-container/PostContainer'
 import { HomeHeader } from '../../components/home-header/HomeHeader'
 import { PostCreator } from './PostCreator'

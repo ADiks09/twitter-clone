@@ -10,13 +10,10 @@ import {
 import classes from './home.module.scss'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { IPostCreate } from '../../store/ducks/post/actions/IPost'
-import { IRootReducer } from '../../store/rootReducer'
-import { LoadingStatus } from '../../store/ducks/common'
-import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
 import { SubmitButton } from '../../components/SubmitButton'
 
 const btnData: JSX.Element[] = [
@@ -38,7 +35,7 @@ const initialValues: IPostCreate = {
 export const PostCreator: FC = () => {
   const dispatch = useDispatch()
 
-  const postCreate = useSelector((state: IRootReducer) => state.post.create)
+  // const postCreate = useSelector((state: IRootReducer) => state.post.create)
 
   const inputFile = useRef<HTMLInputElement>(null)
 
@@ -46,7 +43,7 @@ export const PostCreator: FC = () => {
   const [successful, setSuccessful] = useState(false)
 
   const handleOnSubmit = async (values: IPostCreate) => {
-    dispatch(postRequestCreateAction(values))
+    // dispatch(postRequestCreateAction(values))
     formik.resetForm()
     setCountUploads(0)
   }
@@ -70,9 +67,9 @@ export const PostCreator: FC = () => {
     setCountUploads(countUploads + 1)
   }
 
-  useEffect(() => {
-    setSuccessful(!!postCreate.successful.message)
-  }, [postCreate, postCreate.successful.message])
+  // useEffect(() => {
+  //   setSuccessful(!!postCreate.successful.message)
+  // }, [postCreate, postCreate.successful.message])
 
   if (successful) {
     setTimeout(() => {
@@ -87,7 +84,7 @@ export const PostCreator: FC = () => {
       >
         <AlertTitle>Success</AlertTitle>
         This is a success alert —{' '}
-        <strong>{postCreate.successful.message}</strong>
+        {/*<strong>{postCreate.successful.message}</strong>*/}
       </Alert>
     )
   }
@@ -143,11 +140,7 @@ export const PostCreator: FC = () => {
           style={{ display: 'none' }}
         />
 
-        <SubmitButton
-          loading={postCreate.loading === LoadingStatus.LOADING}
-          classes={classes.btn}
-          text="Tweet"
-        />
+        <SubmitButton loading={false} classes={classes.btn} text="Tweet" />
       </div>
     </form>
   )
