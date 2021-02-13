@@ -15,6 +15,14 @@ export const userApiLogin = ({ email, password }: IUser) =>
       error,
     }))
 
+export const postUserLoginApi = ({ email, password }: IUser) =>
+  axios
+    .post(API.USER.LOGIN, {
+      email,
+      password,
+    })
+    .then((response: AxiosResponse<{ user: IFullUser }>) => response.data.user)
+
 export const userApiSignIn = (fullUser: IFullUser) =>
   axios
     .post(API.USER.REGISTER, fullUser)
