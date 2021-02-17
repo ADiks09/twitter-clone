@@ -10,11 +10,12 @@ import {
 import classes from './home.module.scss'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { IPostCreate } from '../../store/ducks/post/actions/IPost'
 import { SubmitButton } from '../../components/SubmitButton'
+import { $postCreateStore, createPostFx } from '../../models/postCreate'
+import { useStore } from 'effector-react'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,
@@ -33,13 +34,14 @@ const initialValues: IPostCreate = {
 }
 
 export const PostCreator: FC = () => {
+  const { data, error, loading } = useStore($postCreateStore)
   const inputFile = useRef<HTMLInputElement>(null)
 
   const [countUploads, setCountUploads] = useState(0)
   const [successful, setSuccessful] = useState(false)
 
   const handleOnSubmit = async (values: IPostCreate) => {
-    // dispatch(postRequestCreateAction(values))
+    await createPostFx(values)
     formik.resetForm()
     setCountUploads(0)
   }
@@ -136,7 +138,7 @@ export const PostCreator: FC = () => {
           style={{ display: 'none' }}
         />
 
-        <SubmitButton loading={false} classes={classes.btn} text="Tweet" />
+        <SubmitButton loading={loading} classes={classes.btn} text="Tweet" />
       </div>
     </form>
   )
