@@ -13,5 +13,4 @@ export const postUserLoginApi = ({ email, password }: IUser) =>
 export const userApiSignIn = (fullUser: IFullUser) =>
   axios
     .post(API.USER.REGISTER, fullUser)
-    .then((response: AxiosResponse<IFullUser>) => ({ data: response.data }))
-    .catch((error) => ({ error }))
+    .then((response: AxiosResponse<{ user: IFullUser }>) => response.data.user)

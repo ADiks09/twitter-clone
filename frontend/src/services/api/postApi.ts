@@ -3,7 +3,6 @@ import {
   IPostByUserNameCollection,
   IPostCreate,
   IPostFetchCollectionPayload,
-  IPostSetCreateSuccessfulAction,
 } from '../../store/ducks/post/actions/IPost'
 import { API } from './endpoint'
 
@@ -16,20 +15,20 @@ export const postsByUserNameEffector = ({
   return axios.get(url + params).then((res) => res.data)
 }
 
-export const postApiCreate = ({ text, file }: IPostCreate) => {
-  const formData = new FormData()
-
-  if (file) formData.append('file', file)
-  formData.append('text', text)
-
-  return axios
-    .post(API.POST.CREATE, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response: AxiosResponse<IPostSetCreateSuccessfulAction>) => ({
-      data: response.data,
-    }))
-    .catch((error) => ({ error }))
-}
+// export const postApiCreate = ({ text, file }: IPostCreate) => {
+//   const formData = new FormData()
+//
+//   if (file) formData.append('file', file)
+//   formData.append('text', text)
+//
+//   return axios
+//     .post(API.POST.CREATE, formData, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     })
+//     .then((response: AxiosResponse<IPostSetCreateSuccessfulAction>) => ({
+//       data: response.data,
+//     }))
+//     .catch((error) => ({ error }))
+// }

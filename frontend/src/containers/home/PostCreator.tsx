@@ -33,10 +33,6 @@ const initialValues: IPostCreate = {
 }
 
 export const PostCreator: FC = () => {
-  const dispatch = useDispatch()
-
-  // const postCreate = useSelector((state: IRootReducer) => state.post.create)
-
   const inputFile = useRef<HTMLInputElement>(null)
 
   const [countUploads, setCountUploads] = useState(0)

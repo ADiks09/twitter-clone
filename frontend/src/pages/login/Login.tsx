@@ -7,7 +7,7 @@ import { Alert, AlertTitle } from '@material-ui/lab'
 import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
 import { IFullUser, IUser } from '../../store/ducks/common'
-import { $userLoginStore, postUserLoginFx } from '../../models/auth'
+import { $userLoginStore, postUserLoginFx } from '../../models/login'
 import { useStore } from 'effector-react'
 import { CircularProgress } from '@material-ui/core'
 

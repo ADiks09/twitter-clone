@@ -1,8 +1,6 @@
 import { guard } from 'effector'
-import { $authError, $userLoginData, api, postUserLoginFx } from './index'
-import { postUserLoginApi } from '../../services/api/userApi'
-
-postUserLoginFx.use(postUserLoginApi)
+import { postUserLoginFx } from '../login'
+import { $authError, api } from './index'
 
 api.onCreateEffect((fx) => {
   guard({
@@ -11,7 +9,5 @@ api.onCreateEffect((fx) => {
     target: $authError,
   })
 })
-
-$userLoginData.on(postUserLoginFx.doneData, (_, data) => data)
 
 $authError.reset(postUserLoginFx.done)

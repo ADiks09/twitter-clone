@@ -1,8 +1,9 @@
-import { combine, createEffect, createStore, restore } from 'effector'
+import { combine, createStore, restore } from 'effector'
 import {
   IPostByUserNameCollection,
   IPostFetchCollectionPayload,
 } from '../../store/ducks/post/actions/IPost'
+import { api } from '../auth'
 
 export const $postsByUserName = createStore<IPostByUserNameCollection>({
   author: {
@@ -15,7 +16,7 @@ export const $postsByUserName = createStore<IPostByUserNameCollection>({
   postsTotal: 0,
 })
 
-export const getPostByUserNameFx = createEffect<
+export const getPostByUserNameFx = api.createEffect<
   IPostFetchCollectionPayload,
   IPostByUserNameCollection,
   Error
