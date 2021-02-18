@@ -1,16 +1,28 @@
-import { combine, createStore, restore } from 'effector'
-import { IPost, IPostCreate } from '../../store/ducks/post/actions/IPost'
+import { combine, createEvent, createStore, restore } from 'effector'
+import { IPostCreate } from '../../store/ducks/post/actions/IPost'
 import { api } from '../auth'
 import { AxiosError } from 'axios'
 
-export const $postCreate = createStore<IPostCreate>({
-  text: '',
+interface ISuccessfully {
+  message: string
+  isSuccess: boolean
+}
+
+export const $postSuccessfullyCreate = createStore<ISuccessfully>({
+  message: '',
+  isSuccess: false
 })
 
-export const createPostFx = api.createEffect<IPostCreate, IPost, AxiosError>()
+export const resetSuccessfullyCreate = createEvent()
+
+export const createPostFx = api.createEffect<
+  IPostCreate,
+  { message: string },
+  AxiosError
+>()
 
 export const $postCreateStore = combine({
   loading: createPostFx.pending,
   error: restore<AxiosError>(createPostFx.failData, null),
-  data: $postCreate,
+  successfully: $postSuccessfullyCreate,
 })
