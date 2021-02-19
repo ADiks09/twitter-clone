@@ -64,8 +64,9 @@ const Sign: FC = () => {
   const [isRedirect, setIsRedirect] = useState(false)
 
   useEffect(() => {
-    setIsError(!!error)
-    setIsRedirect(!!user)
+    console.log(error?.response?.data?.message)
+    setIsError(!!error?.response?.data?.message)
+    setIsRedirect(!!user.name)
   }, [error, user])
 
   const formik = useFormik<IFullUser>({
@@ -94,7 +95,7 @@ const Sign: FC = () => {
           style={{ marginBottom: 30 }}
         >
           <AlertTitle>Sign in failed</AlertTitle>
-          <strong>{error}!</strong>
+          <strong>{error?.response?.data?.message}!</strong>
         </Alert>
       )}
       <UniversalDialog

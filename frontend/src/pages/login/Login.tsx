@@ -10,6 +10,7 @@ import { IFullUser, IUser } from '../../store/ducks/common'
 import { $userLoginStore, postUserLoginFx } from '../../models/login'
 import { useStore } from 'effector-react'
 import { CircularProgress } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 const validationSchema = yup.object<IUser>({
   email: yup
@@ -104,6 +105,7 @@ const LogInForm: FC = () => {
             }}
           />
         </div>
+        <Link to="/sign">Register now</Link>
         <Button
           className={classes.btn}
           variant={'contained'}
