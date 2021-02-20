@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useRef, useState } from 'react'
 import { Badge, IconButton, Tooltip } from '@material-ui/core'
 import {
   EqualizerRounded,
@@ -10,14 +10,16 @@ import {
 import classes from './home.module.scss'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { IPostCreate } from '../../store/ducks/post/actions/IPost'
-import { IRootReducer } from '../../store/rootReducer'
-import { LoadingStatus } from '../../store/ducks/common'
-import { postRequestCreateAction } from '../../store/ducks/post/actions/action'
 import { SubmitButton } from '../../components/SubmitButton'
+import {
+  $postCreateStore,
+  createPostFx,
+  resetSuccessfullyCreate,
+} from '../../models/postCreate'
+import { useStore } from 'effector-react'
+import { IPostCreate } from '../../interfaces/IPost'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,
@@ -36,17 +38,13 @@ const initialValues: IPostCreate = {
 }
 
 export const PostCreator: FC = () => {
-  const dispatch = useDispatch()
-
-  const postCreate = useSelector((state: IRootReducer) => state.post.create)
-
+  const { successfully, loading } = useStore($postCreateStore)
   const inputFile = useRef<HTMLInputElement>(null)
 
   const [countUploads, setCountUploads] = useState(0)
-  const [successful, setSuccessful] = useState(false)
 
   const handleOnSubmit = async (values: IPostCreate) => {
-    dispatch(postRequestCreateAction(values))
+    await createPostFx(values)
     formik.resetForm()
     setCountUploads(0)
   }
@@ -70,24 +68,19 @@ export const PostCreator: FC = () => {
     setCountUploads(countUploads + 1)
   }
 
-  useEffect(() => {
-    setSuccessful(!!postCreate.successful.message)
-  }, [postCreate, postCreate.successful.message])
-
-  if (successful) {
+  if (successfully.isSuccess) {
     setTimeout(() => {
-      setSuccessful(false)
+      resetSuccessfullyCreate()
     }, 3000)
 
     return (
       <Alert
         severity="success"
         color="info"
-        onClose={() => setSuccessful(false)}
+        onClose={() => resetSuccessfullyCreate()}
       >
         <AlertTitle>Success</AlertTitle>
-        This is a success alert —{' '}
-        <strong>{postCreate.successful.message}</strong>
+        This is a success alert — <strong>{successfully.message}</strong>
       </Alert>
     )
   }
@@ -143,11 +136,7 @@ export const PostCreator: FC = () => {
           style={{ display: 'none' }}
         />
 
-        <SubmitButton
-          loading={postCreate.loading === LoadingStatus.LOADING}
-          classes={classes.btn}
-          text="Tweet"
-        />
+        <SubmitButton loading={loading} classes={classes.btn} text="Tweet" />
       </div>
     </form>
   )

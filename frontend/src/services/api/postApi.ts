@@ -1,13 +1,12 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
+import { API } from './endpoint'
 import {
   IPostByUserNameCollection,
   IPostCreate,
   IPostFetchCollectionPayload,
-  IPostSetCreateSuccessfulAction,
-} from '../../store/ducks/post/actions/IPost'
-import { API } from './endpoint'
+} from '../../interfaces/IPost'
 
-export const postsByUserNameEffector = ({
+export const postsByUserName = ({
   userName,
   query,
 }: IPostFetchCollectionPayload): Promise<IPostByUserNameCollection> => {
@@ -28,8 +27,5 @@ export const postApiCreate = ({ text, file }: IPostCreate) => {
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then((response: AxiosResponse<IPostSetCreateSuccessfulAction>) => ({
-      data: response.data,
-    }))
-    .catch((error) => ({ error }))
+    .then((response) => response.data)
 }

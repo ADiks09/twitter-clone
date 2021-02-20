@@ -3,19 +3,8 @@ import classes from './post.module.scss'
 import { Link } from 'react-router-dom'
 import { IconButton } from '@material-ui/core'
 import { ExpandMoreRounded } from '@material-ui/icons'
-import { IPostAuthor } from '../../store/ducks/post/actions/IPost'
-
-const getDate = (date: Date): string => {
-  const dateNow = new Date(Date.now())
-  const datePost = new Date(date)
-
-  if (dateNow.getMonth() !== datePost.getMonth())
-    return datePost.toLocaleDateString()
-
-  const day = dateNow.getDate() - datePost.getDate()
-
-  return day === 0 ? 'today' : `${day} day ago`
-}
+import { IPostAuthor } from '../../interfaces/IPost'
+import { parseDateForPost } from '../../services/helpers/date'
 
 interface IProps {
   createdAt: Date
@@ -37,7 +26,7 @@ export const PostHeader: React.FC<IProps> = ({ author, createdAt }) => {
           </Link>
           <span className={classes.date}>
             <span style={{ marginRight: '5px' }}>{'\u2022'}</span>
-            {getDate(createdAt)}
+            {parseDateForPost(createdAt)}
           </span>
         </span>
       <IconButton className={classes.iconBtn} style={{ padding: '2px' }}>

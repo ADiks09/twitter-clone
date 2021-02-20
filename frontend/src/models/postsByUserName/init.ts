@@ -1,7 +1,7 @@
 import { $postsByUserName, getPostByUserNameFx } from './index'
-import { postsByUserNameEffector } from '../../services/api/postApi'
+import { postsByUserName } from '../../services/api/postApi'
 
-getPostByUserNameFx.use(postsByUserNameEffector)
+getPostByUserNameFx.use(postsByUserName)
 
 $postsByUserName.on(getPostByUserNameFx.doneData, (state, data) => ({
   author: data.author,
