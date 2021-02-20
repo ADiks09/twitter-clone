@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import {
   IPostByUserNameCollection,
   IPostCreate,
@@ -6,7 +6,7 @@ import {
 } from '../../store/ducks/post/actions/IPost'
 import { API } from './endpoint'
 
-export const postsByUserNameEffector = ({
+export const postsByUserName = ({
   userName,
   query,
 }: IPostFetchCollectionPayload): Promise<IPostByUserNameCollection> => {
