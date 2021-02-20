@@ -56,18 +56,16 @@ const initialValue: IFullUser = {
   name: '',
 }
 
-// todo fix redirect to log in with react store
 const Sign: FC = () => {
-  const { loading, error, user } = useStore($userSignStore)
+  const { loading, error, signSuccessfully } = useStore($userSignStore)
 
   const [isError, setIsError] = useState(false)
   const [isRedirect, setIsRedirect] = useState(false)
 
   useEffect(() => {
-    console.log('error sign form', error?.message, error)
-    setIsError(!!error?.response?.data?.message)
-    setIsRedirect(!!user.name)
-  }, [error, user])
+    setIsError(!!error.message)
+    setIsRedirect(signSuccessfully)
+  }, [error, signSuccessfully])
 
   const formik = useFormik<IFullUser>({
     initialValues: initialValue,
@@ -95,7 +93,7 @@ const Sign: FC = () => {
           style={{ marginBottom: 30 }}
         >
           <AlertTitle>Sign in failed</AlertTitle>
-          <strong>{error?.response?.data?.message}!</strong>
+          <strong>{error.message}!</strong>
         </Alert>
       )}
       <UniversalDialog

@@ -1,4 +1,4 @@
-import { combine, createStore, restore } from 'effector'
+import { combine, createStore } from 'effector'
 import { IFullUser } from '../../store/ducks/common'
 import { AxiosError } from 'axios'
 import { api } from '../auth'
@@ -6,24 +6,15 @@ import { api } from '../auth'
 export const postUserSignFx = api.createEffect<
   IFullUser,
   IFullUser,
-  AxiosError
+  AxiosError<{ message: string }>
 >()
 
-export const $userSignData = createStore<IFullUser>({
-  birthday: new Date(),
-  email: '',
-  firstName: '',
-  lastName: '',
-  name: '',
-  password: '',
-  phone: '',
-})
+export const $userSign = createStore<boolean>(false)
+
+export const $errorSign = createStore<{ message: string }>({ message: '' })
 
 export const $userSignStore = combine({
-  error: restore<AxiosError<{ message: string }>>(
-    postUserSignFx.failData,
-    null
-  ),
-  user: $userSignData,
+  error: $errorSign,
+  signSuccessfully: $userSign,
   loading: postUserSignFx.pending,
 })

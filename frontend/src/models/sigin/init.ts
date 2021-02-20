@@ -1,6 +1,10 @@
-import { $userSignData, postUserSignFx } from './index'
+import { $errorSign, $userSign, postUserSignFx } from './index'
 import { userApiSignIn } from '../../services/api/userApi'
 
 postUserSignFx.use(userApiSignIn)
 
-$userSignData.on(postUserSignFx.doneData, (_, data) => data)
+$errorSign.on(postUserSignFx.failData, (_, d) => d.response?.data)
+
+$userSign.on(postUserSignFx.done, () => true)
+
+$errorSign.reset(postUserSignFx.done)
