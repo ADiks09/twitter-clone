@@ -2,8 +2,8 @@ import React from 'react'
 import classes from './post.module.scss'
 import { Button, MobileStepper } from '@material-ui/core'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
-import { IMedia } from '../../store/ducks/post/actions/IPost'
 import { Alert, Skeleton } from '@material-ui/lab'
+import { IMedia } from '../../interfaces/IPost'
 
 interface IProps {
   media: IMedia[];

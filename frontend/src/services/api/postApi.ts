@@ -1,24 +1,18 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
+import { API } from './endpoint'
 import {
   IPostByUserNameCollection,
   IPostCreate,
   IPostFetchCollectionPayload,
-  IPostSetCreateSuccessfulAction,
-} from '../../store/ducks/post/actions/IPost'
-import { API } from './endpoint'
+} from '../../interfaces/IPost'
 
 export const postsByUserName = ({
   userName,
   query,
-}: IPostFetchCollectionPayload) => {
+}: IPostFetchCollectionPayload): Promise<IPostByUserNameCollection> => {
   const url = `${API.POST.GET_COLLECTION_BY_USER_NAME}/${userName}`
   const params = `?limit=${query.limit}&skip=${query.skip}`
-  return axios
-    .get(url + params)
-    .then((response: AxiosResponse<IPostByUserNameCollection>) => ({
-      data: response.data,
-    }))
-    .catch((error) => ({ error }))
+  return axios.get(url + params).then((res) => res.data)
 }
 
 export const postApiCreate = ({ text, file }: IPostCreate) => {
@@ -33,8 +27,5 @@ export const postApiCreate = ({ text, file }: IPostCreate) => {
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then((response: AxiosResponse<IPostSetCreateSuccessfulAction>) => ({
-      data: response.data,
-    }))
-    .catch((error) => ({ error }))
+    .then((response) => response.data)
 }

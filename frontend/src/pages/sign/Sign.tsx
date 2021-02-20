@@ -1,24 +1,22 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import 'date-fns'
-import { IRootReducer } from '../../store/rootReducer'
 import { useFormik } from 'formik'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import * as yup from 'yup'
 import DateFnsUtils from '@date-io/date-fns'
-import { userFetchSignIn } from '../../store/ducks/user/actions/action'
-import { IFullUserState } from '../../store/ducks/user/state'
-import { IFullUser, LoadingStatus } from '../../store/ducks/common'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Field } from './Field'
 import { SubmitButton } from '../../components/SubmitButton'
 import classes from '../login/login.module.scss'
+import { useStore } from 'effector-react'
+import { $userSignStore, postUserSignFx } from '../../models/sigin'
+import { IFullUser } from '../../interfaces/IUser'
 
 const validationSchema = yup.object<IFullUser>({
   firstName: yup
@@ -58,23 +56,21 @@ const initialValue: IFullUser = {
   name: '',
 }
 
-// todo fix redirect to log in with react store
 const Sign: FC = () => {
-  const auth: IFullUserState = useSelector((state: IRootReducer) => state.auth)
+  const { loading, error, signSuccessfully } = useStore($userSignStore)
 
   const [isError, setIsError] = useState(false)
   const [isRedirect, setIsRedirect] = useState(false)
-  const dispatch = useDispatch()
 
   useEffect(() => {
-    setIsError(auth.loading === LoadingStatus.ERROR)
-    setIsRedirect(auth.loading === LoadingStatus.LOADED)
-  }, [auth.loading])
+    setIsError(!!error.message)
+    setIsRedirect(signSuccessfully)
+  }, [error, signSuccessfully])
 
   const formik = useFormik<IFullUser>({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: async (values: IFullUser) => dispatch(userFetchSignIn(values)),
+    onSubmit: async (values: IFullUser) => postUserSignFx(values),
   })
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -97,7 +93,7 @@ const Sign: FC = () => {
           style={{ marginBottom: 30 }}
         >
           <AlertTitle>Sign in failed</AlertTitle>
-          <strong>{auth.requestError.message}!</strong>
+          <strong>{error.message}!</strong>
         </Alert>
       )}
       <UniversalDialog
@@ -184,11 +180,7 @@ const Sign: FC = () => {
             />
           </MuiPickersUtilsProvider>
         </div>
-        <SubmitButton
-          loading={auth.loading === LoadingStatus.LOADING}
-          text="Sign in"
-          classes={classes.btn}
-        />
+        <SubmitButton loading={loading} text="Sign in" classes={classes.btn} />
       </form>
     </>
   )

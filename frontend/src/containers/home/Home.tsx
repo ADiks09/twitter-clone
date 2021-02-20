@@ -1,55 +1,60 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { ScatterPlot } from '@material-ui/icons'
 import { Button } from '@material-ui/core'
-import { postFetchCollectionAction } from '../../store/ducks/post/actions/action'
-import { IRootReducer } from '../../store/rootReducer'
 import { PostContainer } from '../../components/post-container/PostContainer'
 import { HomeHeader } from '../../components/home-header/HomeHeader'
 import { PostCreator } from './PostCreator'
-import { LoadingStatus } from '../../store/ducks/common'
 import { PostSkeleton } from '../../components/post/PostSkeleton'
 import { Post } from '../../components/post/Post'
 import classes from './home.module.scss'
+import { useStore } from 'effector-react'
+import {
+  $postsByUserNameStore,
+  getPostByUserNameFx,
+} from '../../models/postsByUserName'
+import { useScrollObserver } from '../../services/hooks/useScrollObserver.hook'
+import { $profile } from '../../models/profile'
 
 type Props = {
   headerTitle: string,
 }
 
 export const Home: FC<Props> = ({ headerTitle }) => {
-  const dispatch = useDispatch()
+  const { name } = useStore($profile)
 
-  const userName = useSelector((state: IRootReducer) => state.profile.user.name)
-  const posts = useSelector((state: IRootReducer) => state.post.posts)
+  const { loading, error, data } = useStore($postsByUserNameStore)
 
   const [skip, setSkip] = useState(0)
   const [disabled, setDisabled] = useState<boolean>(false)
 
   useEffect(() => {
     ;(async () => {
-      if (!userName) return
+      if (!name) return
 
-      await dispatch(
-        postFetchCollectionAction({
-          userName,
-          query: {
-            skip: skip,
-            limit: 10,
-          },
-        })
-      )
+      await getPostByUserNameFx({
+        userName: name,
+        query: {
+          skip: skip,
+          limit: 10,
+        },
+      })
     })()
-  }, [dispatch, userName, skip])
+  }, [name, skip])
 
-  const handleLoadMore = () => {
+  const elemObserver = useScrollObserver(() => {
     const totalSkip = skip + 10
 
-    if (totalSkip >= posts.data.postsTotal) {
+    if (totalSkip >= data.postsTotal) {
       setDisabled(true)
       return
     }
 
     setSkip(totalSkip)
+  }, loading)
+
+  if (error) {
+    console.log('home something error: ', error)
+    // return <h1>{error}</h1>
   }
 
   return (
@@ -66,21 +71,21 @@ export const Home: FC<Props> = ({ headerTitle }) => {
 
       <div className={classes.emptyBox} />
 
-      {posts.data.posts.map((data, index) => (
-        <Post post={data} author={posts.data.author} key={index} />
+      {data.posts.map((post, index) => (
+        <Post post={post} author={data.author} key={index} />
       ))}
 
-      {posts.loading === LoadingStatus.LOADING &&
+      {loading &&
         Array.from(new Array(10)).map((_, i) => <PostSkeleton key={i} />)}
 
       <Button
-        onClick={handleLoadMore}
         disabled={disabled}
         fullWidth
         variant="outlined"
         color="primary"
+        ref={elemObserver}
       >
-        Load more...
+        {disabled ? 'Your posts collection has empty' : 'Load more...'}
       </Button>
     </div>
   )

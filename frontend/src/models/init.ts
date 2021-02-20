@@ -1,0 +1,6 @@
+import './auth/init'
+import './login/init'
+import './sigin/init'
+import './postsByUserName/init'
+import './profile/init'
+import './postCreate/init'
