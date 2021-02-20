@@ -64,6 +64,7 @@ const Sign: FC = () => {
   const [isRedirect, setIsRedirect] = useState(false)
 
   useEffect(() => {
+    console.log('error sign form', error?.message, error)
     setIsError(!!error?.response?.data?.message)
     setIsRedirect(!!user.name)
   }, [error, user])

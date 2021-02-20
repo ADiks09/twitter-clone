@@ -11,6 +11,7 @@ import { $userLoginStore, postUserLoginFx } from '../../models/login'
 import { useStore } from 'effector-react'
 import { CircularProgress } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { $authState } from '../../models/auth'
 
 const validationSchema = yup.object<IUser>({
   email: yup
@@ -36,7 +37,8 @@ const initialValue: IFullUser = {
 const LogInForm: FC = () => {
   const [isError, setIsError] = useState(false)
 
-  const { error, loading, user } = useStore($userLoginStore)
+  const { error, loading } = useStore($userLoginStore)
+  const authState = useStore($authState)
 
   useEffect(() => {
     if (error) setIsError(true)
@@ -48,7 +50,7 @@ const LogInForm: FC = () => {
     onSubmit: async (values: IFullUser) => await postUserLoginFx(values),
   })
 
-  if (user.name) return <Redirect to="/home" />
+  if (authState) return <Redirect to="/home" />
 
   if (isError && error) {
     setTimeout(() => {

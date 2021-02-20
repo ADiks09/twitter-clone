@@ -53,7 +53,8 @@ export const Home: FC<Props> = ({ headerTitle }) => {
   }, loading)
 
   if (error) {
-    return <h1>{error}</h1>
+    console.log('home something error: ', error)
+    // return <h1>{error}</h1>
   }
 
   return (

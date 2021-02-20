@@ -20,7 +20,10 @@ export const $userSignData = createStore<IFullUser>({
 })
 
 export const $userSignStore = combine({
-  error: restore<AxiosError>(postUserSignFx.failData, null),
+  error: restore<AxiosError<{ message: string }>>(
+    postUserSignFx.failData,
+    null
+  ),
   user: $userSignData,
   loading: postUserSignFx.pending,
 })

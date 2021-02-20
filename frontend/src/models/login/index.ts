@@ -1,4 +1,4 @@
-import { combine, createStore, restore } from 'effector'
+import { combine, createEvent, createStore, restore } from 'effector'
 import { IFullUser, IUser } from '../../store/ducks/common'
 import { AxiosError } from 'axios'
 import { api } from '../auth'
