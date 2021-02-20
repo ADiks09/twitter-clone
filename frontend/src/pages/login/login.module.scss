@@ -5,6 +5,16 @@
 }
 
 
+.link {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin-top: 20px;
+  text-align: right;
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 .root {
   padding: 2px 4px;

@@ -105,7 +105,7 @@ const LogInForm: FC = () => {
             }}
           />
         </div>
-        <Link to="/sign">Register now</Link>
+
         <Button
           className={classes.btn}
           variant={'contained'}
@@ -116,6 +116,9 @@ const LogInForm: FC = () => {
           {loading ? <CircularProgress /> : 'Log in'}
         </Button>
       </form>
+      <Link className={classes.link} to="/sign">
+        Register now
+      </Link>
     </>
   )
 }
