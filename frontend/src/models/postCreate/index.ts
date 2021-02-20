@@ -1,7 +1,7 @@
 import { combine, createEvent, createStore, restore } from 'effector'
-import { IPostCreate } from '../../store/ducks/post/actions/IPost'
 import { api } from '../auth'
 import { AxiosError } from 'axios'
+import { IPostCreate } from '../../interfaces/IPost'
 
 interface ISuccessfully {
   message: string

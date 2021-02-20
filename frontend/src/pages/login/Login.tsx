@@ -6,12 +6,12 @@ import classes from './login.module.scss'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { Redirect } from 'react-router-dom'
 import { CustomTextField } from '../../services/components/CustomTextField'
-import { IFullUser, IUser } from '../../store/ducks/common'
 import { $userLoginStore, postUserLoginFx } from '../../models/login'
 import { useStore } from 'effector-react'
 import { CircularProgress } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { $authState } from '../../models/auth'
+import { IFullUser, IUser } from '../../interfaces/IUser'
 
 const validationSchema = yup.object<IUser>({
   email: yup

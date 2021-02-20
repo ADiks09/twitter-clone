@@ -1,10 +1,10 @@
 import axios from 'axios'
+import { API } from './endpoint'
 import {
   IPostByUserNameCollection,
   IPostCreate,
   IPostFetchCollectionPayload,
-} from '../../store/ducks/post/actions/IPost'
-import { API } from './endpoint'
+} from '../../interfaces/IPost'
 
 export const postsByUserName = ({
   userName,

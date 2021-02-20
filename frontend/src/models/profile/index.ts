@@ -1,7 +1,7 @@
 import { combine, createStore } from 'effector'
-import { IFullUser } from '../../store/ducks/common'
 import { AxiosError } from 'axios'
 import { api } from '../auth'
+import { IFullUser } from '../../interfaces/IUser'
 
 export const $profile = createStore<IFullUser>({
   birthday: new Date(),

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { API } from './endpoint'
-import { IFullUser } from '../../store/ducks/common'
+import { IFullUser } from '../../interfaces/IUser'
 
 export const profileApiUser = () =>
   axios

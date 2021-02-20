@@ -1,9 +1,9 @@
 import { combine, createStore, restore } from 'effector'
+import { api } from '../auth'
 import {
   IPostByUserNameCollection,
   IPostFetchCollectionPayload,
-} from '../../store/ducks/post/actions/IPost'
-import { api } from '../auth'
+} from '../../interfaces/IPost'
 
 export const $postsByUserName = createStore<IPostByUserNameCollection>({
   author: {

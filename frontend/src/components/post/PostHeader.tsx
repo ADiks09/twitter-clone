@@ -3,8 +3,9 @@ import classes from './post.module.scss'
 import { Link } from 'react-router-dom'
 import { IconButton } from '@material-ui/core'
 import { ExpandMoreRounded } from '@material-ui/icons'
-import { IPostAuthor } from '../../store/ducks/post/actions/IPost'
+import { IPostAuthor } from '../../interfaces/IPost'
 
+//todo move to services
 const getDate = (date: Date): string => {
   const dateNow = new Date(Date.now())
   const datePost = new Date(date)

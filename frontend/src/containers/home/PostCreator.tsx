@@ -12,7 +12,6 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { IPostCreate } from '../../store/ducks/post/actions/IPost'
 import { SubmitButton } from '../../components/SubmitButton'
 import {
   $postCreateStore,
@@ -20,6 +19,7 @@ import {
   resetSuccessfullyCreate,
 } from '../../models/postCreate'
 import { useStore } from 'effector-react'
+import { IPostCreate } from '../../interfaces/IPost'
 
 const btnData: JSX.Element[] = [
   <Gif color="primary" />,

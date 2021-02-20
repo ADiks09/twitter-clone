@@ -1,6 +1,6 @@
 import { combine, restore } from 'effector'
-import { IFullUser, IUser } from '../../store/ducks/common'
 import { AxiosError } from 'axios'
+import { IFullUser, IUser } from '../../interfaces/IUser'
 import { api } from '../auth'
 
 export const postUserLoginFx = api.createEffect<IUser, IFullUser, AxiosError>()

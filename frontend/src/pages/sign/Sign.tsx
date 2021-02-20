@@ -10,13 +10,13 @@ import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import * as yup from 'yup'
 import DateFnsUtils from '@date-io/date-fns'
-import { IFullUser } from '../../store/ducks/common'
 import { UniversalDialog } from '../../services/components/Dialog'
 import { Field } from './Field'
 import { SubmitButton } from '../../components/SubmitButton'
 import classes from '../login/login.module.scss'
 import { useStore } from 'effector-react'
 import { $userSignStore, postUserSignFx } from '../../models/sigin'
+import { IFullUser } from '../../interfaces/IUser'
 
 const validationSchema = yup.object<IFullUser>({
   firstName: yup

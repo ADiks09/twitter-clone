@@ -6,12 +6,12 @@ import {
   SystemUpdateAltOutlined,
 } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
-import { IPost, IPostAuthor } from '../../store/ducks/post/actions/IPost'
 import { PostContainer } from '../post-container/PostContainer'
 import { PostButton } from './PostButton'
 import classes from './post.module.scss'
 import { PostPhotoSlider } from './PostPhotoSlider'
 import { PostHeader } from './PostHeader'
+import { IPost, IPostAuthor } from '../../interfaces/IPost'
 
 // todo later, this is a temporary solution
 const PostButtons = ({loading}: {loading: boolean}) => (
