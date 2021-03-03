@@ -44,7 +44,7 @@ const HomePage = () => {
       <Container maxWidth={'lg'}>
         <Box display="flex">
           <SideNav firstName={profile.firstName} tag={profile.name} />
-          <Home headerTitle="Home" />
+          <Home />
           {matches && <SideBanners />}
         </Box>
       </Container>

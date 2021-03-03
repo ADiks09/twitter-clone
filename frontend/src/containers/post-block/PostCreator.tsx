@@ -7,7 +7,7 @@ import {
   ImageOutlined,
   SentimentSatisfiedRounded,
 } from '@material-ui/icons'
-import classes from './home.module.scss'
+import classes from '../home/home.module.scss'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
